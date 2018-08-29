@@ -29,7 +29,7 @@ JSON data structure
 
 # Use cases
 
-two main use cases, two rare
+four main cases (CRUD), two rare cases
 
 - find a snippet
   - type in description of problem
@@ -53,6 +53,12 @@ two main use cases, two rare
     - from problem description - 3
     - from solution - 1
   - adds to json knowledge base and redis sets
+- update a snippet
+  - observe the delta and change the JSON and redis accordingly
+- delete a snippet
+  - when reading it, have a button that deletes it
+  - go through all the keywords in the snippet and remove it from the sets
+  - remove it from the JSON
 - install knowledge base
   - turn the json into the redis sets
 - edit settings
