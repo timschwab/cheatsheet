@@ -1,0 +1,26 @@
+{
+  "name": "cheatsheet",
+  "version": "1.0.0",
+  "description": "An app for creating and recalling short tidbits that I need to remember",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timschwab/cheatsheet.git"
+  },
+  "keywords": [
+    "cheatsheet"
+  ],
+  "author": "Tim Schwab",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/timschwab/cheatsheet/issues"
+  },
+  "homepage": "https://github.com/timschwab/cheatsheet#readme",
+  "devDependencies": {
+    "electron": "^2.0.8"
+  }
+}
