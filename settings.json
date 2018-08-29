@@ -1,0 +1,11 @@
+{
+	"excluded-words": [
+		"the",
+		"and",
+		"it"
+	],
+	"allowed-characters": [
+		{"character": ",", "allowed": "no"},
+		{"character": "-", "allowed": "yes"}
+	]
+}

@@ -28,7 +28,7 @@ JSON data structure
 - settings
 	- list of ignored words
 	- list of allowed characters in tokens
-- library
+- sheet
 	- keywords
 	- brief problem description (limited to 200 characters)
 	- brief solution (limited to 1000 characters. any more is not suited for this tool.)
