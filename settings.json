@@ -5,7 +5,8 @@
 		"it"
 	],
 	"allowed-characters": [
-		{"character": ",", "allowed": "no"},
-		{"character": "-", "allowed": "yes"}
+		{"character": ",", "allowed": false},
+		{"character": "-", "allowed": true},
+		{"character": ".\\s", "allowed": false}
 	]
 }

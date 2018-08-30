@@ -21,7 +21,7 @@ three sets of redis sets
 	- [keyword]-problems
 	- [keyword]-solutions
 
-The search page has a redis sorted set "~~search" of every matching tidbit with their score. With a new word, this list is updated with the various searches that are done. When finished updating, the page is updated with the most recent list.
+The search page has a redis sorted set "\~\~search" of every matching tidbit with their score. With a new word, this list is updated with the various searches that are done. When finished updating, the page is updated with the most recent list.
 
 JSON data structure
 
