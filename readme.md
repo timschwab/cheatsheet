@@ -35,14 +35,12 @@ JSON data structure
 
 # Use cases
 
-four main cases (CRUD), two rare cases
+four main cases (CRUD), four rare cases
 
-- find a snippet
-	- type in description of problem
-	- quickly finds top results - see below
 - create a snippet
 	- type in problem description
 	- type in solution
+	- specify what sheets to attach to
 	- asks for keywords
 	- adds its own keywords from the problem and solution description
 		- lowercase everything
@@ -59,19 +57,28 @@ four main cases (CRUD), two rare cases
 		- from problem description - 3
 		- from solution - 1
 	- adds to json knowledge base and redis sets
+	- push changes to remote sheet
+- find (retrieve) a snippet
+	- type in description of problem
+	- quickly finds top results - see below
 - update a snippet
 	- observe the delta and change the JSON and redis accordingly
+	- push changes to remote sheet
 - delete a snippet
 	- when reading it, have a button that deletes it
 	- go through all the keywords in the snippet and remove it from the sets
 	- remove it from the JSON
-- install knowledge base
+	- push changes to remote sheet
+- install sheet
 	- turn the json into the redis sets
+- uninstall sheet
+	- go through and delete every snippet from the redis sets
+- create sheet
 - edit settings
 	- list of ignored words
 	- list of allowed characters in tokens
 
-# Pseudocode
+# Searching
 
 on every keystroke, calculate the delta and determine if a new keyword has been entered or removed
 
@@ -89,7 +96,7 @@ new keyword is entered:
 	foreach member in members
 		ZINCRBY ~~search 1 member
 
-	update display using ZREVRANGEBYSCORE ~~search +inf 0 WITHSCORES LIMIT 25
+	update display using ZREVRANGEBYSCORE ~~search +inf 1 WITHSCORES LIMIT 25
 
 new keyword is removed - same as above, except negative numbers
 
