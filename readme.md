@@ -1,6 +1,6 @@
 # Overview
 
-An app for creating and recalling short snippets that I need to remember
+A knowledge base for short snippets
 
 standalone first - electron - https://github.com/electron/electron-quick-start
 
@@ -27,6 +27,10 @@ If a company adopts it, will the individual employees be motivated to use it? Se
 Once a sheet grows to be big enough, it will have critical momentum. Once it has been adopted and contributing to it is habit, it will be extremely useful. The difficulty is adoption.
 
 The concept of crowdsourcing has been proven time and time again. For large projects, this will certainly work. Open source projects live off of the small desires of thousands to contribute. This is how the sheets will be built.
+
+## Financials
+
+I would prefer it to be open source, because that would skyrocket its trustworthiness in the tech world, and thus its popularity. However, this may not garner enough revenue. We could do service levels and hosting of public sheets, but we will have to work that out. That is for Justin to figure out.
 
 # Installation
 
