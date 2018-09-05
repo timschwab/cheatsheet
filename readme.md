@@ -6,6 +6,10 @@ standalone first - electron - https://github.com/electron/electron-quick-start
 
 Slack app second
 
+# Competition
+
+Big ones are Bloomfire, Helpjuice, and Shelf. They are used by some massive companies, but are not the specific type of knowledge base we are trying to implement. I haven't seen any large KBs that are geared around very short, quick QA. But, I believe that there is a huge market for it. (Assumption that needs to be tested.)
+
 # Installation
 
 	git clone git@github.com:timschwab/cheatsheet.git
