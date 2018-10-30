@@ -110,20 +110,11 @@ on every keystroke, calculate the delta and determine if a new keyword has been 
 
 new keyword is entered:
 
-	members = SMEMBERS [keyword]-keywords
-	foreach member in members
-		ZINCRBY ~~search 10 member
+	ZUNIONSTORE ~~scores 3 [keyword]-keywords [keyword]-problems [keyword]-solutions WEIGHTS 10 3 1
+	ZUNIONSTORE ~~results 2 ~~scores ~~results
 
-	members = SMEMBERS [keyword]-problems
-	foreach member in members
-		ZINCRBY ~~search 3 member
+	update display using ZREVRANGEBYSCORE ~~results +inf 1 WITHSCORES LIMIT 25
 
-	members = SMEMBERS [keyword]-solutions
-	foreach member in members
-		ZINCRBY ~~search 1 member
+new keyword is removed - same as above, except negative weights
 
-	update display using ZREVRANGEBYSCORE ~~search +inf 1 WITHSCORES LIMIT 25
-
-new keyword is removed - same as above, except negative numbers
-
-
+empty string - `DEL ~~results`
