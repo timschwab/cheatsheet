@@ -14,8 +14,12 @@ function main() {
     win.loadFile('html/index.html')
 }
 
-ipcMain.on('query', (event, arg) => {
-    event.sender.send('q-result', arg + " works")
-})
+function query(event, q) {
+    client.get(q, (err, result) => {
+        event.sender.send('q-result', result)
+    })
+}
 
+ipcMain.on('query', query)
 app.on('ready', main)
+

@@ -16,6 +16,10 @@ function query() {
 	}
 }
 
-ipcRenderer.on('q-result', (event, arg) => {
-	$("#results").html("Results: " + arg)
+ipcRenderer.on('q-result', (event, result) => {
+	if (result) {
+		$("#results").html("Results: " + result)
+	} else {
+		$("#results").html("Could not find query.")
+	}
 })
