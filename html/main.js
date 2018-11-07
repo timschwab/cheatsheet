@@ -1,4 +1,5 @@
-let $ = require('jquery')  // jQuery now loaded and assigned to $
+const {ipcRenderer} = require('electron')
+const $ = require('jquery')  // jQuery now loaded and assigned to $
 
 $(() => {
 	// Watch for a query
@@ -11,6 +12,10 @@ function query() {
 	if (q == "") {
 		$("#results").html("")
 	} else {
-		$("#results").html("Results: " + q)
+		ipcRenderer.send('query', q)
 	}
 }
+
+ipcRenderer.on('q-result', (event, arg) => {
+	$("#results").html("Results: " + arg)
+})
