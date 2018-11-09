@@ -54,8 +54,8 @@ function query(event, client, q) {
 				obj.score = scores[index]
 				return obj
 			})
-			
-			event.sender.send('q-result', parsed)
+
+			event.sender.send('query-result', parsed)
 		})
 	})
 }

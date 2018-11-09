@@ -1,10 +1,10 @@
-const {app, BrowserWindow} = require('electron')
-const {ipcMain} = require('electron')
+const {app, BrowserWindow, Menu, ipcMain} = require('electron')
 const redis = require('redis')
 const bluebird = require('bluebird')
 bluebird.promisifyAll(redis)
 
 const queryHandler = require('./server/query.js')
+const addHandler = require('./server/add.js')
 
 let win
 let client
@@ -16,9 +16,11 @@ function main() {
 
 	// Create main window
 	win = new BrowserWindow({width: 800, height: 600})
-	win.loadFile('client/index.html')
+	win.loadFile('client/search.html')
+	//Menu.setApplicationMenu(null)
 }
 
 ipcMain.on('query', (event, q) => {queryHandler(event, client, q)})
+ipcMain.on('add', (event, data) => {addHandler(event, client, data)})
 app.on('ready', main)
 

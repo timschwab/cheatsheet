@@ -18,7 +18,7 @@ function query() {
 	}
 }
 
-ipcRenderer.on('q-result', (event, results) => {
+ipcRenderer.on('query-result', (event, results) => {
 	if (results.length == 0) {
 		$('#message').html('Could not find query.')
 		$('#results').html('')

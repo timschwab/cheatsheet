@@ -34,6 +34,8 @@ I would prefer it to be open source, because that would skyrocket its trustworth
 
 # Installation
 
+Assumes you have a running instance of redis.
+
 	git clone git@github.com:timschwab/cheatsheet.git
 	npm install
 	npm start
