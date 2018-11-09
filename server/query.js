@@ -46,17 +46,18 @@ function query(event, client, q) {
 			return client.getAsync(key)
 		})
 
-		bluebird.all(getPromises)
-		.then(responses => {
-			// Parse and return
-			parsed = responses.map((str, index) => {
-				let obj = JSON.parse(str)
-				obj.score = scores[index]
-				return obj
-			})
+		return bluebird.all(getPromises)
+	})
 
-			event.sender.send('query-result', parsed)
+	// Parse and return
+	.then(responses => {
+		parsed = responses.map((str, index) => {
+			let obj = JSON.parse(str)
+			obj.score = scores[index]
+			return obj
 		})
+
+		event.sender.send('query-result', parsed)
 	})
 }
 

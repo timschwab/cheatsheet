@@ -73,7 +73,7 @@ four main cases (CRUD), four rare cases
 	- adds its own keywords from the problem and solution description
 		- lowercase everything
 		- turn unneeded characters into whitespace
-			- replace(/[^\.\s\da-z]|(\.\s)/g, " ") - from list of allowed characters
+			- replace(/[^\s\da-z]|(\s)/g, " ") - from list of allowed characters
 		- get rid of unneeded words
 			- replace(/\b(the)\b|\b(and)\b|\b(is)\b|\b(to)\b|\b(by)\b|\b(is)\b|\b(in)\b|\b(with)\b/g, "") - built from list of ignored words
 		- get rid of unneeded whitespace
