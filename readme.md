@@ -2,7 +2,7 @@
 
 A knowledge base for short snippets
 
-standalone first - electron - https://github.com/electron/electron-quick-start
+Standalone first
 
 Slack app second
 
@@ -36,9 +36,11 @@ I would prefer it to be open source, because that would skyrocket its trustworth
 
 Assumes you have redis installed and running, git installed, and nodejs/npm installed.
 
-	git clone git@github.com:timschwab/cheatsheet.git
-	npm install
-	npm start
+```
+git clone git@github.com:timschwab/cheatsheet.git
+npm install
+npm start
+```
 
 # Data
 
