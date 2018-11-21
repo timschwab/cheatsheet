@@ -16,11 +16,33 @@ function main() {
 
 	// Create main window
 	win = new BrowserWindow({width: 800, height: 600})
+	const menu = Menu.buildFromTemplate([
+		{
+			label: 'File',
+			submenu: [
+				{ label: 'Install sheet' },
+				{ label: 'Remove sheet' }
+			]
+		},
+		{
+			label: 'View',
+			submenu: [
+				{
+					label: 'Refresh',
+					role: 'reload'
+				},
+				{
+					label: 'Dev tools',
+					role: 'toggledevtools'
+				}
+			]
+		}
+	])
+	Menu.setApplicationMenu(menu)
 	win.loadFile('client/search.html')
-	//Menu.setApplicationMenu(null)
 }
 
-ipcMain.on('query', (event, q) => {queryHandler(event, client, q)})
+ipcMain.on('query', (event, query) => {queryHandler(event, client, query)})
 ipcMain.on('add', (event, data) => {addHandler(event, client, data)})
 app.on('ready', main)
 
