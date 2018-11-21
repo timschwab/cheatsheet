@@ -3,7 +3,8 @@ const redis = require('redis')
 const bluebird = require('bluebird')
 bluebird.promisifyAll(redis)
 
-const queryHandler = require('./server/query.js')
+const searchHandler = require('./server/search.js')
+const getHandler = require('./server/get.js')
 const addHandler = require('./server/add.js')
 
 let win
@@ -42,7 +43,11 @@ function main() {
 	win.loadFile('client/search.html')
 }
 
-ipcMain.on('query', (event, query) => {queryHandler(event, client, query)})
+// Routes
+ipcMain.on('search', (event, query) => {searchHandler(event, client, query)})
+ipcMain.on('get', (event, id) => {getHandler(event, client, id)})
 ipcMain.on('add', (event, data) => {addHandler(event, client, data)})
+
+// Start app
 app.on('ready', main)
 

@@ -6,7 +6,6 @@
 
 # Current to-do
 
-- Fix docs
 - Round out snippets
 	- View snippets
 	- Delete snippets

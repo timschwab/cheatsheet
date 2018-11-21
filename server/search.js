@@ -1,12 +1,12 @@
 const bluebird = require('bluebird')
 
 // Receive query, process it, and send back the results
-function query(event, client, q) {
-	q = q.toLowerCase()
-	console.log("\nReceived query: " + q)
+function search(event, client, query) {
+	query = query.toLowerCase()
+	console.log("\nReceived query: " + query)
 
 	// Get scores of each term and store them in redis
-	let terms = q.split(' ')
+	let terms = query.split(' ')
 	let scorePromises = terms.map((term, index) => {
 		return client.zunionstoreAsync('~~scores-' + index, '3', term + '-keywords', term + '-problems', term + '-solutions', 'WEIGHTS', '10', '3', '1')
 	})
@@ -15,7 +15,8 @@ function query(event, client, q) {
 	let sets = terms.map((term, index) => {
 		return '~~scores-' + index
 	})
-	let scores = []
+
+	let snippets
 
 	// When all scores have been calculated
 	bluebird.all(scorePromises)
@@ -32,18 +33,19 @@ function query(event, client, q) {
 
 	.then(results => {
 		// Separate out keys and scores
-		let keys = results.filter((element, index) => {
+		snippets = results.reduce((soFar, nextValue, index) => {
 			if (index % 2) {
-				scores.push(element)
-				return false
+				soFar[soFar.length - 1].score = nextValue
 			} else {
-				return true
+				soFar.push({key: nextValue})
 			}
-		})
+
+			return soFar
+		}, [])
 		
 		// Get all the snippets
-		let getPromises = keys.map(key => {
-			return client.getAsync(key)
+		let getPromises = snippets.map(snippet => {
+			return client.getAsync(snippet.key)
 		})
 
 		return bluebird.all(getPromises)
@@ -53,14 +55,15 @@ function query(event, client, q) {
 	.then(responses => {
 		parsed = responses.map((str, index) => {
 			let obj = JSON.parse(str)
-			obj.score = scores[index]
+			obj.score = snippets[index].score
+			obj.key = snippets[index].key
 			return obj
 		})
 
-		event.sender.send('query-result', parsed)
+		event.sender.send('search-result', parsed)
 	})
 }
 
-module.exports = query
+module.exports = search
 
 

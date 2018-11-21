@@ -9,16 +9,22 @@
 	</head>
 	
 	<body>
-		<div id="links">
-			<p><a href="add.html">Add a snippet</a></p>
+
+		<div id="search-page">
+			<div id="links">
+				<p><a href="add.html">Add a snippet</a></p>
+			</div>
+			
+			<div id="search">
+				Search query: <br />
+				<input type="text" id="query">
+			</div>
+			
+			<div id="message"></div>
+			<div id="results"></div>
 		</div>
 
-		<div id="search">
-			Search query: <br />
-			<input type="text" id="query">
-		</div>
+		<div id="view-page" class="hidden"></div>
 
-		<div id="message"></div>
-		<div id="results"></div>
 	</body>
 </html>
