@@ -7,9 +7,11 @@
 # Current to-do
 
 - Round out snippets
-	- View snippets
 	- Delete snippets
 	- Edit snippets
+- Use settings
+	- Settings view page
+	- Have settings.json be used by server/add.js to generate tokens
 - Introduce sheets
 	- tag snippets with sheets
 - Integrate sheets
