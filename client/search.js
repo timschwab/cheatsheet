@@ -14,23 +14,23 @@ function search() {
 		ipcRenderer.send('search', query)
 	} else {
 		$('#message').html('')
-		$('#results').html('')
+		$('#search-results').html('')
 	}
 }
 
 ipcRenderer.on('search-result', (event, results) => {
 	if (results.length == 0) {
 		$('#message').html('Search returned no results :(')
-		$('#results').html('')
+		$('#search-results').html('')
 	} else {
 		$('#message').html('Showing ' + results.length + ' results.')
-		$('#results').html('')
+		$('#search-results').html('')
 		results.forEach(snippet => {
 			let html = '<hr /><div class="snippet">'
 			html += '<p class="problem"><a href="#" onclick="get(' + snippet.key + ');">' + he.encode(snippet.problem) + '</a></p>'
 			html += '<p class="score">' + he.encode(snippet.score) + '</p>'
 			html += '</div>'
-			$('#results').append(html)
+			$('#search-results').append(html)
 		});
 	}
 })
@@ -40,5 +40,18 @@ function get(key) {
 }
 
 ipcRenderer.on('get-result', (event, snippet) => {
-	console.log(snippet)
+	let html = '<p class="problem">' + he.encode(snippet.problem) + '</p>'
+	html += '<p class="solution">' + he.encode(snippet.solution) + '</p>'
+	html += '<p class="solution">' + he.encode(String(snippet.keywords)) + '</p>'
+
+	$('#view-results').html(html)
+
+	$('#search-page').hide()
+	$('#view-page').show()
 })
+
+function showSearchPage() {
+	$('#search-page').show()
+	$('#view-page').hide()
+}
+
