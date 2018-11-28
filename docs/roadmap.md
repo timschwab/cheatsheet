@@ -18,6 +18,7 @@
 	- install sheets
 	- uninstall sheets
 	- filter searches by sheets
+- Switch to using Vue.js
 - cloud sheets with eventual consistency
 	- (!!!) (the big boy)
 
