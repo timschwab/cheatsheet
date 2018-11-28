@@ -20,6 +20,7 @@
 	- uninstall sheets
 	- filter searches by sheets
 - Switch to using Vue.js
+- Use Markdown formatting
 - cloud sheets with eventual consistency
 	- (!!!) (the big boy)
 
