@@ -10,6 +10,7 @@
 	- Delete snippets
 	- Edit snippets
 - Add the time to each backend query log
+- Switch to using Vue.js
 - Use settings
 	- Settings view page
 	- Have settings.json be used by server/add.js to generate tokens
@@ -19,7 +20,6 @@
 	- install sheets
 	- uninstall sheets
 	- filter searches by sheets
-- Switch to using Vue.js
 - Use Markdown formatting
 - cloud sheets with eventual consistency
 	- (!!!) (the big boy)
