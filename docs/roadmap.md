@@ -11,6 +11,7 @@
 	- Edit snippets
 - Add the total processing time to each backend query log, for visibility
 - Switch to using Vue.js
+- Use Markdown formatting
 - Use settings
 	- Settings view page
 	- Have settings.json be used by server/add.js to generate tokens
@@ -20,7 +21,6 @@
 	- install sheets
 	- uninstall sheets
 	- filter searches by sheets
-- Use Markdown formatting
 - cloud sheets with eventual consistency
 	- (!!!) (the big boy)
 
