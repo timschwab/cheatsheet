@@ -1,4 +1,4 @@
-# Large overview
+# Long term plan
 
 - Electron app first
 - Then a Slack app

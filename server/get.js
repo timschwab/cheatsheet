@@ -1,7 +1,7 @@
 const bluebird = require('bluebird')
 
 function get(event, client, id) {
-	console.log('Received get request: ' + id)
+	console.log('get: ' + id)
 
 	client.getAsync(id)
 	.then(snippetText => {

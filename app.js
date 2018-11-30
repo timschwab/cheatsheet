@@ -6,6 +6,7 @@ bluebird.promisifyAll(redis)
 const searchHandler = require('./server/search.js')
 const getHandler = require('./server/get.js')
 const addHandler = require('./server/add.js')
+const deleteHandler = require('./server/delete.js')
 
 let win
 let client
@@ -47,6 +48,7 @@ function main() {
 ipcMain.on('search', (event, query) => {searchHandler(event, client, query)})
 ipcMain.on('get', (event, id) => {getHandler(event, client, id)})
 ipcMain.on('add', (event, data) => {addHandler(event, client, data)})
+ipcMain.on('delete', (event, data) => {deleteHandler(event, client, data)})
 
 // Start app
 app.on('ready', main)

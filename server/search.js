@@ -3,7 +3,7 @@ const bluebird = require('bluebird')
 // Receive query, process it, and send back the results
 function search(event, client, query) {
 	query = query.toLowerCase()
-	console.log("\nReceived query: " + query)
+	console.log("search: " + query)
 
 	// Get scores of each term and store them in redis
 	let terms = query.split(' ')

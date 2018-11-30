@@ -2,11 +2,12 @@ const {ipcRenderer} = require('electron')
 const $ = require('jquery')
 const he = require('he')
 
+// Watch for a query
 $(() => {
-	// Watch for a query
-	$('#query').change(search)
+	$('#query').on('input', search)
 });
 
+// User submits a search query
 function search() {
 	let query = this.value
 
@@ -18,9 +19,33 @@ function search() {
 	}
 }
 
+// Client views a snippet
+function get(key) {
+	$('#delete').click(() => { deleteSnippet(key) })
+	ipcRenderer.send('get', key)
+}
+
+// Client deletes a snippet
+function deleteSnippet(key) {
+	ipcRenderer.send('delete', key)
+}
+
+// Show the search page, hiding the view page
+function showSearchPage() {
+	$('#search-page').show()
+	$('#view-page').hide()
+}
+
+// Show the view page, hiding the search page
+function showViewPage() {
+	$('#search-page').hide()
+	$('#view-page').show()
+}
+
+// Server responds with search results
 ipcRenderer.on('search-result', (event, results) => {
 	if (results.length == 0) {
-		$('#message').html('Search returned no results :(')
+		$('#message').html('Search returned no results :\'(')
 		$('#search-results').html('')
 	} else {
 		$('#message').html('Showing ' + results.length + ' results.')
@@ -35,10 +60,7 @@ ipcRenderer.on('search-result', (event, results) => {
 	}
 })
 
-function get(key) {
-	ipcRenderer.send('get', key)
-}
-
+// Server responds with snippet data
 ipcRenderer.on('get-result', (event, snippet) => {
 	let html = '<p class="problem">' + he.encode(snippet.problem) + '</p>'
 	html += '<p class="solution">' + he.encode(snippet.solution) + '</p>'
@@ -46,12 +68,23 @@ ipcRenderer.on('get-result', (event, snippet) => {
 
 	$('#view-results').html(html)
 
-	$('#search-page').hide()
-	$('#view-page').show()
+	showViewPage()
 })
 
-function showSearchPage() {
-	$('#search-page').show()
-	$('#view-page').hide()
-}
+// Server deleted a snippet
+ipcRenderer.on('delete-result', (event, result) => {
+	if (result.status == 'success') {
+		$('#message').html('Snippet deleted.')
+		$('#search-results').html('')
+		showSearchPage()
+	} else {
+		$('#message').html('Snippet could not be deleted: ' + results.message)
+	}
+})
+
+
+
+
+
+
 
