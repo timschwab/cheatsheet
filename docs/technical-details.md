@@ -22,7 +22,7 @@ The data that we are storing and searching is essentially a list of snippets. A 
 
 ## Redis data
 
-To store this data and quickly manipulate it, there are three groups of redis data.
+To store this data and quickly manipulate it, there are four groups of redis data.
 
 ### Snippet
 

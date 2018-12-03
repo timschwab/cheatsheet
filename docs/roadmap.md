@@ -7,7 +7,6 @@
 # Current to-do
 
 - Round out snippets
-	- Delete snippets
 	- Edit snippets
 - Add the total processing time to each backend query log, for visibility
 - Update search alg to use precalculated token scores

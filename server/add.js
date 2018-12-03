@@ -20,13 +20,13 @@ function add(event, client, data) {
 	// Set data
 	.then(counter => {
 		problemPromises = problemTokens.map(token => {
-			return client.sadd(token + '-problems', counter)
+			return client.saddAsync(token + '-problems', counter)
 		})
 		solutionPromises = solutionTokens.map(token => {
-			return client.sadd(token + '-solutions', counter)
+			return client.saddAsync(token + '-solutions', counter)
 		})
 		keywordPromises = keywords.map(keyword => {
-			return client.sadd(keyword + '-keywords', counter)
+			return client.saddAsync(keyword + '-keywords', counter)
 		})
 		setPromise = client.setAsync(counter, JSON.stringify(data))
 
