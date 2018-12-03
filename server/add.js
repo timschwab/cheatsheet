@@ -9,7 +9,7 @@ function add(event, client, data) {
 	// Process data
 	let problem = data.problem
 	let solution = data.solution
-	let keywords = map(data.keywords, keyword => { return keyword.toLowerCase() })
+	let keywords = data.keywords.map(keyword => { return keyword.toLowerCase() })
 
 	let problemTokens = tokenize(problem)
 	let solutionTokens = tokenize(solution)
