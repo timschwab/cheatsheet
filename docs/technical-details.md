@@ -73,6 +73,7 @@ Next, `~~results`. This is created by the search algorithm and contains a sorted
 	- split(" ")
 - add to redis
 - recalcuate scores
+- (potentially in the future, only keep the top 100 to make the search faster)
 
 # Searching
 
