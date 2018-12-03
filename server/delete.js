@@ -12,7 +12,7 @@ function deleteSnippet(event, client, id) {
 		// Process data
 		let problem = snippet.problem
 		let solution = snippet.solution
-		let keywords = map(snippet.keywords, keyword => { return keyword.toLowerCase() })
+		let keywords = snippet.keywords.map( keyword => { return keyword.toLowerCase() })
 
 		let problemTokens = tokenize(problem)
 		let solutionTokens = tokenize(solution)
