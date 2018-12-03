@@ -2,27 +2,26 @@ const bluebird = require('bluebird')
 
 // Receive query, process it, and send back the results
 function search(event, client, query) {
+	let snippets
+
 	query = query.toLowerCase()
 	console.log("search: " + query)
 
 	// Get scores of each term and store them in redis
 	let terms = query.split(' ')
-	let scorePromises = terms.map((term, index) => {
-		return client.zunionstoreAsync('~~scores-' + index, '3', term + '-keywords', term + '-problems', term + '-solutions', 'WEIGHTS', '10', '3', '1')
+	let scorePromises = terms.map(term => {
+		return client.zunionstoreAsync('~~scores-' + term, '3', term + '-keywords', term + '-problems', term + '-solutions', 'WEIGHTS', '10', '3', '1')
 	})
-
-	// Set up some vars
-	let sets = terms.map((term, index) => {
-		return '~~scores-' + index
-	})
-
-	let snippets
 
 	// When all scores have been calculated
 	bluebird.all(scorePromises)
 
 	// Load them all into ~~results
 	.then(responses => {
+		let sets = terms.map(term => {
+			return '~~scores-' + term
+		})
+
 		return client.zunionstoreAsync(['~~results', sets.length].concat(sets))
 	})
 

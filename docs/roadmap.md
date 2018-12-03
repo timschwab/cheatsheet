@@ -10,6 +10,7 @@
 	- Delete snippets
 	- Edit snippets
 - Add the total processing time to each backend query log, for visibility
+- Update search alg to use precalculated token scores
 - Switch to using Vue.js
 - Use Markdown formatting
 - Use settings

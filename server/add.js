@@ -1,4 +1,5 @@
 const bluebird = require('bluebird')
+const tokenize = require('./tokenize')
 
 // Receive data, process, add to Redis, and send back success message to client
 function add(event, client, data) {
@@ -8,10 +9,10 @@ function add(event, client, data) {
 	// Process data
 	let problem = data.problem
 	let solution = data.solution
-	let keywords = data.keywords
+	let keywords = map(data.keywords, keyword => { return keyword.toLowerCase() })
 
-	let problemTokens = extractTokens(problem)
-	let solutionTokens = extractTokens(solution)
+	let problemTokens = tokenize(problem)
+	let solutionTokens = tokenize(solution)
 
 	// Get next snippet index
 	client.incrAsync('~~counter')
@@ -38,28 +39,6 @@ function add(event, client, data) {
 			status: 'success'
 		})
 	})
-}
-
-function extractTokens(str) {
-	// Lowercase everything
-	str = str.toLowerCase()
-
-	// Turn unneded characters into whitespace
-	str = str.replace(/[^\s\da-z]|(\s)/g, ' ')
-
-	// Get rid of unneeded words
-	str = str.replace(/\b(the)\b|\b(and)\b|\b(is)\b|\b(to)\b|\b(by)\b|\b(is)\b|\b(in)\b|\b(with)\b/g, '')
-
-	// Get rid of unneeded whitespace
-	str = str.replace(/\s+/g, ' ')
-
-	// Remove possible front and back spaces
-	str = str.trim()
-
-	// Tokenize
-	let tokens = str.split(' ')
-
-	return tokens
 }
 
 module.exports = add
