@@ -64,7 +64,7 @@ ipcRenderer.on('search-result', (event, results) => {
 ipcRenderer.on('get-result', (event, snippet) => {
 	let html = '<p class="problem">' + he.encode(snippet.problem) + '</p>'
 	html += '<p class="solution">' + he.encode(snippet.solution) + '</p>'
-	html += '<p class="solution">' + he.encode(String(snippet.keywords)) + '</p>'
+	html += '<p class="keywords">' + he.encode(String(snippet.keywords)) + '</p>'
 
 	$('#view-results').html(html)
 
