@@ -10,7 +10,7 @@ The answers to these questions come from three sources: the Internet, the subjec
 
 Hence, CheatSheet. It is a central source of truth for tiny, minuscule pieces of information. When we already have a framework of knowledge but just can't remember something, we need one place we can search. The search needs to understand what you want, and it needs to be fast. This is what CheatSheet delivers.
 
-Check out the [docs](docs) if you want more detail.
+Check out the [docs](https://github.com/timschwab/cheatsheet/wiki) if you want more detail.
 
 # Installation
 
