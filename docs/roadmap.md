@@ -9,9 +9,9 @@
 - Round out snippets
 	- Edit snippets
 - Add the total processing time to each backend query log, for visibility
-- Update search alg to use precalculated token scores
 - Switch to using Vue.js
 - Use Markdown formatting
+- Update search alg to use precalculated token scores
 - Use settings
 	- Settings view page
 	- Have settings.json be used by server/add.js to generate tokens
