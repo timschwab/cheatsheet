@@ -43,7 +43,11 @@ function search() {
 
 // User views a snippet
 function get(key) {
+	// Set link handlers
+	$('#delete').off()
 	$('#delete').click(() => { deleteSnippet(key) })
+
+	// Get data
 	ipcRenderer.send('get', key)
 }
 
