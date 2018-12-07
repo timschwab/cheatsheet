@@ -12,7 +12,7 @@
 
 		<div id="search-page">
 			<div id="search-links">
-				<p><a href="add.html">Add a snippet</a></p>
+				<p><a href="#" onclick="show('add')">Add a snippet</a></p>
 			</div>
 			
 			<div id="search">
@@ -20,17 +20,35 @@
 				<input type="text" id="query">
 			</div>
 			
-			<div id="message"></div>
+			<div id="search-message"></div>
 			<div id="search-results"></div>
 		</div>
 
 		<div id="view-page" class="hidden">
 			<div id="view-links">
-				<p><a href="#" onclick="showSearchPage()">Back to search results</a></p>
+				<p><a href="#" onclick="show('search')">Back to search results</a></p>
+				<p><a href="#" id="edit">Edit this snippet</a></p>
 				<p><a href="#" id="delete">Delete this snippet</a></p>
 			</div>
 			<div id="view-results"></div>
 		</div>
 
+		<div id="add-page" class="hidden">
+			<div id="links">
+				<p><a href="#" onclick="show('search')">Back to search results</a></p>
+			</div>
+
+			<div id="form">
+				<span>Problem:</span><input type="text" id="problem">
+				<br />
+				<span>Solution:</span><textarea id="solution"></textarea>
+				<br />
+				<span>Keywords:</span><input type="text" id="keywords">
+				<br />
+				<input type="button" value="Submit" id="add-submit">
+			</div>
+
+			<div id="add-message"></div>
+		</div>
 	</body>
 </html>
