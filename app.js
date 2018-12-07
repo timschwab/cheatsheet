@@ -45,31 +45,16 @@ function main() {
 }
 
 // Routes
-ipcMain.on('search', (event, query) => { router(event, query, 'search') })
-ipcMain.on('get', (event, id) => { router(event, id, 'get') })
-ipcMain.on('add', (event, data) => { router(event, data, 'add') })
-ipcMain.on('delete', (event, id) => { router(event, id, 'delete') })
+ipcMain.on('search', (event, query) => { timeLog(event, query, searchHandler) })
+ipcMain.on('get', (event, id) => { timeLog(event, id, getHandler) })
+ipcMain.on('add', (event, data) => { timeLog(event, data, addHandler) })
+ipcMain.on('delete', (event, id) => { timeLog(event, id, deleteHandler) })
 
-// Essentially here to time the functions
-function router(event, req, type) {
+// Wrap the handlers in a timer
+function timeLog(event, request, fn) {
 	console.time('time')
 
-	switch (type) {
-		case 'search':
-			searchHandler(event, client, req)
-			break
-		case 'get':
-			getHandler(event, client, req)
-			break
-		case 'add':
-			addHandler(event, client, req)
-			break
-		case 'delete':
-			deleteHandler(event, client, req)
-			break
-		default:
-			console.log('Unrecognized request: ' + type)
-	}
+	fn(event, client, request)
 
 	console.timeEnd('time')
 	console.log()
