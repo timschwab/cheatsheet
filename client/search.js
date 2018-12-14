@@ -1,13 +1,15 @@
 const {ipcRenderer} = require('electron')
 const $ = require('jquery')
-const Vue = require('vue')
+const Vue = require('vue/dist/vue.js')
 const he = require('he')
 
-let data = {
+let data, computed, vm
+
+data = {
 	page: 'search'
 }
 
-let computed = {
+computed = {
 	searchPage: function() {
 		return (this.page == 'search')
 	},
@@ -19,9 +21,12 @@ let computed = {
 	}
 }
 
-let vm = new Vue({
-	data: data,
-	computed: computed
+$(() => {
+	vm = new Vue({
+		el: '#app',
+		data: data,
+		computed: computed
+	})
 })
 
 // Watch for a query
@@ -33,24 +38,6 @@ $(() => {
 // Show a certain page
 function show(page) {
 	data.page = page
-
-	switch (page) {
-		case 'search':
-			$('#search-page').show()
-			$('#view-page').hide()
-			$('#add-page').hide()
-			break
-		case 'view':
-			$('#search-page').hide()
-			$('#view-page').show()
-			$('#add-page').hide()
-			break
-		case 'add':
-			$('#search-page').hide()
-			$('#view-page').hide()
-			$('#add-page').show()
-			break
-	}
 }
 
 // User submits a search query

@@ -7,6 +7,6 @@
 	white-space: pre-wrap;
 }
 
-.hidden {
+[v-cloak] {
 	display: none;
 }
