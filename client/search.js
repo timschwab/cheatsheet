@@ -1,15 +1,39 @@
 const {ipcRenderer} = require('electron')
 const $ = require('jquery')
+const Vue = require('vue')
 const he = require('he')
+
+let data = {
+	page: 'search'
+}
+
+let computed = {
+	searchPage: function() {
+		return (this.page == 'search')
+	},
+	viewPage: function() {
+		return (this.page == 'view')
+	},
+	addPage: function() {
+		return (this.page == 'add')
+	}
+}
+
+let vm = new Vue({
+	data: data,
+	computed: computed
+})
 
 // Watch for a query
 $(() => {
 	$('#query').on('input', search)
 	$('#add-submit').on('click', add)
-});
+})
 
 // Show a certain page
 function show(page) {
+	data.page = page
+
 	switch (page) {
 		case 'search':
 			$('#search-page').show()
