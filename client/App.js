@@ -3,54 +3,80 @@ const $ = require('jquery')
 const Vue = require('vue/dist/vue.js')
 const he = require('he')
 
-let data, computed, vm
+const searchPage = require('./SearchPage')
 
-data = {
-	page: 'search'
-}
-
-computed = {
-	searchPage: function() {
-		return (this.page == 'search')
-	},
-	viewPage: function() {
-		return (this.page == 'view')
-	},
-	addPage: function() {
-		return (this.page == 'add')
-	}
-}
+let vm
 
 $(() => {
 	vm = new Vue({
 		el: '#app',
-		data: data,
-		computed: computed
+		data: {
+			page: 'search'
+		},
+		computed: {
+			pageComponent: function() {
+				return (this.page + '-page')
+			}
+		},
+		template: `
+			<component v-bind:is="pageComponent"></component>
+		`
 	})
 })
 
-// Watch for a query
-$(() => {
-	$('#query').on('input', search)
-	$('#add-submit').on('click', add)
+// Define the view page
+Vue.component('view-page', {
+	data: function() {
+		return {
+			snippet: {
+				problem: '',
+				solution: '',
+				keywords: []
+			}
+		}
+	},
+	template: `
+		<div id="view-page">
+			<div id="view-links">
+				<p><a href="#" onclick="show('search')">Back to search results</a></p>
+				<p><a href="#" id="delete">Delete this snippet</a></p>
+			</div>
+			<div id="view-results"></div>
+		</div>`
+})
+
+// Define the add page
+Vue.component('add-page', {
+	data: function() {return {}},
+	template: `
+		<div id="add-page">
+			<div id="add-links">
+				<p><a href="#" onclick="show('search')">Back to search results</a></p>
+			</div>
+
+			<div id="form">
+				<span>Problem:</span><input type="text" id="problem">
+				<br />
+				<span>Solution:</span><textarea id="solution"></textarea>
+				<br />
+				<span>Keywords:</span><input type="text" id="keywords">
+				<br />
+				<input type="button" value="Submit" id="add-submit">
+			</div>
+
+			<div id="add-message"></div>
+		</div>`
 })
 
 // Show a certain page
 function show(page) {
-	data.page = page
+	vm.page = page
 }
 
-// User submits a search query
-function search() {
-	let query = this.value
-
-	if (query) {
-		ipcRenderer.send('search', query)
-	} else {
-		$('#search-message').html('')
-		$('#search-results').html('')
-	}
-}
+// Watch for adding a snippet
+$(() => {
+	$('#add-submit').on('click', add)
+})
 
 // User views a snippet
 function get(key) {
@@ -90,23 +116,7 @@ function add() {
 	}
 }
 
-// Server responds with search results
-ipcRenderer.on('search-result', (event, results) => {
-	if (results.length == 0) {
-		$('#search-message').html('Search returned no results :\'(')
-		$('#search-results').html('')
-	} else {
-		$('#search-message').html('Showing ' + results.length + ' results.')
-		$('#search-results').html('')
-		results.forEach(snippet => {
-			let html = '<hr /><div class="snippet">'
-			html += '<p class="problem"><a href="#" onclick="get(' + snippet.key + ');">' + he.encode(snippet.problem) + '</a></p>'
-			html += '<p class="score">' + he.encode(snippet.score) + '</p>'
-			html += '</div>'
-			$('#search-results').append(html)
-		});
-	}
-})
+
 
 // Server responds with snippet data
 ipcRenderer.on('get-result', (event, snippet) => {

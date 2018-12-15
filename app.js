@@ -41,7 +41,7 @@ function main() {
 		}
 	])
 	Menu.setApplicationMenu(menu)
-	win.loadFile('client/search.html')
+	win.loadFile('client/index.html')
 }
 
 // Routes
