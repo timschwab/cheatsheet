@@ -14,18 +14,48 @@ $(() => {
 			page: 'search'
 		},
 		computed: {
-			pageComponent: function() {
-				return (this.page + '-page')
+			showSearchPage: function() {
+				return (this.page == 'search')
+			},
+			showViewPage: function() {
+				return (this.page.slice(0,5) == 'view:')
+			},
+			showAddPage: function() {
+				return (this.page == 'add')
+			},
+			viewingKey: function() {
+				if (this.page.slice(0,5) == 'view:') {
+					return this.page.slice(5)
+				} else {
+					return null
+				}
 			}
 		},
 		template: `
-			<component v-bind:is="pageComponent"></component>
+			<div>
+				<search-page
+					v-show="showSearchPage"
+					v-on:page="page = $event"
+				></search-page>
+
+				<view-page
+					v-show="showViewPage"
+					v-on:page="page = $event"
+					:snippet="viewingKey"
+				></view-page>
+
+				<add-page
+					v-show="showAddPage"
+					v-on:page="page = $event"
+				></add-page>
+			</div>
 		`
 	})
 })
 
 // Define the view page
 Vue.component('view-page', {
+	props: ['snippetKey'],
 	data: function() {
 		return {
 			snippet: {
