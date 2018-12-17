@@ -4,6 +4,7 @@ const Vue = require('vue/dist/vue.js')
 const he = require('he')
 
 const searchPage = require('./SearchPage')
+const viewPage = require('./ViewPage')
 
 let vm
 
@@ -53,28 +54,6 @@ $(() => {
 	})
 })
 
-// Define the view page
-Vue.component('view-page', {
-	props: ['snippetKey'],
-	data: function() {
-		return {
-			snippet: {
-				problem: '',
-				solution: '',
-				keywords: []
-			}
-		}
-	},
-	template: `
-		<div id="view-page">
-			<div id="view-links">
-				<p><a href="#" onclick="show('search')">Back to search results</a></p>
-				<p><a href="#" id="delete">Delete this snippet</a></p>
-			</div>
-			<div id="view-results"></div>
-		</div>`
-})
-
 // Define the add page
 Vue.component('add-page', {
 	data: function() {return {}},
@@ -108,16 +87,6 @@ $(() => {
 	$('#add-submit').on('click', add)
 })
 
-// User views a snippet
-function get(key) {
-	// Set link handlers
-	$('#delete').off()
-	$('#delete').click(() => { deleteSnippet(key) })
-
-	// Get data
-	ipcRenderer.send('get', key)
-}
-
 // User deletes a snippet
 function deleteSnippet(key) {
 	ipcRenderer.send('delete', key)
@@ -147,17 +116,6 @@ function add() {
 }
 
 
-
-// Server responds with snippet data
-ipcRenderer.on('get-result', (event, snippet) => {
-	let html = '<p class="problem">' + he.encode(snippet.problem) + '</p>'
-	html += '<p class="solution">' + he.encode(snippet.solution) + '</p>'
-	html += '<p class="keywords">' + he.encode(String(snippet.keywords)) + '</p>'
-
-	$('#view-results').html(html)
-
-	show('view')
-})
 
 // Server deleted a snippet
 ipcRenderer.on('delete-result', (event, result) => {
