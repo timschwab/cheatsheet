@@ -32,8 +32,12 @@ Vue.component('view-page', {
 			}
 		}
 	},
+	watch: {
+		snippetKey: get
+	},
 	template: `
 		<div id="view-page">
+			{{ snippetKey }}
 			<div id="view-links">
 				<p><a href="#" onclick="show('search')">Back to search results</a></p>
 				<p><a href="#" id="delete">Delete this snippet</a></p>
@@ -43,16 +47,12 @@ Vue.component('view-page', {
 				<p class="solution">{{ encoded.solution }}</p>
 				<p class="keywords">{{ encoded.keywords }}</p>
 			</div>
-		</div>`
+		</div>
+	`
 })
 
 // User views a snippet
 function get(key) {
-	// Set link handlers
-	$('#delete').off()
-	$('#delete').click(() => { deleteSnippet(key) })
-
-	// Get data
 	ipcRenderer.send('get', key)
 }
 
