@@ -26,7 +26,16 @@ Vue.component('search-page', {
 		}
 	},
 	watch: {
-		query: search
+		query: function(q) {
+			if (q) {
+				ipcRenderer.send('search', q)
+			} else {
+				vm.results = []
+			}
+		},
+		message: function(m) {
+			this.$emit('message', m)
+		}
 	},
 	template: `
 		<div id="search-page">
@@ -36,10 +45,9 @@ Vue.component('search-page', {
 			
 			<div>
 				Search query: <br />
-				<input type="text" v-model="query">
+				<input id="query" type="text" v-model="query">
 			</div>
 			
-			<span>{{ message }}</span>
 			<snippet-preview
 				v-for="snippet in results"
 				:snippet="snippet"
@@ -49,15 +57,6 @@ Vue.component('search-page', {
 		</div>
 	`
 })
-
-// User submits a search query
-function search(val, oldVal) {
-	if (val) {
-		ipcRenderer.send('search', val)
-	} else {
-		vm.results = []
-	}
-}
 
 // Server responds with search results
 ipcRenderer.on('search-result', (event, results) => {

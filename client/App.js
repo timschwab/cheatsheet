@@ -5,6 +5,7 @@ const he = require('he')
 
 const searchPage = require('./SearchPage')
 const viewPage = require('./ViewPage')
+const messageDisplay = require('./MessageDisplay')
 
 let vm
 
@@ -12,7 +13,8 @@ $(() => {
 	vm = new Vue({
 		el: '#app',
 		data: {
-			page: 'search'
+			page: 'search',
+			message: ''
 		},
 		computed: {
 			showSearchPage: function() {
@@ -34,21 +36,33 @@ $(() => {
 		},
 		template: `
 			<div>
-				<search-page
-					v-show="showSearchPage"
-					v-on:page="page = $event"
-				></search-page>
+				<message-display
+					:message="message"
+				></message-display>
 
-				<view-page
-					v-show="showViewPage"
-					v-on:page="page = $event"
-					:snippetKey="viewingKey"
-				></view-page>
+				<hr />
 
-				<add-page
-					v-show="showAddPage"
-					v-on:page="page = $event"
-				></add-page>
+				<div id="content">
+					<search-page
+						v-show="showSearchPage"
+						v-on:page="page = $event"
+						v-on:message="message = $event"
+					></search-page>
+
+					<view-page
+						v-show="showViewPage"
+						v-on:page="page = $event"
+						v-on:message="message = $event"
+
+						:snippetKey="viewingKey"
+					></view-page>
+
+					<add-page
+						v-show="showAddPage"
+						v-on:page="page = $event"
+						v-on:message="message = $event"
+					></add-page>
+				</div>
 			</div>
 		`
 	})

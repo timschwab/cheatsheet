@@ -32,7 +32,11 @@ Vue.component('view-page', {
 		}
 	},
 	watch: {
-		snippetKey: get
+		snippetKey: function(key) {
+			if (key) {
+				ipcRenderer.send('get', key)
+			}
+		}
 	},
 	template: `
 		<div id="view-page">
@@ -56,13 +60,6 @@ Vue.component('view-page', {
 	}
 })
 
-// User views a snippet
-function get(key) {
-	if (key) {
-		ipcRenderer.send('get', key)
-	}
-}
-
 // Server responds with snippet data
 ipcRenderer.on('get-result', (event, snippet) => {
 	vm.snippet = snippet
@@ -71,11 +68,11 @@ ipcRenderer.on('get-result', (event, snippet) => {
 // Server deleted a snippet
 ipcRenderer.on('delete-result', (event, result) => {
 	if (result.status == 'success') {
-		$('#search-message').html('Snippet deleted.')
-		$('#search-results').html('')
-		show('search')
+		vm.$emit('message', 'Snippet deleted')
+		vm.$emit('page', 'search')
 	} else {
-		$('#search-message').html('Snippet could not be deleted: ' + results.message)
+		vm.$emit('message', 'Snippet could not be deleted')
+		console.log(result)
 	}
 })
 
