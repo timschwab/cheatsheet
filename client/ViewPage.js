@@ -4,9 +4,8 @@ const he = require('he')
 
 let vm
 
-// Define the view page
 Vue.component('view-page', {
-	create: function() {
+	created: function() {
 		vm = this
 	},
 	props: ['snippetKey'],
@@ -37,7 +36,6 @@ Vue.component('view-page', {
 	},
 	template: `
 		<div id="view-page">
-			{{ snippetKey }}
 			<div id="view-links">
 				<p><a href="#" onclick="show('search')">Back to search results</a></p>
 				<p><a href="#" id="delete">Delete this snippet</a></p>
@@ -53,7 +51,9 @@ Vue.component('view-page', {
 
 // User views a snippet
 function get(key) {
-	ipcRenderer.send('get', key)
+	if (key) {
+		ipcRenderer.send('get', key)
+	}
 }
 
 // Server responds with snippet data

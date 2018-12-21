@@ -42,7 +42,7 @@ $(() => {
 				<view-page
 					v-show="showViewPage"
 					v-on:page="page = $event"
-					:snippet="viewingKey"
+					:snippetKey="viewingKey"
 				></view-page>
 
 				<add-page

@@ -46,7 +46,8 @@ Vue.component('search-page', {
 				:key="snippet.key"
 				v-on:page="$emit('page', $event)"
 			></snippet-preview>
-		</div>`
+		</div>
+	`
 })
 
 // User submits a search query
