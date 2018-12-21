@@ -87,11 +87,6 @@ $(() => {
 	$('#add-submit').on('click', add)
 })
 
-// User deletes a snippet
-function deleteSnippet(key) {
-	ipcRenderer.send('delete', key)
-}
-
 // User submits an add request
 function add() {
 	let problem = $('#problem').val()
@@ -114,19 +109,6 @@ function add() {
 		})
 	}
 }
-
-
-
-// Server deleted a snippet
-ipcRenderer.on('delete-result', (event, result) => {
-	if (result.status == 'success') {
-		$('#search-message').html('Snippet deleted.')
-		$('#search-results').html('')
-		show('search')
-	} else {
-		$('#search-message').html('Snippet could not be deleted: ' + results.message)
-	}
-})
 
 // Server adds a snippet
 ipcRenderer.on('add-result', (event, results) => {

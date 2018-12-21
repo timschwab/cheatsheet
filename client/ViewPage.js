@@ -37,8 +37,8 @@ Vue.component('view-page', {
 	template: `
 		<div id="view-page">
 			<div id="view-links">
-				<p><a href="#" onclick="show('search')">Back to search results</a></p>
-				<p><a href="#" id="delete">Delete this snippet</a></p>
+				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
+				<p><button v-on:click="deleteSnippet">Delete this snippet</button></p>
 			</div>
 			<div id="view-results">
 				<p class="problem">{{ encoded.problem }}</p>
@@ -46,7 +46,14 @@ Vue.component('view-page', {
 				<p class="keywords">{{ encoded.keywords }}</p>
 			</div>
 		</div>
-	`
+	`,
+	methods: {
+		deleteSnippet: function() {
+			if (this.snippetKey) {
+				ipcRenderer.send('delete', this.snippetKey)
+			}
+		}
+	}
 })
 
 // User views a snippet
@@ -59,6 +66,17 @@ function get(key) {
 // Server responds with snippet data
 ipcRenderer.on('get-result', (event, snippet) => {
 	vm.snippet = snippet
+})
+
+// Server deleted a snippet
+ipcRenderer.on('delete-result', (event, result) => {
+	if (result.status == 'success') {
+		$('#search-message').html('Snippet deleted.')
+		$('#search-results').html('')
+		show('search')
+	} else {
+		$('#search-message').html('Snippet could not be deleted: ' + results.message)
+	}
 })
 
 module.exports = {}
