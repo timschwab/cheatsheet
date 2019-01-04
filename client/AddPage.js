@@ -16,11 +16,17 @@ Vue.component('add-page', {
 	},
 	computed: {
 		keywords: function() {
-			if (this.keywordInput.trim()) {
-				return this.keywordInput.trim().split(/, |,| /g)
-			} else {
-				return []
-			}
+			let result
+
+			// split into keywords
+			result = this.keywordInput.trim().split(/[, ]+/g)
+
+			// get rid of empty keywords
+			result = result.filter(keyword => {
+				return keyword
+			})
+
+			return result
 		}
 	},
 	template: `
