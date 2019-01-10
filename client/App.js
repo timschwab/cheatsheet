@@ -21,10 +21,17 @@ $(() => {
 				return (this.page.slice(0,5) == 'view:')
 			},
 			showAddPage: function() {
-				return (this.page == 'add')
+				return (this.page == 'add' || this.page.slice(0,5) == 'edit:')
 			},
 			viewingKey: function() {
 				if (this.page.slice(0,5) == 'view:') {
+					return this.page.slice(5)
+				} else {
+					return null
+				}
+			},
+			editingKey: function() {
+				if (this.page.slice(0,5) == 'edit:') {
 					return this.page.slice(5)
 				} else {
 					return null
@@ -58,6 +65,8 @@ $(() => {
 						v-show="showAddPage"
 						v-on:page="page = $event"
 						v-on:message="message = $event"
+
+						:snippetKey="editingKey"
 					></add-page>
 				</div>
 			</div>

@@ -15,18 +15,30 @@ Vue.component('add-page', {
 		}
 	},
 	computed: {
-		keywords: function() {
-			let result
+		keywords: {
+			get: function() {
+				let result
 
-			// split into keywords
-			result = this.keywordInput.trim().split(/[, ]+/g)
+				// split into keywords
+				result = this.keywordInput.trim().split(/[, ]+/g)
 
-			// get rid of empty keywords
-			result = result.filter(keyword => {
-				return keyword
-			})
+				// get rid of empty keywords
+				result = result.filter(keyword => {
+					return keyword
+				})
 
-			return result
+				return result
+			},
+			set: function(words) {
+				this.keywordInput = words.join(',')
+			}
+		}
+	},
+	watch: {
+		snippetKey: function(key) {
+			if (key) {
+				ipcRenderer.send('get', key)
+			}
 		}
 	},
 	template: `
@@ -79,6 +91,15 @@ ipcRenderer.on('add-result', (event, result) => {
 		console.log(result)
 		vm.$emit('message', 'Could not add snippet')
 	}
+})
+
+// Open up a edit page
+ipcRenderer.on('get-result', (event, snippet) => {
+	console.log(vm)
+	console.log(snippet)
+	vm.problem = snippet.problem
+	vm.solution = snippet.solution
+	vm.keywords = snippet.keywords
 })
 
 module.exports = {}
