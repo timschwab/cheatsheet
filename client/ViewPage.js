@@ -1,6 +1,5 @@
 const {ipcRenderer} = require('electron')
 const Vue = require('vue/dist/vue.js')
-const he = require('he')
 
 let vm
 
@@ -15,19 +14,6 @@ Vue.component('view-page', {
 				problem: '',
 				solution: '',
 				keywords: []
-			}
-		}
-	},
-	computed: {
-		encoded: function() {
-			let problem = he.encode(this.snippet.problem)
-			let solution = he.encode(this.snippet.solution)
-			let keywords = he.encode(String(this.snippet.keywords))
-
-			return {
-				problem: problem,
-				solution: solution,
-				keywords: keywords
 			}
 		}
 	},
@@ -46,9 +32,9 @@ Vue.component('view-page', {
 				<p><button v-on:click="deleteSnippet">Delete this snippet</button></p>
 			</div>
 			<div id="view-results">
-				<p class="problem">{{ encoded.problem }}</p>
-				<p class="solution">{{ encoded.solution }}</p>
-				<p class="keywords">{{ encoded.keywords }}</p>
+				<p class="problem">{{ snippet.problem }}</p>
+				<p class="solution">{{ snippet.solution }}</p>
+				<p class="keywords">{{ snippet.keywords }}</p>
 			</div>
 		</div>
 	`,
