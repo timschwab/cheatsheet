@@ -6,6 +6,7 @@ bluebird.promisifyAll(redis)
 const searchHandler = require('./server/search.js')
 const getHandler = require('./server/get.js')
 const addHandler = require('./server/add.js')
+const editHandler = require('./server/edit.js')
 const deleteHandler = require('./server/delete.js')
 
 let win
@@ -48,6 +49,8 @@ function main() {
 ipcMain.on('search', (event, query) => { timeLog(event, query, searchHandler) })
 ipcMain.on('get', (event, id) => { timeLog(event, id, getHandler) })
 ipcMain.on('add', (event, data) => { timeLog(event, data, addHandler) })
+ipcMain.on('edit:get', (event, data) => { timeLog(event, data, editHandler.get) })
+ipcMain.on('edit:change', (event, data) => { timeLog(event, data, editHandler.change) })
 ipcMain.on('delete', (event, id) => { timeLog(event, id, deleteHandler) })
 
 // Wrap the handlers in a timer

@@ -37,7 +37,7 @@ Vue.component('add-page', {
 	watch: {
 		snippetKey: function(key) {
 			if (key) {
-				ipcRenderer.send('get', key)
+				ipcRenderer.send('edit:get', key)
 			}
 		}
 	},
@@ -94,7 +94,7 @@ ipcRenderer.on('add-result', (event, result) => {
 })
 
 // Open up a edit page
-ipcRenderer.on('get-result', (event, snippet) => {
+ipcRenderer.on('edit:get-result', (event, snippet) => {
 	console.log(vm)
 	console.log(snippet)
 	vm.problem = snippet.problem
