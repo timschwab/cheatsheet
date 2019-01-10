@@ -1,4 +1,5 @@
 const bluebird = require('bluebird')
+const tokenize = require('./tokenize')
 
 // Receive query, process it, and send back the results
 function search(event, client, query) {
@@ -8,7 +9,7 @@ function search(event, client, query) {
 	console.log("search: " + query)
 
 	// Get scores of each term and store them in redis
-	let terms = query.split(' ')
+	let terms = tokenize(query)
 	let scorePromises = terms.map(term => {
 		return client.zunionstoreAsync('~~scores-' + term, '3', term + '-keywords', term + '-problems', term + '-solutions', 'WEIGHTS', '10', '3', '1')
 	})

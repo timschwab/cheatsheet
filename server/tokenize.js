@@ -6,7 +6,7 @@ function tokenize(str) {
 	// Lowercase everything
 	str = str.toLowerCase()
 
-	// Turn unneded characters into whitespace
+	// Turn unneeded characters into whitespace
 	str = str.replace(/[^\s\da-z]|(\s)/g, ' ')
 
 	// Get rid of unneeded words
