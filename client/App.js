@@ -21,17 +21,20 @@ $(() => {
 				return (this.page.slice(0,5) == 'view:')
 			},
 			showAddPage: function() {
-				return (this.page == 'add' || this.page.slice(0,5) == 'edit:')
+				return (this.page == 'add')
+			},
+			showEditPage: function() {
+				return (this.page.slice(0,5) == 'edit:')
 			},
 			viewingKey: function() {
-				if (this.page.slice(0,5) == 'view:') {
+				if (this.showViewPage) {
 					return this.page.slice(5)
 				} else {
 					return null
 				}
 			},
 			editingKey: function() {
-				if (this.page.slice(0,5) == 'edit:') {
+				if (this.showEditPage) {
 					return this.page.slice(5)
 				} else {
 					return null
