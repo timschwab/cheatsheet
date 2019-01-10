@@ -1,6 +1,5 @@
 const {ipcRenderer} = require('electron')
 const Vue = require('vue/dist/vue.js')
-const he = require('he')
 
 let vm
 
@@ -69,10 +68,7 @@ Vue.component('snippet-preview', {
 	props: ['snippet'],
 	computed: {
 		encodedProblem: function() {
-			return he.encode(this.snippet.problem)
-		},
-		getCommand: function() {
-			return 'get(' + this.snippet.key + ')'
+			return this.snippet.problem
 		}
 	},
 	template: `
