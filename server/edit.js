@@ -1,9 +1,11 @@
-const bluebird = require('bluebird')
+const getHandler = require('./get')
+const addHandler = require('./add')
+const deleteHandler = require('./delete')
 
 function get(event, client, id) {
 	console.log('edit:get: ' + id)
 
-	client.getAsync(id)
+	getHandler.redisGet(client, id)
 	.then(snippetText => {
 		let snippet = JSON.parse(snippetText)
 		event.sender.send('edit:get-result', snippet)
@@ -13,9 +15,20 @@ function get(event, client, id) {
 function change(event, client, data) {
 	console.log('edit:change:')
 	console.log(data)
-	
-	event.sender.send('edit:change-result', {
-		status: 'success'
+
+	// Delete snippet
+	deleteHandler.redisDelete(client, data.key)
+
+	// Re-add snippet
+	.then(result => {
+		return addHandler.redisAdd(client, data.key, data)
+	})
+
+	// Send response
+	.then(result => {
+		event.sender.send('edit:change-result', {
+			status: 'success'
+		})
 	})
 }
 

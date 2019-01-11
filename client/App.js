@@ -1,5 +1,5 @@
 const $ = require('jquery')
-const Vue = require('vue/dist/vue.js')
+const Vue = require('vue/dist/vue')
 
 const messageDisplay = require('./MessageDisplay')
 const searchPage = require('./SearchPage')

@@ -20,7 +20,7 @@ Vue.component('edit-page', {
 	template: `
 		<div id="edit-page">
 			<div id="edit-links">
-				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
+				<p><a href="#" v-on:click="back">Back to view page</a></p>
 			</div>
 
 			<add-form
@@ -31,6 +31,9 @@ Vue.component('edit-page', {
 		</div>
 	`,
 	methods: {
+		back: function(event) {
+			this.$emit('page', 'view:' + vm.snippetKey)
+		},
 		submit: function(data) {
             data.key = this.snippetKey
 			ipcRenderer.send('edit:change', data)

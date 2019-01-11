@@ -1,11 +1,20 @@
 const bluebird = require('bluebird')
 const tokenize = require('./tokenize')
 
-function deleteSnippet(event, client, id) {
+function snippetDelete(event, client, id) {
 	console.log('delete: ' + id)
 
+	redisDelete(client, id)
+	.then(result => {
+		event.sender.send('delete-result', {
+			status: 'success'
+		})
+	})
+}
+
+function redisDelete(client, id) {
 	// Get snippet
-	client.getAsync(id)
+	let promise = client.getAsync(id)
 	.then(snippetText => {
 		let snippet = JSON.parse(snippetText)
 
@@ -17,24 +26,21 @@ function deleteSnippet(event, client, id) {
 		let problemTokens = tokenize(problem)
 		let solutionTokens = tokenize(solution)
 		
-		problemPromises = problemTokens.map(token => {
+		let problemPromises = problemTokens.map(token => {
 			return client.sremAsync(token + '-problems', id)
 		})
-		solutionPromises = solutionTokens.map(token => {
+		let solutionPromises = solutionTokens.map(token => {
 			return client.sremAsync(token + '-solutions', id)
 		})
-		keywordPromises = keywords.map(keyword => {
+		let keywordPromises = keywords.map(keyword => {
 			return client.sremAsync(keyword + '-keywords', id)
 		})
-		setPromise = client.delAsync(id, JSON.stringify(snippet))
+		let setPromise = client.delAsync(id, JSON.stringify(snippet))
 
 		return bluebird.all([problemPromises, solutionPromises, keywordPromises, setPromise])
 	})
-	.then(result => {
-		event.sender.send('delete-result', {
-			status: 'success'
-		})
-	})
+
+	return promise
 }
 
-module.exports = deleteSnippet
+module.exports = {delete: snippetDelete, redisDelete: redisDelete}

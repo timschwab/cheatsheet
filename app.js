@@ -3,11 +3,11 @@ const redis = require('redis')
 const bluebird = require('bluebird')
 bluebird.promisifyAll(redis)
 
-const searchHandler = require('./server/search.js')
-const getHandler = require('./server/get.js')
-const addHandler = require('./server/add.js')
-const editHandler = require('./server/edit.js')
-const deleteHandler = require('./server/delete.js')
+const searchHandler = require('./server/search')
+const getHandler = require('./server/get')
+const addHandler = require('./server/add')
+const editHandler = require('./server/edit')
+const deleteHandler = require('./server/delete')
 
 let win
 let client
@@ -46,12 +46,12 @@ function main() {
 }
 
 // Routes
-ipcMain.on('search', (event, query) => { timeLog(event, query, searchHandler) })
-ipcMain.on('get', (event, id) => { timeLog(event, id, getHandler) })
-ipcMain.on('add', (event, data) => { timeLog(event, data, addHandler) })
+ipcMain.on('search', (event, query) => { timeLog(event, query, searchHandler.search) })
+ipcMain.on('get', (event, id) => { timeLog(event, id, getHandler.get) })
+ipcMain.on('add', (event, data) => { timeLog(event, data, addHandler.add) })
 ipcMain.on('edit:get', (event, data) => { timeLog(event, data, editHandler.get) })
 ipcMain.on('edit:change', (event, data) => { timeLog(event, data, editHandler.change) })
-ipcMain.on('delete', (event, id) => { timeLog(event, id, deleteHandler) })
+ipcMain.on('delete', (event, id) => { timeLog(event, id, deleteHandler.delete) })
 
 // Wrap the handlers in a timer
 function timeLog(event, request, fn) {
