@@ -1,4 +1,3 @@
-const $ = require('jquery')
 const Vue = require('vue/dist/vue')
 
 const messageDisplay = require('./MessageDisplay')
@@ -7,7 +6,7 @@ const viewPage = require('./ViewPage')
 const addPage = require('./AddPage')
 const editPage = require('./EditPage')
 
-$(() => {
+document.addEventListener('DOMContentLoaded', () => {
 	new Vue({
 		el: '#app',
 		data: {
