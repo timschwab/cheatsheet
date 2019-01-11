@@ -27,18 +27,26 @@ Vue.component('add-form', {
 			set: function(words) {
 				this.keywordString = words.join(',')
 			}
+		},
+		markdownPreview: function() {
+			if (this.solution) {
+				return this.solution
+			} else {
+				return "Preview of markdown solution rendering"
+			}
 		}
 	},
 	template: `
 		<div class="add-form">
-			<span>Problem:</span><input type="text" v-model="problem">
+			<span>Problem:</span> <input type="text" v-model="problem">
 			<br />
-			<span>Solution:</span><textarea v-model="solution"></textarea>
+			<span>Solution:</span> <textarea rows=10 cols=40 v-model="solution"></textarea>
 			<br />
-			<span>Keywords:</span><input type="text" v-model="keywordString">
-			{{ keywords }}
+			<span>Keywords:</span> <input type="text" v-model="keywordString"> {{ keywords }}
 			<br />
 			<input type="button" value="Submit" v-on:click="submit">
+			<hr />
+			<div class="md">{{ markdownPreview }}</div>
 		</div>
 	`,
 	methods: {
