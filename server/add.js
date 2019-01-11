@@ -2,35 +2,16 @@ const bluebird = require('bluebird')
 const tokenize = require('./tokenize')
 
 // Receive data, process, add to Redis, and send back success message to client
-function add(event, client, data) {
+function snippetAdd(event, client, data) {
 	console.log('add:')
 	console.log(data)
-
-	// Process data
-	let problem = data.problem
-	let solution = data.solution
-	let keywords = data.keywords.map(keyword => { return keyword.toLowerCase() })
-
-	let problemTokens = tokenize(problem)
-	let solutionTokens = tokenize(solution)
 
 	// Get next snippet index
 	client.incrAsync('~~counter')
 
 	// Set data
 	.then(counter => {
-		problemPromises = problemTokens.map(token => {
-			return client.saddAsync(token + '-problems', counter)
-		})
-		solutionPromises = solutionTokens.map(token => {
-			return client.saddAsync(token + '-solutions', counter)
-		})
-		keywordPromises = keywords.map(keyword => {
-			return client.saddAsync(keyword + '-keywords', counter)
-		})
-		setPromise = client.setAsync(counter, JSON.stringify(data))
-
-		return bluebird.all([problemPromises, solutionPromises, keywordPromises, setPromise])
+		redisAdd(client, counter, data)
 	})
 
 	// Send back message to client
@@ -41,4 +22,28 @@ function add(event, client, data) {
 	})
 }
 
-module.exports = add
+// Assumes id is unused
+function redisAdd(client, id, data) {
+	// Process data
+	let problem = data.problem
+	let solution = data.solution
+	let keywords = data.keywords.map(keyword => { return keyword.toLowerCase() })
+
+	let problemTokens = tokenize(problem)
+	let solutionTokens = tokenize(solution)
+
+	let problemPromises = problemTokens.map(token => {
+		return client.saddAsync(token + '-problems', id)
+	})
+	let solutionPromises = solutionTokens.map(token => {
+		return client.saddAsync(token + '-solutions', id)
+	})
+	let keywordPromises = keywords.map(keyword => {
+		return client.saddAsync(keyword + '-keywords', id)
+	})
+	let setPromise = client.setAsync(id, JSON.stringify(data))
+
+	return bluebird.all([problemPromises, solutionPromises, keywordPromises, setPromise])
+}
+
+module.exports = {add: snippetAdd, redisAdd: redisAdd}

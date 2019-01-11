@@ -28,6 +28,7 @@ Vue.component('view-page', {
 		<div id="view-page">
 			<div id="view-links">
 				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
+				<p><button v-on:click="editSnippet">Edit this snippet</button></p>
 				<p><button v-on:click="deleteSnippet">Delete this snippet</button></p>
 			</div>
 			<div id="view-results">
@@ -42,6 +43,9 @@ Vue.component('view-page', {
 			if (this.snippetKey) {
 				ipcRenderer.send('delete', this.snippetKey)
 			}
+		},
+		editSnippet: function() {
+			this.$emit('page', 'edit:' + this.snippetKey)
 		}
 	}
 })

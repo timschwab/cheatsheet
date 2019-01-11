@@ -2,7 +2,7 @@ const bluebird = require('bluebird')
 const tokenize = require('./tokenize')
 
 // Receive query, process it, and send back the results
-function search(event, client, query) {
+function snippetSearch(event, client, query) {
 	let snippets
 
 	query = query.toLowerCase()
@@ -64,6 +64,6 @@ function search(event, client, query) {
 	})
 }
 
-module.exports = search
+module.exports = {search: snippetSearch}
 
 

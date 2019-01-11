@@ -1,13 +1,17 @@
-const bluebird = require('bluebird')
-
-function get(event, client, id) {
+function snippetGet(event, client, id) {
 	console.log('get: ' + id)
 
-	client.getAsync(id)
+	redisGet(client, id)
 	.then(snippetText => {
 		let snippet = JSON.parse(snippetText)
 		event.sender.send('get-result', snippet)
 	})
 }
 
-module.exports = get
+function redisGet(client, id) {
+	let promise = client.getAsync(id)
+
+	return promise
+}
+
+module.exports = {get: snippetGet, redisGet: redisGet}
