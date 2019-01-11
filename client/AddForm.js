@@ -30,7 +30,7 @@ Vue.component('add-form', {
 		}
 	},
 	template: `
-		<div id="add-form">
+		<div class="add-form">
 			<span>Problem:</span><input type="text" v-model="problem">
 			<br />
 			<span>Solution:</span><textarea v-model="solution"></textarea>
@@ -61,7 +61,13 @@ Vue.component('add-form', {
             this.problem = ''
             this.solution = ''
             this.keywordString = ''
-        }
+		},
+		set: function(snippet) {
+			this.problem = snippet.problem || this.problem
+			this.solution = snippet.solution || this.solution
+			this.keywordString = snippet.keywordString || this.keywordString
+			this.keywords = snippet.keywords || this.keywords
+		}
 	}
 })
 

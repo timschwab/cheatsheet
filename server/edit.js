@@ -11,8 +11,12 @@ function get(event, client, id) {
 }
 
 function change(event, client, data) {
-    console.log('edit:change:')
-    console.log(data)
+	console.log('edit:change:')
+	console.log(data)
+	
+	event.sender.send('edit:change-result', {
+		status: 'success'
+	})
 }
 
 module.exports = {get: get, change: change}

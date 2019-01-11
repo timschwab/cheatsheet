@@ -1,10 +1,11 @@
 const $ = require('jquery')
 const Vue = require('vue/dist/vue.js')
 
+const messageDisplay = require('./MessageDisplay')
 const searchPage = require('./SearchPage')
 const viewPage = require('./ViewPage')
 const addPage = require('./AddPage')
-const messageDisplay = require('./MessageDisplay')
+const editPage = require('./EditPage')
 
 $(() => {
 	new Vue({
@@ -68,9 +69,15 @@ $(() => {
 						v-show="showAddPage"
 						v-on:page="page = $event"
 						v-on:message="message = $event"
+					></add-page>
+
+					<edit-page
+						v-show="showEditPage"
+						v-on:page="page = $event"
+						v-on:message="message = $event"
 
 						:snippetKey="editingKey"
-					></add-page>
+					></edit-page>
 				</div>
 			</div>
 		`
