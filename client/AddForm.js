@@ -1,4 +1,5 @@
 const Vue = require('vue/dist/vue.js')
+const marked = require('marked')
 
 Vue.component('add-form', {
     props: ['problemProp', 'solutionProp', 'keywordStringProp'],
@@ -30,9 +31,9 @@ Vue.component('add-form', {
 		},
 		markdownPreview: function() {
 			if (this.solution) {
-				return this.solution
+				return marked(this.solution)
 			} else {
-				return "Preview of markdown solution rendering"
+				return "<p>Preview of markdown rendering of the solution</p>"
 			}
 		}
 	},
@@ -46,7 +47,7 @@ Vue.component('add-form', {
 			<br />
 			<input type="button" value="Submit" v-on:click="submit">
 			<hr />
-			<div class="md">{{ markdownPreview }}</div>
+			<div class="md" v-html="markdownPreview"></div>
 		</div>
 	`,
 	methods: {

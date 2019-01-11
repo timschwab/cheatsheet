@@ -1,5 +1,6 @@
 const {ipcRenderer} = require('electron')
 const Vue = require('vue/dist/vue.js')
+const marked = require('marked')
 
 let vm
 
@@ -15,6 +16,11 @@ Vue.component('view-page', {
 				solution: '',
 				keywords: []
 			}
+		}
+	},
+	computed: {
+		markedSolution: function() {
+			return marked(this.snippet.solution)
 		}
 	},
 	watch: {
@@ -33,7 +39,7 @@ Vue.component('view-page', {
 			</div>
 			<div id="view-results">
 				<p class="problem">{{ snippet.problem }}</p>
-				<p class="solution">{{ snippet.solution }}</p>
+				<div class="solution" v-html="markedSolution"></div>
 				<p class="keywords">{{ snippet.keywords }}</p>
 			</div>
 		</div>
