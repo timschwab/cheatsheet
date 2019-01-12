@@ -13,27 +13,14 @@ Vue.component('search-page', {
 			results: []
 		}
 	},
-	computed: {
-		message: function() {
-			if (this.query == '') {
-				return ''
-			} else if (this.results.length == 0) {
-				return 'Search returned no results :\'('
-			} else {
-				return 'Showing ' + this.results.length + ' results.'
-			}
-		}
-	},
 	watch: {
 		query: function(q) {
 			if (q) {
 				ipcRenderer.send('search', q)
 			} else {
 				vm.results = []
+				this.$emit('message', 'Enter a search query')
 			}
-		},
-		message: function(m) {
-			this.$emit('message', m)
 		}
 	},
 	template: `
@@ -60,21 +47,22 @@ Vue.component('search-page', {
 // Server responds with search results
 ipcRenderer.on('search-result', (event, results) => {
 	vm.results = results
+
+	if (results.length == 0) {
+		vm.$emit('message', 'Search returned no results :\'(')
+	} else {
+		vm.$emit('message', 'Showing ' + results.length + ' results.')
+	}
 })
 
 
 
 Vue.component('snippet-preview', {
 	props: ['snippet'],
-	computed: {
-		encodedProblem: function() {
-			return this.snippet.problem
-		}
-	},
 	template: `
 		<div class="snippet-preview">
 			<hr />
-			<p><a href="#" v-on:click="viewFull">{{ encodedProblem }}</a></p>
+			<p><a href="#" v-on:click="viewFull">{{ snippet.problem }}</a></p>
 			<p>{{ snippet.score }}</p>
 		</div>
 	`,

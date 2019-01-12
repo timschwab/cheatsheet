@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		el: '#app',
 		data: {
 			page: 'search',
-			message: ''
+			message: 'Enter a search query'
 		},
 		computed: {
 			showSearchPage: function() {
