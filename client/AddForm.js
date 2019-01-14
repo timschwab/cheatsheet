@@ -2,14 +2,14 @@ const Vue = require('vue/dist/vue.js')
 const marked = require('marked')
 
 Vue.component('add-form', {
-    props: ['problemProp', 'solutionProp', 'keywordStringProp'],
-    data: function() {
-        return {
-            problem: this.problemProp || '',
-            solution: this.solutionProp || '',
-            keywordString: this.keywordStringProp || ''
-        }
-    },
+	props: ['problemProp', 'solutionProp', 'keywordStringProp'],
+	data: function() {
+		return {
+			problem: this.problemProp || '',
+			solution: this.solutionProp || '',
+			keywordString: this.keywordStringProp || ''
+		}
+	},
 	computed: {
 		keywords: {
 			get: function() {
@@ -59,17 +59,17 @@ Vue.component('add-form', {
 			} else if (this.keywords.length == 0) {
 				this.$emit('message', 'Keywords are your friend')
 			} else {
-                this.$emit('submit', {
+				this.$emit('submit', {
 					problem: this.problem,
 					solution: this.solution,
 					keywords: this.keywords
 				})
 			}
-        },
-        clear: function() {
-            this.problem = ''
-            this.solution = ''
-            this.keywordString = ''
+		},
+		clear: function() {
+			this.problem = ''
+			this.solution = ''
+			this.keywordString = ''
 		},
 		set: function(snippet) {
 			this.problem = snippet.problem || this.problem

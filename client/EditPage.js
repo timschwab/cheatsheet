@@ -8,9 +8,9 @@ let vm
 Vue.component('edit-page', {
 	created: function (){
 		vm = this
-    },
-    props: ['snippetKey'],
-    watch: {
+	},
+	props: ['snippetKey'],
+	watch: {
 		snippetKey: function(key) {
 			if (key) {
 				ipcRenderer.send('edit:get', key)
@@ -35,7 +35,7 @@ Vue.component('edit-page', {
 			this.$emit('page', 'view:' + vm.snippetKey)
 		},
 		submit: function(data) {
-            data.key = this.snippetKey
+			data.key = this.snippetKey
 			ipcRenderer.send('edit:change', data)
 		}
 	}
@@ -43,7 +43,7 @@ Vue.component('edit-page', {
 
 // Get the snippet to edit
 ipcRenderer.on('edit:get-result', (event, snippet) => {
-    vm.$refs.form.set(snippet)
+	vm.$refs.form.set(snippet)
 })
 
 // Server adds a snippet
