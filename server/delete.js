@@ -1,5 +1,6 @@
 const bluebird = require('bluebird')
 const tokenize = require('./tokenize')
+const scoreTerm = require('./score')
 
 function snippetDelete(event, client, id) {
 	console.log('delete: ' + id)
@@ -14,19 +15,24 @@ function snippetDelete(event, client, id) {
 }
 
 function redisDelete(client, id) {
+	let problemTokens
+	let solutionTokens
+	let keywords
+
 	// Get snippet
 	let promise = client.getAsync(id)
 	.then(snippetText => {
 		let snippet = JSON.parse(snippetText)
 
-		// Process data
+		// Prep data
 		let problem = snippet.problem
 		let solution = snippet.solution
-		let keywords = snippet.keywords.map( keyword => { return keyword.toLowerCase() })
+		keywords = snippet.keywords.map( keyword => { return keyword.toLowerCase() })
 
-		let problemTokens = tokenize(problem)
-		let solutionTokens = tokenize(solution)
+		problemTokens = tokenize(problem)
+		solutionTokens = tokenize(solution)
 		
+		// Remove the snippet from the token sets
 		let problemPromises = problemTokens.map(token => {
 			return client.sremAsync(token + '-problems', id)
 		})
@@ -36,9 +42,21 @@ function redisDelete(client, id) {
 		let keywordPromises = keywords.map(keyword => {
 			return client.sremAsync(keyword + '-keywords', id)
 		})
-		let setPromise = client.delAsync(id, JSON.stringify(snippet))
 
-		return bluebird.all([problemPromises, solutionPromises, keywordPromises, setPromise])
+		return bluebird.all([problemPromises, solutionPromises, keywordPromises])
+	})
+
+	// Delete the snippet
+	.then(responses => {
+		return client.delAsync(id)
+	})
+
+	// Calculate the new scores of the terms
+	.then(results => {
+		let terms = problemTokens.concat(solutionTokens).concat(keywords)
+		return terms.map(term => {
+			return scoreTerm(client, term)
+		})
 	})
 
 	return promise
