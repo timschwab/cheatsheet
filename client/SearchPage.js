@@ -62,6 +62,15 @@ ipcRenderer.on('search-result', (event, results) => {
 	vm.results = results
 })
 
+// If a snippet is deleted, make sure it is removed from the search results
+ipcRenderer.on('delete-result', (event, result) => {
+	if (result.status == 'success') {
+		vm.results = vm.results.filter(snippet => {
+			return snippet.key != result.id
+		})
+	}
+})
+
 
 
 Vue.component('snippet-preview', {

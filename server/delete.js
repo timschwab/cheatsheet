@@ -7,7 +7,8 @@ function snippetDelete(event, client, id) {
 	redisDelete(client, id)
 	.then(result => {
 		event.sender.send('delete-result', {
-			status: 'success'
+			status: 'success',
+			id: id
 		})
 	})
 }
