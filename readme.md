@@ -20,6 +20,7 @@ Check out the [docs](https://github.com/timschwab/cheatsheet/wiki) if you want m
 
 ```
 git clone git@github.com:timschwab/cheatsheet.git
+cd cheatsheet
 npm install
 npm start
 ```
