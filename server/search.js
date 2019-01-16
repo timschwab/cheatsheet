@@ -8,23 +8,15 @@ function snippetSearch(event, client, query) {
 	query = query.toLowerCase()
 	console.log("search: " + query)
 
-	// Get scores of each term and store them in redis
+	// Tokenize the query
 	let terms = tokenize(query)
-	let scorePromises = terms.map(term => {
-		return client.zunionstoreAsync('~~scores-' + term, '3', term + '-keywords', term + '-problems', term + '-solutions', 'WEIGHTS', '10', '3', '1')
+
+	// Load the pre-calculated term scores into ~~results
+	let sets = terms.map(term => {
+		return term + '-scores'
 	})
 
-	// When all scores have been calculated
-	bluebird.all(scorePromises)
-
-	// Load them all into ~~results
-	.then(responses => {
-		let sets = terms.map(term => {
-			return '~~scores-' + term
-		})
-
-		return client.zunionstoreAsync(['~~results', sets.length].concat(sets))
-	})
+	client.zunionstoreAsync(['~~results', sets.length].concat(sets))
 
 	// Then get them in order, with the score
 	.then(result => {
