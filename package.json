@@ -4,8 +4,8 @@
   "description": "A knowledge base for short snippets",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "call \"redis/install.bat\""
   },
   "repository": {
     "type": "git",
