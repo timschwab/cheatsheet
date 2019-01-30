@@ -38,14 +38,30 @@ Vue.component('add-form', {
 		}
 	},
 	template: `
-		<div class="add-form">
-			<span>Problem:</span> <input type="text" v-model="problem">
-			<br />
-			<span>Solution:</span> <textarea rows=10 cols=40 v-model="solution"></textarea>
-			<br />
-			<span>Keywords:</span> <input type="text" v-model="keywordString"> {{ keywords }}
-			<br />
-			<input type="button" value="Submit" v-on:click="submit">
+		<div class="add-form form-horizontal">
+			<div class="form-group">
+				<label for="problem" class="control-label col-sm-2">Problem:</label>
+				<div class="col-sm-10">
+					<input class="form-control" id="problem" type="text" v-model="problem">
+				</div>	
+			</div>
+			<div class="form-group">
+				<label for="solution" class="control-label col-sm-2">Solution:</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" id="solution" rows=10 cols=40 v-model="solution"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keywords" class="control-label col-sm-2">Keywords:</label>
+				<div class="col-sm-10">
+					<input class="form-control" id="keywords" type="text" v-model="keywordString"> {{ keywords }}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input class="btn" type="button" value="Submit" v-on:click="submit">
+				</div>
+			</div>
 			<hr />
 			<div class="md" v-html="markdownPreview"></div>
 		</div>
