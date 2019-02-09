@@ -1,11 +1,11 @@
 {
   "name": "cheatsheet",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A knowledge base for short snippets",
   "main": "app.js",
   "scripts": {
     "start": "electron .",
-    "postinstall": "call \"redis/install.bat\""
+    "postinstall": "call \"dist/redis/install.bat\""
   },
   "repository": {
     "type": "git",
