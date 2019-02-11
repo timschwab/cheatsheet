@@ -16,7 +16,7 @@ Check out the [docs](https://github.com/timschwab/cheatsheet/wiki) if you want m
 
 # Installation
 
-**Prerequisites:** Assumes you have redis installed and running, git installed, and nodejs/npm installed.
+**Prerequisites:** Assumes you have git and nodejs/npm installed. If these steps do not work for you, contact Tim Schwab.
 
 ```
 git clone git@github.com:timschwab/cheatsheet.git
