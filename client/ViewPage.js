@@ -35,7 +35,7 @@ Vue.component('view-page', {
 			<div id="view-links">
 				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
 				<p><button class="btn" v-on:click="editSnippet">Edit this snippet</button></p>
-				<p><button class="btn" v-on:click="deleteSnippet">Delete this snippet</button></p>
+				<p><button class="btn btn-danger" v-on:click="deleteSnippet">Delete this snippet</button></p>
 			</div>
 			<div id="view-results">
 				<p class="problem">{{ snippet.problem }}</p>
