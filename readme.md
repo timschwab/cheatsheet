@@ -12,11 +12,11 @@ So, most of us developments have a document. A document named "notes.txt" or "st
 
 Hence, CheatSheet. It is a central source of truth for tiny, minuscule pieces of information. When we already have a framework of knowledge but just can't remember something, we need one place we can search. The search needs to understand what you want, and it needs to be fast. This is what CheatSheet delivers.
 
-Check out the [docs](https://github.com/timschwab/cheatsheet/wiki) if you want more detail.
+Check out the [wiki](https://github.com/timschwab/cheatsheet/wiki) for more detail.
 
 # Installation
 
-**Prerequisites:** Assumes you have redis installed and running, git installed, and nodejs/npm installed.
+**Prerequisites:** Assumes you have git and nodejs/npm installed. If these steps do not work for you, please submit an issue describing what went wrong.
 
 ```
 git clone git@github.com:timschwab/cheatsheet.git
