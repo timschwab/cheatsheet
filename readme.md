@@ -1,4 +1,4 @@
-\_\_# CheatSheet
+# CheatSheet
 
 A knowledge base for short snippets
 

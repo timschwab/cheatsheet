@@ -1,6 +1,6 @@
 {
 	"name": "cheatsheet",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "A knowledge base for short snippets",
 	"main": "app.js",
 	"scripts": {
@@ -38,7 +38,7 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,json,css,md,html}": [
+		"*.{js,json,css,html}": [
 			"prettier --write",
 			"git add"
 		]
