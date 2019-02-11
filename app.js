@@ -22,10 +22,7 @@ function main() {
 	const menu = Menu.buildFromTemplate([
 		{
 			label: 'File',
-			submenu: [
-				{ label: 'Install sheet' },
-				{ label: 'Remove sheet' }
-			]
+			submenu: [{label: 'Install sheet'}, {label: 'Remove sheet'}]
 		},
 		{
 			label: 'View',
@@ -46,12 +43,24 @@ function main() {
 }
 
 // Routes
-ipcMain.on('search', (event, query) => { timeLog(event, query, searchHandler.search) })
-ipcMain.on('get', (event, id) => { timeLog(event, id, getHandler.get) })
-ipcMain.on('add', (event, data) => { timeLog(event, data, addHandler.add) })
-ipcMain.on('edit:get', (event, data) => { timeLog(event, data, editHandler.get) })
-ipcMain.on('edit:change', (event, data) => { timeLog(event, data, editHandler.change) })
-ipcMain.on('delete', (event, id) => { timeLog(event, id, deleteHandler.delete) })
+ipcMain.on('search', (event, query) => {
+	timeLog(event, query, searchHandler.search)
+})
+ipcMain.on('get', (event, id) => {
+	timeLog(event, id, getHandler.get)
+})
+ipcMain.on('add', (event, data) => {
+	timeLog(event, data, addHandler.add)
+})
+ipcMain.on('edit:get', (event, data) => {
+	timeLog(event, data, editHandler.get)
+})
+ipcMain.on('edit:change', (event, data) => {
+	timeLog(event, data, editHandler.change)
+})
+ipcMain.on('delete', (event, id) => {
+	timeLog(event, id, deleteHandler.delete)
+})
 
 // Wrap the handlers in a timer
 function timeLog(event, request, fn) {
@@ -65,4 +74,3 @@ function timeLog(event, request, fn) {
 
 // Start app
 app.on('ready', main)
-

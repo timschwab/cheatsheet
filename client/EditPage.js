@@ -6,7 +6,7 @@ const addForm = require('./AddForm')
 let vm
 
 Vue.component('edit-page', {
-	created: function (){
+	created: function() {
 		vm = this
 	},
 	props: ['snippetKey'],

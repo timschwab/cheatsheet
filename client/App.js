@@ -15,16 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		},
 		computed: {
 			showSearchPage: function() {
-				return (this.page == 'search')
+				return this.page == 'search'
 			},
 			showViewPage: function() {
-				return (this.page.slice(0,5) == 'view:')
+				return this.page.slice(0, 5) == 'view:'
 			},
 			showAddPage: function() {
-				return (this.page == 'add')
+				return this.page == 'add'
 			},
 			showEditPage: function() {
-				return (this.page.slice(0,5) == 'edit:')
+				return this.page.slice(0, 5) == 'edit:'
 			},
 			viewingKey: function() {
 				if (this.showViewPage) {
@@ -82,10 +82,3 @@ document.addEventListener('DOMContentLoaded', () => {
 		`
 	})
 })
-
-
-
-
-
-
-

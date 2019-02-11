@@ -6,7 +6,7 @@ const addForm = require('./AddForm')
 let vm
 
 Vue.component('add-page', {
-	created: function (){
+	created: function() {
 		vm = this
 	},
 	template: `
