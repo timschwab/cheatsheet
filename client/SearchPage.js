@@ -26,12 +26,12 @@ Vue.component('search-page', {
 	template: `
 		<div id="search-page">
 			<div>
-				<p><button v-on:click="$emit('page', 'add')">Add a snippet</button></p>
+				<p><button class="btn btn-primary" v-on:click="$emit('page', 'add')">Add a snippet</button></p>
 			</div>
 			
-			<div>
-				Search query: <br />
-				<input id="query" type="text" v-model="query">
+			<div class="form-group">
+				<label for="query">Search query:</label>
+				<input class="form-control" id="query" type="text" v-model="query">
 			</div>
 			
 			<snippet-preview
