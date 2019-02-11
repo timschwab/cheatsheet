@@ -2,22 +2,12 @@
 	"name": "test",
 	"sheet": [
 		{
-			"keywords": [
-				"html",
-				"new",
-				"tab",
-				"link"
-			],
+			"keywords": ["html", "new", "tab", "link"],
 			"problem": "How do I have a link open a new tab?",
 			"solution": "<a href='' target='_blank'></a>"
 		},
 		{
-			"keywords": [
-				"C#",
-				"exit",
-				"terminate",
-				"stop"
-			],
+			"keywords": ["C#", "exit", "terminate", "stop"],
 			"problem": "How do I stop execution in C#?",
 			"solution": "Environment.Exit([exit code]);"
 		}

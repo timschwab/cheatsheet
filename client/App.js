@@ -1,10 +1,10 @@
-const Vue = require('vue/dist/vue')
+const Vue = require('vue/dist/vue');
 
-const messageDisplay = require('./MessageDisplay')
-const searchPage = require('./SearchPage')
-const viewPage = require('./ViewPage')
-const addPage = require('./AddPage')
-const editPage = require('./EditPage')
+const messageDisplay = require('./MessageDisplay');
+const searchPage = require('./SearchPage');
+const viewPage = require('./ViewPage');
+const addPage = require('./AddPage');
+const editPage = require('./EditPage');
 
 document.addEventListener('DOMContentLoaded', () => {
 	new Vue({
@@ -15,29 +15,29 @@ document.addEventListener('DOMContentLoaded', () => {
 		},
 		computed: {
 			showSearchPage: function() {
-				return (this.page == 'search')
+				return this.page == 'search';
 			},
 			showViewPage: function() {
-				return (this.page.slice(0,5) == 'view:')
+				return this.page.slice(0, 5) == 'view:';
 			},
 			showAddPage: function() {
-				return (this.page == 'add')
+				return this.page == 'add';
 			},
 			showEditPage: function() {
-				return (this.page.slice(0,5) == 'edit:')
+				return this.page.slice(0, 5) == 'edit:';
 			},
 			viewingKey: function() {
 				if (this.showViewPage) {
-					return this.page.slice(5)
+					return this.page.slice(5);
 				} else {
-					return null
+					return null;
 				}
 			},
 			editingKey: function() {
 				if (this.showEditPage) {
-					return this.page.slice(5)
+					return this.page.slice(5);
 				} else {
-					return null
+					return null;
 				}
 			}
 		},
@@ -80,12 +80,5 @@ document.addEventListener('DOMContentLoaded', () => {
 				</div>
 			</div>
 		`
-	})
-})
-
-
-
-
-
-
-
+	});
+});

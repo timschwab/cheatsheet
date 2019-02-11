@@ -1,4 +1,4 @@
-const Vue = require('vue/dist/vue.js')
+const Vue = require('vue/dist/vue.js');
 
 Vue.component('message-display', {
 	props: ['message'],
@@ -7,7 +7,6 @@ Vue.component('message-display', {
 			<span>{{ message }}</span>
 		</div>
 	`
-})
+});
 
-module.exports = {}
-
+module.exports = {};

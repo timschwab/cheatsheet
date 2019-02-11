@@ -1,13 +1,13 @@
-const {ipcRenderer} = require('electron')
-const Vue = require('vue/dist/vue.js')
+const {ipcRenderer} = require('electron');
+const Vue = require('vue/dist/vue.js');
 
-const addForm = require('./AddForm')
+const addForm = require('./AddForm');
 
-let vm
+let vm;
 
 Vue.component('add-page', {
-	created: function (){
-		vm = this
+	created: function() {
+		vm = this;
 	},
 	template: `
 		<div id="add-page">
@@ -24,20 +24,20 @@ Vue.component('add-page', {
 	`,
 	methods: {
 		submit: function(data) {
-			ipcRenderer.send('add', data)
+			ipcRenderer.send('add', data);
 		}
 	}
-})
+});
 
 // Server adds a snippet
 ipcRenderer.on('add-result', (event, result) => {
 	if (result.status == 'success') {
-		vm.$emit('message', 'Successfully added')
-		vm.$refs.form.clear()
+		vm.$emit('message', 'Successfully added');
+		vm.$refs.form.clear();
 	} else {
-		console.log(result)
-		vm.$emit('message', 'Could not add snippet')
+		console.log(result);
+		vm.$emit('message', 'Could not add snippet');
 	}
-})
+});
 
-module.exports = {}
+module.exports = {};

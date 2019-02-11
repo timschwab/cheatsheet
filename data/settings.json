@@ -1,9 +1,5 @@
 {
-	"excluded-words": [
-		"the",
-		"and",
-		"it"
-	],
+	"excluded-words": ["the", "and", "it"],
 	"allowed-characters": [
 		{"character": ",", "allowed": false},
 		{"character": "-", "allowed": true},
