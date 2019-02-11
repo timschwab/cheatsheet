@@ -59,7 +59,7 @@ Vue.component('add-form', {
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<input class="btn" type="button" value="Submit" v-on:click="submit">
+					<button class="btn btn-primary" v-on:click="submit">Submit</button>
 				</div>
 			</div>
 			<hr />

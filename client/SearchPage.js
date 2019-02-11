@@ -26,7 +26,7 @@ Vue.component('search-page', {
 	template: `
 		<div id="search-page">
 			<div>
-				<p><button class="btn" v-on:click="$emit('page', 'add')">Add a snippet</button></p>
+				<p><button class="btn btn-primary" v-on:click="$emit('page', 'add')">Add a snippet</button></p>
 			</div>
 			
 			<div class="form-group">
