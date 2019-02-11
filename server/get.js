@@ -1,8 +1,7 @@
 function snippetGet(event, client, id) {
 	console.log('get: ' + id)
 
-	redisGet(client, id)
-	.then(snippetText => {
+	redisGet(client, id).then(snippetText => {
 		let snippet = JSON.parse(snippetText)
 		event.sender.send('get-result', snippet)
 	})

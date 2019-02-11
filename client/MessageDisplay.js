@@ -10,4 +10,3 @@ Vue.component('message-display', {
 })
 
 module.exports = {}
-

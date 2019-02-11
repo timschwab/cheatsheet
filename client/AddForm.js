@@ -33,7 +33,7 @@ Vue.component('add-form', {
 			if (this.solution) {
 				return marked(this.solution)
 			} else {
-				return "<p>Preview of markdown rendering of the solution</p>"
+				return '<p>Preview of markdown rendering of the solution</p>'
 			}
 		}
 	},
@@ -71,7 +71,10 @@ Vue.component('add-form', {
 			if (!this.problem) {
 				this.$emit('message', 'You gotta input a problem to add it, bro')
 			} else if (!this.solution) {
-				this.$emit('message', 'It isn\'t very helpful to have a problem with no solution, now is it?')
+				this.$emit(
+					'message',
+					"It isn't very helpful to have a problem with no solution, now is it?"
+				)
 			} else if (this.keywords.length == 0) {
 				this.$emit('message', 'Keywords are your friend')
 			} else {

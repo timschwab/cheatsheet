@@ -4,7 +4,7 @@ const Vue = require('vue/dist/vue.js')
 let vm
 
 Vue.component('search-page', {
-	created: function (){
+	created: function() {
 		vm = this
 	},
 	data: function() {
@@ -49,7 +49,7 @@ ipcRenderer.on('search-result', (event, results) => {
 	vm.results = results
 
 	if (results.length == 0) {
-		vm.$emit('message', 'Search returned no results :\'(')
+		vm.$emit('message', "Search returned no results :'(")
 	} else {
 		vm.$emit('message', 'Showing ' + results.length + ' results.')
 	}
@@ -63,8 +63,6 @@ ipcRenderer.on('delete-result', (event, result) => {
 		})
 	}
 })
-
-
 
 Vue.component('snippet-preview', {
 	props: ['snippet'],

@@ -10,7 +10,10 @@ function tokenize(str) {
 	str = str.replace(/[^\s\da-z]|(\s)/g, ' ')
 
 	// Get rid of unneeded words
-	str = str.replace(/\b(the)\b|\b(and)\b|\b(is)\b|\b(to)\b|\b(by)\b|\b(is)\b|\b(in)\b|\b(with)\b/g, '')
+	str = str.replace(
+		/\b(the)\b|\b(and)\b|\b(is)\b|\b(to)\b|\b(by)\b|\b(is)\b|\b(in)\b|\b(with)\b/g,
+		''
+	)
 
 	// Get rid of unneeded whitespace
 	str = str.replace(/\s+/g, ' ')
