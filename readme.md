@@ -16,7 +16,7 @@ Check out the [docs](https://github.com/timschwab/cheatsheet/wiki) if you want m
 
 # Installation
 
-**Prerequisites:** Assumes you have git and nodejs/npm installed. If these steps do not work for you, contact Tim Schwab.
+**Prerequisites:** Assumes you have git and nodejs/npm installed. If these steps do not work for you, please submit an issue describing what went wrong.
 
 ```
 git clone git@github.com:timschwab/cheatsheet.git
