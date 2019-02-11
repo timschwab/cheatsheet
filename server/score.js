@@ -9,7 +9,7 @@ function scoreTerm(client, term) {
 		'10',
 		'3',
 		'1'
-	);
+	)
 }
 
-module.exports = scoreTerm;
+module.exports = scoreTerm

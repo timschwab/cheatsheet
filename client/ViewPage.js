@@ -1,12 +1,12 @@
-const {ipcRenderer} = require('electron');
-const Vue = require('vue/dist/vue.js');
-const marked = require('marked');
+const {ipcRenderer} = require('electron')
+const Vue = require('vue/dist/vue.js')
+const marked = require('marked')
 
-let vm;
+let vm
 
 Vue.component('view-page', {
 	created: function() {
-		vm = this;
+		vm = this
 	},
 	props: ['snippetKey'],
 	data: function() {
@@ -16,17 +16,17 @@ Vue.component('view-page', {
 				solution: '',
 				keywords: []
 			}
-		};
+		}
 	},
 	computed: {
 		markedSolution: function() {
-			return marked(this.snippet.solution);
+			return marked(this.snippet.solution)
 		}
 	},
 	watch: {
 		snippetKey: function(key) {
 			if (key) {
-				ipcRenderer.send('get', key);
+				ipcRenderer.send('get', key)
 			}
 		}
 	},
@@ -47,29 +47,29 @@ Vue.component('view-page', {
 	methods: {
 		deleteSnippet: function() {
 			if (this.snippetKey) {
-				ipcRenderer.send('delete', this.snippetKey);
+				ipcRenderer.send('delete', this.snippetKey)
 			}
 		},
 		editSnippet: function() {
-			this.$emit('page', 'edit:' + this.snippetKey);
+			this.$emit('page', 'edit:' + this.snippetKey)
 		}
 	}
-});
+})
 
 // Server responds with snippet data
 ipcRenderer.on('get-result', (event, snippet) => {
-	vm.snippet = snippet;
-});
+	vm.snippet = snippet
+})
 
 // Server deleted a snippet
 ipcRenderer.on('delete-result', (event, result) => {
 	if (result.status == 'success') {
-		vm.$emit('message', 'Snippet deleted');
-		vm.$emit('page', 'search');
+		vm.$emit('message', 'Snippet deleted')
+		vm.$emit('page', 'search')
 	} else {
-		vm.$emit('message', 'Snippet could not be deleted');
-		console.log(result);
+		vm.$emit('message', 'Snippet could not be deleted')
+		console.log(result)
 	}
-});
+})
 
-module.exports = {};
+module.exports = {}

@@ -4,27 +4,27 @@
 
 function tokenize(str) {
 	// Lowercase everything
-	str = str.toLowerCase();
+	str = str.toLowerCase()
 
 	// Turn unneeded characters into whitespace
-	str = str.replace(/[^\s\da-z]|(\s)/g, ' ');
+	str = str.replace(/[^\s\da-z]|(\s)/g, ' ')
 
 	// Get rid of unneeded words
 	str = str.replace(
 		/\b(the)\b|\b(and)\b|\b(is)\b|\b(to)\b|\b(by)\b|\b(is)\b|\b(in)\b|\b(with)\b/g,
 		''
-	);
+	)
 
 	// Get rid of unneeded whitespace
-	str = str.replace(/\s+/g, ' ');
+	str = str.replace(/\s+/g, ' ')
 
 	// Remove possible front and back spaces
-	str = str.trim();
+	str = str.trim()
 
 	// Tokenize
-	let tokens = str.split(' ');
+	let tokens = str.split(' ')
 
-	return tokens;
+	return tokens
 }
 
-module.exports = tokenize;
+module.exports = tokenize

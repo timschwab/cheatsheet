@@ -1,19 +1,19 @@
-const {ipcRenderer} = require('electron');
-const Vue = require('vue/dist/vue.js');
+const {ipcRenderer} = require('electron')
+const Vue = require('vue/dist/vue.js')
 
-const addForm = require('./AddForm');
+const addForm = require('./AddForm')
 
-let vm;
+let vm
 
 Vue.component('edit-page', {
 	created: function() {
-		vm = this;
+		vm = this
 	},
 	props: ['snippetKey'],
 	watch: {
 		snippetKey: function(key) {
 			if (key) {
-				ipcRenderer.send('edit:get', key);
+				ipcRenderer.send('edit:get', key)
 			}
 		}
 	},
@@ -32,29 +32,29 @@ Vue.component('edit-page', {
 	`,
 	methods: {
 		back: function(event) {
-			this.$emit('page', 'view:' + vm.snippetKey);
+			this.$emit('page', 'view:' + vm.snippetKey)
 		},
 		submit: function(data) {
-			data.key = this.snippetKey;
-			ipcRenderer.send('edit:change', data);
+			data.key = this.snippetKey
+			ipcRenderer.send('edit:change', data)
 		}
 	}
-});
+})
 
 // Get the snippet to edit
 ipcRenderer.on('edit:get-result', (event, snippet) => {
-	vm.$refs.form.set(snippet);
-});
+	vm.$refs.form.set(snippet)
+})
 
 // Server adds a snippet
 ipcRenderer.on('edit:change-result', (event, result) => {
 	if (result.status == 'success') {
-		vm.$emit('message', 'Successfully edited');
-		vm.$emit('page', 'view:' + vm.snippetKey);
+		vm.$emit('message', 'Successfully edited')
+		vm.$emit('page', 'view:' + vm.snippetKey)
 	} else {
-		console.log(result);
-		vm.$emit('message', 'Could not edit snippet');
+		console.log(result)
+		vm.$emit('message', 'Could not edit snippet')
 	}
-});
+})
 
-module.exports = {};
+module.exports = {}
