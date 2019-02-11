@@ -1,6 +1,6 @@
 {
 	"name": "cheatsheet",
-	"version": "0.5.1",
+	"version": "0.6.0",
 	"description": "A knowledge base for short snippets",
 	"main": "app.js",
 	"scripts": {
