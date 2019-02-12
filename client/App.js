@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		},
 		template: `
-			<div>
+			<div class="m-3">
 				<message-display
 					:message="message"
 				></message-display>
