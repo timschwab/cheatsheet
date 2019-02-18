@@ -34,14 +34,23 @@ Vue.component('view-page', {
 		<div id="view-page">
 			<div id="view-links">
 				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
-				<p><button class="btn btn-secondary" v-on:click="editSnippet">Edit this snippet</button></p>
-				<p><button class="btn btn-danger" v-on:click="deleteSnippet">Delete this snippet</button></p>
 			</div>
-			<div id="view-results">
-				<p class="problem">{{ snippet.problem }}</p>
-				<div class="solution" v-html="markedSolution"></div>
-				<p class="keywords">{{ snippet.keywords }}</p>
+			<div id="view-results" class="card">
+				<div class="card-body">
+					<h4 class="problem card-title">{{ snippet.problem }}</h4>
+					<div class="solution" v-html="markedSolution"></div>
+					<h6>Keywords:</h6>
+					<ul>
+						<li v-for="keyword in snippet.keywords">{{ keyword }}</li>
+					</ul>				
+				</div>
+				<div class="card-footer">
+					<button class="btn btn-danger float-right mx-1" v-on:click="deleteSnippet"><i class="fa fa-trash"></i> Delete</button>
+					<button class="btn btn-secondary float-right mx-1" v-on:click="editSnippet"><i class="fa fa-edit"></i> Edit</button>
+				</div>
 			</div>
+			<div>
+</div>
 		</div>
 	`,
 	methods: {
