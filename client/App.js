@@ -1,3 +1,4 @@
+const {ipcRenderer} = require('electron')
 const Vue = require('vue/dist/vue')
 
 const messageDisplay = require('./MessageDisplay')
@@ -5,13 +6,16 @@ const searchPage = require('./SearchPage')
 const viewPage = require('./ViewPage')
 const addPage = require('./AddPage')
 const editPage = require('./EditPage')
+const deletedPage = require('./DeletedPage')
+
+let vm
 
 document.addEventListener('DOMContentLoaded', () => {
-	new Vue({
+	vm = new Vue({
 		el: '#app',
 		data: {
 			page: 'search',
-			message: 'Enter a search query'
+			message: ''
 		},
 		computed: {
 			showSearchPage: function() {
@@ -25,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			},
 			showEditPage: function() {
 				return this.page.slice(0, 5) == 'edit:'
+			},
+			showDeletedPage: function() {
+				return this.page == 'deleted'
 			},
 			viewingKey: function() {
 				if (this.showViewPage) {
@@ -77,8 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 						:snippetKey="editingKey"
 					></edit-page>
+
+					<deleted-page
+						v-show="showDeletedPage"
+						v-on:page="page = $event"
+						v-on:message="message = $event"
+					></deleted-page>
 				</div>
 			</div>
 		`
 	})
+})
+
+ipcRenderer.on('menu:deleted', (event, results) => {
+	vm.page = 'deleted'
 })

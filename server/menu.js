@@ -1,9 +1,22 @@
-const {Menu} = require('electron')
+const {Menu, ipcMain} = require('electron')
 
 const menu = Menu.buildFromTemplate([
 	{
 		label: 'File',
-		submenu: [{label: 'Install sheet'}, {label: 'Remove sheet'}]
+		submenu: [
+			{
+				label: 'Install sheet'
+			},
+			{
+				label: 'Remove sheet'
+			},
+			{
+				label: 'Recently deleted snippets',
+				click(item, window) {
+					window.webContents.send('menu:deleted')
+				}
+			}
+		]
 	},
 	{
 		label: 'View',
