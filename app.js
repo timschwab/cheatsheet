@@ -1,15 +1,20 @@
+// Library includes
 const {app, BrowserWindow, Menu, ipcMain} = require('electron')
 const redis = require('redis')
 const bluebird = require('bluebird')
 bluebird.promisifyAll(redis)
 
+// Electron infrastructure
+const menu = require('./server/menu')
+// routes
+
+// Redis interactions
 const searchHandler = require('./server/search')
 const getHandler = require('./server/get')
 const addHandler = require('./server/add')
 const editHandler = require('./server/edit')
 const deleteHandler = require('./server/delete')
 
-let win
 let client
 
 // Connect to redis and set up the main window
@@ -18,26 +23,7 @@ function main() {
 	client = redis.createClient()
 
 	// Create main window
-	win = new BrowserWindow({width: 800, height: 600})
-	const menu = Menu.buildFromTemplate([
-		{
-			label: 'File',
-			submenu: [{label: 'Install sheet'}, {label: 'Remove sheet'}]
-		},
-		{
-			label: 'View',
-			submenu: [
-				{
-					label: 'Refresh',
-					role: 'reload'
-				},
-				{
-					label: 'Dev tools',
-					role: 'toggledevtools'
-				}
-			]
-		}
-	])
+	let win = new BrowserWindow({width: 800, height: 600})
 	Menu.setApplicationMenu(menu)
 	win.loadFile('client/index.html')
 }
