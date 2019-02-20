@@ -17,7 +17,7 @@ function change(event, client, data) {
 
 	// Delete snippet
 	deleteHandler
-		.redisDelete(client, data.key)
+		.redisPermanentDelete(client, data.key)
 
 		// Re-add snippet
 		.then(result => {

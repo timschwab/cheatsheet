@@ -2,10 +2,10 @@ const bluebird = require('bluebird')
 const tokenize = require('./tokenize')
 const scoreTerm = require('./score')
 
-function snippetDelete(event, client, id) {
-	console.log('delete: ' + id)
+function snippetPermanentDelete(event, client, id) {
+	console.log('permanent delete: ' + id)
 
-	redisDelete(client, id).then(result => {
+	redisPermanentDelete(client, id).then(result => {
 		event.sender.send('delete-result', {
 			status: 'success',
 			id: id
@@ -13,14 +13,45 @@ function snippetDelete(event, client, id) {
 	})
 }
 
-function redisDelete(client, id) {
+function snippetUndoableDelete(event, client, id) {
+	console.log('undoable delete: ' + id)
+
+	redisUndoableDelete(client, id).then(result => {
+		event.sender.send('delete-result', {
+			status: 'success',
+			id: id
+		})
+	})
+}
+
+function redisPermanentDelete(client, id) {
+	// Remove the indices
+	let promise = removeIndices(client, id)
+		// Delete the snippet
+		.then(responses => {
+			return client.delAsync(id)
+		})
+
+	return promise
+}
+
+function redisUndoableDelete(client, id) {
+	// Remove any expired deletions from the sorted set
+	// Remove the indices
+	// Add the key to a sorted set, with the score being the UTC timestamp
+}
+
+function removeIndices(client, id) {
 	let problemTokens
 	let solutionTokens
 	let keywords
 
-	// Get snippet
 	let promise = client
+
+		// Get the snippet data
 		.getAsync(id)
+
+		// Recalculate what indicies to remove, then remove them
 		.then(snippetText => {
 			let snippet = JSON.parse(snippetText)
 
@@ -48,11 +79,6 @@ function redisDelete(client, id) {
 			return bluebird.all([problemPromises, solutionPromises, keywordPromises])
 		})
 
-		// Delete the snippet
-		.then(responses => {
-			return client.delAsync(id)
-		})
-
 		// Calculate the new scores of the terms
 		.then(results => {
 			let terms = problemTokens.concat(solutionTokens).concat(keywords)
@@ -64,4 +90,8 @@ function redisDelete(client, id) {
 	return promise
 }
 
-module.exports = {delete: snippetDelete, redisDelete: redisDelete}
+module.exports = {
+	delete: snippetPermanentDelete,
+	redisDelete: redisPermanentDelete,
+	redisPermanentDelete: redisPermanentDelete
+}
