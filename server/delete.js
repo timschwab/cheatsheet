@@ -1,12 +1,13 @@
 const bluebird = require('bluebird')
 const tokenize = require('./tokenize')
 const scoreTerm = require('./score')
+const recentlyDeletedOperations = require('./recently-deleted')
 
 function snippetPermanentDelete(event, client, id) {
 	console.log('permanent delete: ' + id)
 
 	redisPermanentDelete(client, id).then(result => {
-		event.sender.send('delete-result', {
+		event.sender.send('permanent-delete-result', {
 			status: 'success',
 			id: id
 		})
@@ -25,6 +26,10 @@ function snippetUndoableDelete(event, client, id) {
 }
 
 function redisPermanentDelete(client, id) {
+	// Use `zscore ~~recently-deleted id` to determine:
+	// If it is not already deleted, unindex then delete.
+	// If it is already deleted, remove from sorted set then delete.
+
 	// Remove the indices
 	let promise = removeIndices(client, id)
 		// Delete the snippet
@@ -36,9 +41,23 @@ function redisPermanentDelete(client, id) {
 }
 
 function redisUndoableDelete(client, id) {
+	let stamp = new Date().getTime() // Number of milliseconds since UTC epoch
+
 	// Remove any expired deletions from the sorted set
-	// Remove the indices
-	// Add the key to a sorted set, with the score being the UTC timestamp
+	let promise = recentlyDeletedOperations
+		.cleanSet(client)
+
+		// Remove the indices (but do not remove the actual data)
+		.then(result => {
+			return removeIndices(client, id)
+		})
+
+		// Add the id to a sorted set, with the score being the UTC timestamp
+		.then(result => {
+			return client.zadd('~~recently-deleted', stamp, id)
+		})
+
+	return promise
 }
 
 function removeIndices(client, id) {
@@ -91,7 +110,8 @@ function removeIndices(client, id) {
 }
 
 module.exports = {
-	delete: snippetPermanentDelete,
-	redisDelete: redisPermanentDelete,
+	delete: snippetUndoableDelete,
+	permanentDelete: snippetPermanentDelete,
+	redisDelete: snippetUndoableDelete,
 	redisPermanentDelete: redisPermanentDelete
 }
