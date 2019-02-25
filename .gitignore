@@ -1,6 +1,6 @@
 # custom
 
-dist/redis/redis-installed
+scripts/redis-installed
 
 
 
