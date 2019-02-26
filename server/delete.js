@@ -26,16 +26,23 @@ function snippetUndoableDelete(event, client, id) {
 }
 
 function redisPermanentDelete(client, id) {
-	// Use `zscore ~~recently-deleted id` to determine:
-	// If it is not already deleted, unindex then delete.
-	// If it is already deleted, remove from sorted set then delete.
+	// Has it already been deleted?
+	let promise = client.zscoreAsync('~~recently-deleted', id).then(score => {
+		// It is not in the set - a live snippet
+		if (score == null) {
+			// Remove indices then delete
+			return removeIndices(client, id).then(responses => {
+				return client.delAsync(id)
+			})
 
-	// Remove the indices
-	let promise = removeIndices(client, id)
-		// Delete the snippet
-		.then(responses => {
-			return client.delAsync(id)
-		})
+			// It is in the set - recently deleted
+		} else {
+			// Remove from ~~recently-deleted then delete
+			return client.zremAsync('~~recently-deleted', id).then(result => {
+				return client.delAsync(id)
+			})
+		}
+	})
 
 	return promise
 }
@@ -112,6 +119,6 @@ function removeIndices(client, id) {
 module.exports = {
 	delete: snippetUndoableDelete,
 	permanentDelete: snippetPermanentDelete,
-	redisDelete: snippetUndoableDelete,
+	redisDelete: redisUndoableDelete,
 	redisPermanentDelete: redisPermanentDelete
 }
