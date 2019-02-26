@@ -36,13 +36,16 @@ Vue.component('view-page', {
 				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
 			</div>
 			<div id="view-results" class="card">
-				<div class="card-body">
+				<div class="card-header">
 					<h4 class="problem card-title">{{ snippet.problem }}</h4>
+				</div>
+				<div class="card-body">
 					<div class="solution" v-html="markedSolution"></div>
+					<hr />
 					<h6>Keywords:</h6>
 					<ul>
 						<li v-for="keyword in snippet.keywords">{{ keyword }}</li>
-					</ul>				
+					</ul>
 				</div>
 				<div class="card-footer">
 					<button class="btn btn-danger float-right mx-1" v-on:click="deleteSnippet"><i class="fa fa-trash"></i> Delete</button>
