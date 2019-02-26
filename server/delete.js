@@ -28,15 +28,14 @@ function snippetUndoableDelete(event, client, id) {
 function redisPermanentDelete(client, id) {
 	// Has it already been deleted?
 	let promise = client.zscoreAsync('~~recently-deleted', id).then(score => {
-		// It is not in the set - a live snippet
 		if (score == null) {
+			// It is not in the set - a live snippet
 			// Remove indices then delete
 			return removeIndices(client, id).then(responses => {
 				return client.delAsync(id)
 			})
-
-			// It is in the set - recently deleted
 		} else {
+			// It is in the set - recently deleted
 			// Remove from ~~recently-deleted then delete
 			return client.zremAsync('~~recently-deleted', id).then(result => {
 				return client.delAsync(id)
