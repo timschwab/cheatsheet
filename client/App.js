@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
 						v-show="showDeletedPage"
 						v-on:page="page = $event"
 						v-on:message="message = $event"
+
+						:visible="showDeletedPage"
 					></deleted-page>
 				</div>
 			</div>

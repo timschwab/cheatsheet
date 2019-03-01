@@ -68,4 +68,7 @@ function redisAdd(client, id, data) {
 	return promise
 }
 
-module.exports = {add: snippetAdd, redisAdd: redisAdd}
+module.exports = {
+	add: snippetAdd,
+	redisAdd: redisAdd
+}

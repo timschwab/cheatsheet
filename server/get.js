@@ -13,4 +13,7 @@ function redisGet(client, id) {
 	return promise
 }
 
-module.exports = {get: snippetGet, redisGet: redisGet}
+module.exports = {
+	get: snippetGet,
+	redisGet: redisGet
+}

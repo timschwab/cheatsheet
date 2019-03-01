@@ -1,4 +1,5 @@
 const bluebird = require('bluebird')
+const getHandler = require('./get')
 const tokenize = require('./tokenize')
 
 // Receive query, process it, and send back the results
@@ -46,7 +47,7 @@ function snippetSearch(event, client, query) {
 
 			// Get all the snippets
 			let getPromises = snippets.map(snippet => {
-				return client.getAsync(snippet.key)
+				return getHandler.redisGet(client, snippet.key)
 			})
 
 			return bluebird.all(getPromises)
@@ -54,7 +55,7 @@ function snippetSearch(event, client, query) {
 
 		// Parse and return
 		.then(responses => {
-			parsed = responses.map((str, index) => {
+			let parsed = responses.map((str, index) => {
 				let obj = JSON.parse(str)
 				obj.score = snippets[index].score
 				obj.key = snippets[index].key

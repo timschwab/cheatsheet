@@ -5,6 +5,7 @@ const getHandler = require('./get')
 const addHandler = require('./add')
 const editHandler = require('./edit')
 const deleteHandler = require('./delete')
+const recentDeleteHandler = require('./recently-deleted')
 
 let client
 
@@ -35,7 +36,11 @@ function init(redisClient) {
 		timeLog(event, id, deleteHandler.delete)
 	})
 
-	console.log('Routes initialized.')
+	ipcMain.on('get:deleted', (event, data) => {
+		timeLog(event, data, recentDeleteHandler.get)
+	})
+
+	console.log('Routes initialized.\n')
 }
 
 // Wrap the handlers in a timer
