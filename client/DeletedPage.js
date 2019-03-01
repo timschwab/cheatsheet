@@ -10,7 +10,7 @@ Vue.component('deleted-page', {
 	props: ['visible'],
 	data: function() {
 		return {
-			snippets: 'test'
+			snippets: []
 		}
 	},
 	watch: {
@@ -26,9 +26,24 @@ Vue.component('deleted-page', {
 				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
 			</div>
 
-			<p>{{ snippets }}</p>
+			<div v-for="snippet in snippets">
+				<p>
+					reuse &lt;snippet-preview&gt;:
+					{{ snippet }}
+					<a href="#" v-on:click="this.restoreSnippet()">Restore</a>
+					<a href="#" v-on:click="deleteSnippet">Delete</a>
+				</p>
+			</div>
 		</div>
-	`
+	`,
+	methods: {
+		restoreSnippet: function() {
+			console.log('restoring...')
+		},
+		deleteSnippet: function() {
+			console.log('deleting...')
+		}
+	}
 })
 
 ipcRenderer.on('get:deleted-result', (event, snippets) => {
