@@ -8,6 +8,8 @@ function snippetsGet(event, client, data) {
 	console.log('get:deleted:')
 	console.log(data)
 
+	let snippetIDs
+
 	// Clean up the set every time we can
 	cleanSet(client)
 		// Get the recently deleted snippets
@@ -17,6 +19,8 @@ function snippetsGet(event, client, data) {
 
 		// Get the data for all snippets
 		.then(IDs => {
+			snippetIDs = IDs
+
 			let getPromises = IDs.map(id => {
 				return getHandler.redisGet(client, id)
 			})
@@ -26,7 +30,12 @@ function snippetsGet(event, client, data) {
 
 		// Parse the data and return
 		.then(snippets => {
-			let parsed = snippets.map(JSON.parse)
+			let parsed = snippets.map((str, index) => {
+				let obj = JSON.parse(str)
+				obj.id = snippetIDs[index]
+				return obj
+			})
+
 			event.sender.send('get:deleted-result', parsed)
 		})
 }
