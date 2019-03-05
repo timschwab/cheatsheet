@@ -1,6 +1,8 @@
 const {ipcRenderer} = require('electron')
 const Vue = require('vue/dist/vue.js')
 
+const snippetPreview = require('./SnippetPreview')
+
 let vm
 
 Vue.component('search-page', {
@@ -38,7 +40,7 @@ Vue.component('search-page', {
 				v-for="snippet in results"
 				:snippet="snippet"
 				:key="snippet.key"
-				v-on:page="$emit('page', $event)"
+				v-on:click="$emit('page', 'view:' + $event)"
 			></snippet-preview>
 		</div>
 	`
@@ -61,22 +63,6 @@ ipcRenderer.on('delete-result', (event, result) => {
 		vm.results = vm.results.filter(snippet => {
 			return snippet.key != result.id
 		})
-	}
-})
-
-Vue.component('snippet-preview', {
-	props: ['snippet'],
-	template: `
-		<div class="snippet-preview">
-			<hr />
-			<p><a href="#" v-on:click="viewFull">{{ snippet.problem }}</a></p>
-			<p>{{ snippet.score }}</p>
-		</div>
-	`,
-	methods: {
-		viewFull: function() {
-			this.$emit('page', 'view:' + this.snippet.key)
-		}
 	}
 })
 
