@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			showDeletedPage: function() {
 				return this.page == 'deleted'
 			},
+			showDeletedViewPage: function() {
+				return this.page.slice(0, 13) == 'view-deleted:'
+			},
 			viewingKey: function() {
 				if (this.showViewPage) {
 					return this.page.slice(5)
@@ -43,6 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			editingKey: function() {
 				if (this.showEditPage) {
 					return this.page.slice(5)
+				} else {
+					return null
+				}
+			},
+			deletedKey: function() {
+				if (this.showDeletedViewPage) {
+					return this.page.slice(13)
 				} else {
 					return null
 				}
@@ -92,6 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 						:visible="showDeletedPage"
 					></deleted-page>
+
+					<view-page
+						v-show="showDeletedViewPage"
+						v-on:page="page = $event"
+						v-on:message="message = $event"
+
+						:snippetKey="deletedKey"
+						:deleted=true
+					></view-page>
 				</div>
 			</div>
 		`

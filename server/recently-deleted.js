@@ -40,6 +40,10 @@ function snippetsGet(event, client, data) {
 		})
 }
 
+function snippetRestore(event, client, id) {
+	console.log('restore: ' + id)
+}
+
 function redisGet(client, data) {
 	// TODO: utilize RPP and page #
 
@@ -76,6 +80,7 @@ function expireCutOff(stamp) {
 
 module.exports = {
 	get: snippetsGet,
+	restore: snippetRestore,
 	redisGet: redisGet,
 	cleanSet: cleanSet
 }

@@ -2,13 +2,25 @@ const {ipcRenderer} = require('electron')
 const Vue = require('vue/dist/vue.js')
 const marked = require('marked')
 
-let vm
-
 Vue.component('view-page', {
 	created: function() {
-		vm = this
+		// Server responds with snippet data
+		ipcRenderer.on('get-result', (event, snippet) => {
+			this.snippet = snippet
+		})
+
+		// Server deleted a snippet
+		ipcRenderer.on('delete-result', (event, result) => {
+			if (result.status == 'success') {
+				this.$emit('message', 'Snippet deleted')
+				this.$emit('page', 'search')
+			} else {
+				this.$emit('message', 'Snippet could not be deleted')
+				console.log(result)
+			}
+		})
 	},
-	props: ['snippetKey'],
+	props: ['snippetKey', 'deleted'],
 	data: function() {
 		return {
 			snippet: {
@@ -31,11 +43,11 @@ Vue.component('view-page', {
 		}
 	},
 	template: `
-		<div id="view-page">
-			<div id="view-links">
+		<div class="view-page">
+			<div class="view-links">
 				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
 			</div>
-			<div id="view-results" class="card">
+			<div class="view-results card">
 				<div class="card-header">
 					<h4 class="problem card-title">{{ snippet.problem }}</h4>
 				</div>
@@ -48,12 +60,17 @@ Vue.component('view-page', {
 					</ul>
 				</div>
 				<div class="card-footer">
-					<button class="btn btn-danger float-right mx-1" v-on:click="deleteSnippet"><i class="fa fa-trash"></i> Delete</button>
-					<button class="btn btn-secondary float-right mx-1" v-on:click="editSnippet"><i class="fa fa-edit"></i> Edit</button>
+					<div v-if="deleted">
+						<button class="btn btn-danger float-right mx-1" v-on:click="deletePermanent"><i class="fa fa-trash"></i> Delete Permanently</button>
+						<button class="btn btn-primary float-right mx-1" v-on:click="restoreSnippet"><i class="fa fa-undo"></i> Restore</button>
+					</div>
+
+					<div v-else>
+						<button class="btn btn-danger float-right mx-1" v-on:click="deleteSnippet"><i class="fa fa-trash"></i> Delete</button>
+						<button class="btn btn-secondary float-right mx-1" v-on:click="editSnippet"><i class="fa fa-edit"></i> Edit</button>
+					</div>
 				</div>
 			</div>
-			<div>
-</div>
 		</div>
 	`,
 	methods: {
@@ -64,23 +81,13 @@ Vue.component('view-page', {
 		},
 		editSnippet: function() {
 			this.$emit('page', 'edit:' + this.snippetKey)
+		},
+		deletePermanent: function() {
+			ipcRenderer.send('delete:permanent', this.snippetKey)
+		},
+		restoreSnippet: function() {
+			ipcRenderer.send('restore', this.snippetKey)
 		}
-	}
-})
-
-// Server responds with snippet data
-ipcRenderer.on('get-result', (event, snippet) => {
-	vm.snippet = snippet
-})
-
-// Server deleted a snippet
-ipcRenderer.on('delete-result', (event, result) => {
-	if (result.status == 'success') {
-		vm.$emit('message', 'Snippet deleted')
-		vm.$emit('page', 'search')
-	} else {
-		vm.$emit('message', 'Snippet could not be deleted')
-		console.log(result)
 	}
 })
 

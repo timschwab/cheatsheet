@@ -36,8 +36,16 @@ function init(redisClient) {
 		timeLog(event, id, deleteHandler.delete)
 	})
 
+	ipcMain.on('delete:permanent', (event, id) => {
+		timeLog(event, id, deleteHandler.permanentDelete)
+	})
+
 	ipcMain.on('get:deleted', (event, data) => {
 		timeLog(event, data, recentDeleteHandler.get)
+	})
+
+	ipcMain.on('restore', (event, id) => {
+		timeLog(event, id, recentDeleteHandler.restore)
 	})
 
 	console.log('Routes initialized.\n')

@@ -28,20 +28,24 @@ Vue.component('deleted-page', {
 
 			<div v-for="snippet in snippets">
 				<p>
-					reuse &lt;snippet-preview&gt;:
-					{{ snippet }}
-					<a href="#" v-on:click="this.restoreSnippet()">Restore</a>
-					<a href="#" v-on:click="deleteSnippet">Delete</a>
+					<snippet-preview
+						:snippet="snippet"
+						:deleted=true
+						:key="snippet.key"
+						v-on:view="$emit('page', 'view-deleted:' + $event)"
+						v-on:restore="restoreSnippet"
+						v-on:delete="deleteSnippet"
+					></snippet-preview>
 				</p>
 			</div>
 		</div>
 	`,
 	methods: {
-		restoreSnippet: function() {
-			console.log('restoring...')
+		restoreSnippet: function(id) {
+			ipcRenderer.send('restore', id)
 		},
-		deleteSnippet: function() {
-			console.log('deleting...')
+		deleteSnippet: function(id) {
+			ipcRenderer.send('delete:permanent', id)
 		}
 	}
 })
@@ -49,3 +53,5 @@ Vue.component('deleted-page', {
 ipcRenderer.on('get:deleted-result', (event, snippets) => {
 	vm.snippets = snippets
 })
+
+module.exports = {}

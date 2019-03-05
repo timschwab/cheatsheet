@@ -39,8 +39,8 @@ Vue.component('search-page', {
 			<snippet-preview
 				v-for="snippet in results"
 				:snippet="snippet"
-				:key="snippet.key"
-				v-on:click="$emit('page', 'view:' + $event)"
+				:key="snippet.id"
+				v-on:view="$emit('page', 'view:' + $event)"
 			></snippet-preview>
 		</div>
 	`

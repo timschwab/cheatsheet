@@ -6,12 +6,13 @@ const recentlyDeletedOperations = require('./recently-deleted')
 function snippetPermanentDelete(event, client, id) {
 	console.log('permanent delete: ' + id)
 
-	redisPermanentDelete(client, id).then(result => {
-		event.sender.send('permanent-delete-result', {
-			status: 'success',
-			id: id
-		})
-	})
+	// TODO: uncomment this and implement the frontend response
+	//redisPermanentDelete(client, id).then(result => {
+	//	event.sender.send('permanent:delete-result', {
+	//		status: 'success',
+	//		id: id
+	//	})
+	//})
 }
 
 function snippetUndoableDelete(event, client, id) {

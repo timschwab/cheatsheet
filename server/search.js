@@ -58,7 +58,7 @@ function snippetSearch(event, client, query) {
 			let parsed = responses.map((str, index) => {
 				let obj = JSON.parse(str)
 				obj.score = snippets[index].score
-				obj.key = snippets[index].key
+				obj.id = snippets[index].key
 				return obj
 			})
 
