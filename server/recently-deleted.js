@@ -42,6 +42,20 @@ function snippetsGet(event, client, data) {
 
 function snippetRestore(event, client, id) {
 	console.log('restore: ' + id)
+
+	// Clean up the set every time we can
+	cleanSet(client)
+		// Restore the snippet
+		.then(result => {
+			return redisRestore(client, id)
+		})
+
+		// Return success
+		.then(result => {
+			event.sender.send('restore-result', {
+				status: 'success'
+			})
+		})
 }
 
 function redisGet(client, data) {
@@ -52,6 +66,17 @@ function redisGet(client, data) {
 		'+inf',
 		expireCutOff()
 	)
+
+	return promise
+}
+
+function redisRestore(client, id) {
+	// Remove from the recently deleted
+	let promise = client
+		.zremAsync('~~recently-deleted', id)
+
+		// Re-index
+		.then(result => {})
 
 	return promise
 }
@@ -82,5 +107,6 @@ module.exports = {
 	get: snippetsGet,
 	restore: snippetRestore,
 	redisGet: redisGet,
+	redisRestore: redisRestore,
 	cleanSet: cleanSet
 }

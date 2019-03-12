@@ -12,4 +12,6 @@ function scoreTerm(client, term) {
 	)
 }
 
-module.exports = scoreTerm
+module.exports = {
+	scoreTerm: scoreTerm
+}
