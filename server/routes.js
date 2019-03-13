@@ -7,11 +7,7 @@ const editHandler = require('./edit')
 const deleteHandler = require('./delete')
 const recentDeleteHandler = require('./recently-deleted')
 
-let client
-
-function init(redisClient) {
-	client = redisClient
-
+function init() {
 	ipcMain.on('search', (event, query) => {
 		timeLog(event, query, searchHandler.search)
 	})
@@ -55,7 +51,7 @@ function init(redisClient) {
 function timeLog(event, requestData, fn) {
 	console.time('time')
 
-	fn(event, client, requestData)
+	fn(event, requestData)
 
 	console.timeEnd('time')
 	console.log()
