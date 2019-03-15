@@ -12,10 +12,11 @@ function simpleAdd(client, id, data) {
 	return promise
 }
 
-// Get next ID, then add, then tokenize, then index, then score
+// Get next ID -> simple add -> tokenize -> index -> score
 function fullAdd(client, data) {
 	let promise
 	let tokens
+	let id
 
 	// Get next ID
 	promise = client
@@ -23,23 +24,24 @@ function fullAdd(client, data) {
 
 		// Add
 		.then(counter => {
-			simpleAdd(client, counter, data)
+			id = counter
+			return simpleAdd(client, id, data)
 		})
 
 		// Tokenize
 		.then(result => {
-			tokenizeHandler.tokenizeData(client, id, data)
+			return tokenizeHandler.tokenizeData(data)
 		})
 
 		// Index
 		.then(snippetTokens => {
 			tokens = snippetTokens
-			indexHandler.indexWithTokens(client, id, tokens)
+			return indexHandler.index(client, id, tokens)
 		})
 
 		// Score
 		.then(result => {
-			scoreHandler.score(client, id, tokens)
+			return scoreHandler.score(client, tokens)
 		})
 
 	// Return

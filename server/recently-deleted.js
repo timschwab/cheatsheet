@@ -1,3 +1,5 @@
+const api = require('./redis-api/api')
+
 const bluebird = require('bluebird')
 const getHandler = require('./get')
 

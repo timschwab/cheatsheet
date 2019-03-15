@@ -1,4 +1,4 @@
-const tokenize = require('./tokenize')
+const bluebird = require('bluebird')
 
 // Takes an object with these params:
 //   problemTokens

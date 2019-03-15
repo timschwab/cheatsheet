@@ -1,3 +1,5 @@
+const bluebird = require('bluebird')
+
 // Takes an object with these params:
 //   problemTokens
 //   solutionTokens

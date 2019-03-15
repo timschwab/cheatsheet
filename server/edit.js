@@ -1,6 +1,4 @@
-const getHandler = require('./get')
-const addHandler = require('./add')
-const deleteHandler = require('./delete')
+const api = require('./redis-api/api')
 
 function get(event, client, id) {
 	console.log('edit:get: ' + id)

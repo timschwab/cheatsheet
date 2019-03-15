@@ -1,7 +1,4 @@
-const bluebird = require('bluebird')
-const tokenize = require('./tokenize')
-const scoreTerm = require('./score')
-const recentlyDeletedOperations = require('./recently-deleted')
+const api = require('./redis-api/api')
 
 function snippetPermanentDelete(event, client, id) {
 	console.log('permanent delete: ' + id)

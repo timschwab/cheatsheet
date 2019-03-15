@@ -3,11 +3,11 @@
 */
 
 function tokenizeID(client, id) {
-	// Get data, convert to object, then tokenizeData()
+	// Get data then tokenizeData()
 }
 
 // If we already have the data available, do not re-query redis
-function tokenizeData(client, id, data) {
+function tokenizeData(data) {
 	let promise
 
 	// Prep data

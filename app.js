@@ -1,8 +1,5 @@
 // Library includes
 const {app, BrowserWindow, Menu} = require('electron')
-const redis = require('redis')
-const bluebird = require('bluebird')
-bluebird.promisifyAll(redis)
 
 // Custom infrastructure
 const menu = require('./server/menu')
