@@ -1,5 +1,16 @@
 const api = require('./redis-api/api')
 
+function snippetUndoableDelete(event, id) {
+	console.log('undoable delete: ' + id)
+
+	api.undoableDelete(id).then(result => {
+		event.sender.send('delete-result', {
+			status: 'success',
+			id: id
+		})
+	})
+}
+
 function snippetPermanentDelete(event, client, id) {
 	console.log('permanent delete: ' + id)
 
@@ -10,17 +21,6 @@ function snippetPermanentDelete(event, client, id) {
 	//		id: id
 	//	})
 	//})
-}
-
-function snippetUndoableDelete(event, id) {
-	console.log('undoable delete: ' + id)
-
-	api.undoableDelete(id).then(result => {
-		event.sender.send('delete-result', {
-			status: 'success',
-			id: id
-		})
-	})
 }
 
 function redisPermanentDelete(client, id) {

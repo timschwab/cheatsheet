@@ -12,6 +12,8 @@ const searchHandler = require('./search')
 const editHandler = require('./edit')
 const deleteHandler = require('./delete')
 
+const recentlyDeletedHandler = require('./recently-deleted')
+
 let client
 let api = {init: init}
 
@@ -34,6 +36,10 @@ function init() {
 
 	api.undoableDelete = id => {
 		return deleteHandler.undoableDelete(client, id)
+	}
+
+	api.getRecentlyDeleted = () => {
+		return recentlyDeletedHandler.getAll(client)
 	}
 
 	console.log('Redis API initialized.')

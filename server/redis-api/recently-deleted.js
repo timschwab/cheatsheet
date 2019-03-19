@@ -1,3 +1,7 @@
+const bluebird = require('bluebird')
+
+const getHandler = require('./get')
+
 const cutOffDays = 3
 const millisecondsInDay = 1000 * 60 * 60 * 24
 
@@ -13,6 +17,34 @@ function addSnippet(client, id) {
 
 	return promise
 }
+
+function getAll(client) {
+	let promise
+
+	// Clean the set
+	promise = cleanSet(client)
+		// Get the list of IDs
+		.then(result => {
+			return client.zrevrangebyscoreAsync(
+				'~~recently-deleted',
+				'+inf',
+				expireCutOff()
+			)
+		})
+
+		// Get the corresponding snippets
+		.then(IDs => {
+			let getPromises = IDs.map(id => {
+				return getHandler.get(client, id)
+			})
+
+			return bluebird.all(getPromises)
+		})
+
+	return promise
+}
+
+/* Utility below this line */
 
 function cleanSet(client) {
 	// Remove any expired deletions from the sorted set
@@ -39,5 +71,6 @@ function expireCutOff(stamp) {
 }
 
 module.exports = {
-	add: addSnippet
+	add: addSnippet,
+	getAll: getAll
 }

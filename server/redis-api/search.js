@@ -57,7 +57,6 @@ function searchSnippet(client, query) {
 		.then(responses => {
 			let parsed = responses.map((snippet, index) => {
 				snippet.score = snippets[index].score
-				snippet.id = snippets[index].key
 				return snippet
 			})
 

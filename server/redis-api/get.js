@@ -8,7 +8,10 @@ function getSnippet(client, id) {
 		// Convert to object
 		.then(text => {
 			return new Promise((resolve, reject) => {
-				resolve(JSON.parse(text))
+				let obj = JSON.parse(text)
+				obj.id = id
+
+				resolve(obj)
 			})
 		})
 

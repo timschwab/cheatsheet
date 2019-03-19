@@ -1,45 +1,16 @@
 const api = require('./redis-api/api')
 
-const bluebird = require('bluebird')
-const getHandler = require('./get')
-
 const cutOffDays = 3
 const millisecondsInDay = 1000 * 60 * 60 * 24
 
-function snippetsGet(event, client, data) {
+function snippetsGet(event, data) {
 	console.log('get:deleted:')
 	console.log(data)
 
-	let snippetIDs
-
-	// Clean up the set every time we can
-	cleanSet(client)
-		// Get the recently deleted snippets
-		.then(result => {
-			return redisGet(client, data)
-		})
-
-		// Get the data for all snippets
-		.then(IDs => {
-			snippetIDs = IDs
-
-			let getPromises = IDs.map(id => {
-				return getHandler.redisGet(client, id)
-			})
-
-			return bluebird.all(getPromises)
-		})
-
-		// Parse the data and return
-		.then(snippets => {
-			let parsed = snippets.map((str, index) => {
-				let obj = JSON.parse(str)
-				obj.id = snippetIDs[index]
-				return obj
-			})
-
-			event.sender.send('get:deleted-result', parsed)
-		})
+	// Get the recently deleted snippets
+	api.getRecentlyDeleted(client).then(snippets => {
+		event.sender.send('get:deleted-result', snippets)
+	})
 }
 
 function snippetRestore(event, client, id) {
