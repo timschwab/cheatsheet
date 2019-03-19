@@ -5,16 +5,12 @@ function snippetAdd(event, data) {
 	console.log('add:')
 	console.log(data)
 
-	// Add snippet
-	api
-		.add(data)
-
-		// Send back message to client
-		.then(results => {
-			event.sender.send('add-result', {
-				status: 'success'
-			})
+	// Add snippet to the sheet
+	api.add(data).then(results => {
+		event.sender.send('add-result', {
+			status: 'success'
 		})
+	})
 }
 
 module.exports = {

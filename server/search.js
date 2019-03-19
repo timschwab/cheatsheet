@@ -5,13 +5,9 @@ function snippetSearch(event, query) {
 	console.log('search: ' + query)
 
 	// Search the query
-	api
-		.search(query)
-
-		// Then send the results to the client
-		.then(results => {
-			event.sender.send('search-result', results)
-		})
+	api.search(query).then(results => {
+		event.sender.send('search-result', results)
+	})
 }
 
 module.exports = {
