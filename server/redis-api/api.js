@@ -15,7 +15,7 @@ const deleteHandler = require('./delete')
 let client
 let api = {init: init}
 
-function init(redisClient) {
+function init() {
 	// Get the redis client
 	client = redis.createClient()
 
@@ -30,6 +30,10 @@ function init(redisClient) {
 
 	api.search = query => {
 		return searchHandler.search(client, query)
+	}
+
+	api.undoableDelete = id => {
+		return deleteHandler.undoableDelete(client, id)
 	}
 
 	console.log('Redis API initialized.')

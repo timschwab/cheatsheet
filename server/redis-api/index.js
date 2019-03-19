@@ -5,7 +5,6 @@ const bluebird = require('bluebird')
 //   solutionTokens
 //   keywords
 function index(client, id, tokens) {
-	// Set the indices
 	let problemPromises = tokens.problemTokens.map(token => {
 		return client.saddAsync(token + '-problems', id)
 	})
@@ -25,8 +24,28 @@ function index(client, id, tokens) {
 	return promise
 }
 
-function unindex(client, id) {
-	// do stuff
+// Takes an object with these params:
+//   problemTokens
+//   solutionTokens
+//   keywords
+function unindex(client, id, tokens) {
+	let problemPromises = tokens.problemTokens.map(token => {
+		return client.sremAsync(token + '-problems', id)
+	})
+	let solutionPromises = tokens.solutionTokens.map(token => {
+		return client.sremAsync(token + '-solutions', id)
+	})
+	let keywordPromises = tokens.keywords.map(keyword => {
+		return client.sremAsync(keyword + '-keywords', id)
+	})
+
+	let promise = bluebird.all([
+		problemPromises,
+		solutionPromises,
+		keywordPromises
+	])
+
+	return promise
 }
 
 module.exports = {

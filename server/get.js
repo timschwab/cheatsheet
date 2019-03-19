@@ -1,5 +1,6 @@
 const api = require('./redis-api/api')
 
+// Get the snippet then send it to the client
 function snippetGet(event, id) {
 	console.log('get: ' + id)
 

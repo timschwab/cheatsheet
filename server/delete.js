@@ -12,10 +12,10 @@ function snippetPermanentDelete(event, client, id) {
 	//})
 }
 
-function snippetUndoableDelete(event, client, id) {
+function snippetUndoableDelete(event, id) {
 	console.log('undoable delete: ' + id)
 
-	redisUndoableDelete(client, id).then(result => {
+	api.undoableDelete(id).then(result => {
 		event.sender.send('delete-result', {
 			status: 'success',
 			id: id
@@ -26,7 +26,7 @@ function snippetUndoableDelete(event, client, id) {
 function redisPermanentDelete(client, id) {
 	// Has it already been deleted?
 	let promise = client.zscoreAsync('~~recently-deleted', id).then(score => {
-		if (score == null) {
+		if (score === null) {
 			// It is not in the set - a live snippet
 			// Remove indices then delete
 			return removeIndices(client, id).then(responses => {
@@ -40,26 +40,6 @@ function redisPermanentDelete(client, id) {
 			})
 		}
 	})
-
-	return promise
-}
-
-function redisUndoableDelete(client, id) {
-	let stamp = new Date().getTime() // Number of milliseconds since UTC epoch
-
-	// Remove any expired deletions from the sorted set
-	let promise = recentlyDeletedOperations
-		.cleanSet(client)
-
-		// Remove the indices (but do not remove the actual data)
-		.then(result => {
-			return removeIndices(client, id)
-		})
-
-		// Add the id to a sorted set, with the score being the UTC timestamp
-		.then(result => {
-			return client.zadd('~~recently-deleted', stamp, id)
-		})
 
 	return promise
 }
@@ -115,7 +95,5 @@ function removeIndices(client, id) {
 
 module.exports = {
 	delete: snippetUndoableDelete,
-	permanentDelete: snippetPermanentDelete,
-	redisDelete: redisUndoableDelete,
-	redisPermanentDelete: redisPermanentDelete
+	permanentDelete: snippetPermanentDelete
 }

@@ -1,9 +1,17 @@
-/*
-	Extract the words that could be important for a search
-*/
+const getHandler = require('./get')
 
 function tokenizeID(client, id) {
-	// Get data then tokenizeData()
+	let promise
+
+	// Get data then use tokenizeData()
+	promise = getHandler
+		.get(client, id)
+
+		.then(snippet => {
+			return tokenizeData(snippet)
+		})
+
+	return promise
 }
 
 // If we already have the data available, do not re-query redis
@@ -20,7 +28,7 @@ function tokenizeData(data) {
 	let problemTokens = tokenizeString(problem)
 	let solutionTokens = tokenizeString(solution)
 
-	// In the future: store tokenization history
+	// In the future: store tokenization history. Will need to have the `client`.
 
 	// Construct a promise that provides the tokenized data
 	promise = new Promise((resolve, reject) => {
