@@ -12,25 +12,34 @@ function simpleDelete(client, id) {
 	return promise
 }
 
-function undoableDelete(client, id) {
+function unindexAndScore(client, id) {
 	let promise
 	let tokens
 
-	// Tokenize
+	// Get the tokenized snippet data
 	promise = tokenizeHandler
 		.tokenizeID(client, id)
 
-		// Remove indices
+		// Unindex the tokens
 		.then(snippetTokens => {
 			tokens = snippetTokens
 			return indexHandler.unindex(client, id, tokens)
 		})
 
-		// Re-score the affected tokens
-		.then(results => {
+		// Re-score the tokens
+		.then(result => {
 			return scoreHandler.score(client, tokens)
 		})
 
+	return promise
+}
+
+function undoableDelete(client, id) {
+	let promise
+	let tokens
+
+	// Remove from search results
+	promise = unindexAndScore(client, id)
 		// Add to the recently deleted
 		.then(results => {
 			return recentlyDeletedHandler.add(client, id)
@@ -39,7 +48,22 @@ function undoableDelete(client, id) {
 	return promise
 }
 
+function fullDelete(client, id) {
+	let promise
+
+	// Remove from search results
+	promise = unindexAndScore(client, id)
+		// Delete the actual snippet data
+		.then(results => {
+			return simpleDelete(client, id)
+		})
+
+	return promise
+}
+
 module.exports = {
 	simpleDelete: simpleDelete,
-	undoableDelete: undoableDelete
+	unindexAndScore: unindexAndScore,
+	undoableDelete: undoableDelete,
+	fullDelete: fullDelete
 }

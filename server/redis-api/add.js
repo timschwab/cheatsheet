@@ -18,14 +18,9 @@ function indexAndScore(client, id) {
 	let promise
 	let tokens
 
-	// Get the snippet data
-	promise = getHandler
-		.get(client, id)
-
-		// Tokenize it
-		.then(data => {
-			return tokenizeHandler.tokenizeData(data)
-		})
+	// Get the tokenized snippet data
+	promise = tokenizeHandler
+		.tokenizeID(client, id)
 
 		// Index the tokens
 		.then(snippetTokens => {

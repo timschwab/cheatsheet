@@ -5,7 +5,7 @@ const getHandler = require('./get')
 const addHandler = require('./add')
 const editHandler = require('./edit')
 const deleteHandler = require('./delete')
-const recentDeleteHandler = require('./recently-deleted')
+const recentlyDeletedHandler = require('./recently-deleted')
 
 function init() {
 	ipcMain.on('search', (event, query) => {
@@ -37,11 +37,11 @@ function init() {
 	})
 
 	ipcMain.on('get:deleted', (event, data) => {
-		timeLog(event, data, recentDeleteHandler.get)
+		timeLog(event, data, recentlyDeletedHandler.get)
 	})
 
 	ipcMain.on('restore', (event, id) => {
-		timeLog(event, id, recentDeleteHandler.restore)
+		timeLog(event, id, recentlyDeletedHandler.restore)
 	})
 
 	console.log('Routes initialized.\n')
@@ -57,4 +57,6 @@ function timeLog(event, requestData, fn) {
 	console.log()
 }
 
-module.exports = {init: init}
+module.exports = {
+	init: init
+}

@@ -26,12 +26,16 @@ function init() {
 		return addHandler.fullAdd(client, data)
 	}
 
+	api.search = query => {
+		return searchHandler.search(client, query)
+	}
+
 	api.get = id => {
 		return getHandler.get(client, id)
 	}
 
-	api.search = query => {
-		return searchHandler.search(client, query)
+	api.edit = (id, newData) => {
+		return editHandler.edit(client, id, newData)
 	}
 
 	api.undoableDelete = id => {
