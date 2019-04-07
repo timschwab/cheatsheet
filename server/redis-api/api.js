@@ -38,8 +38,12 @@ function init() {
 		return deleteHandler.undoableDelete(client, id)
 	}
 
-	api.getRecentlyDeleted = () => {
-		return recentlyDeletedHandler.getAll(client)
+	api.getRecentlyDeleted = data => {
+		return recentlyDeletedHandler.getAll(client, data)
+	}
+
+	api.restoreRecentlyDeleted = id => {
+		return recentlyDeletedHandler.restore(client, id)
 	}
 
 	console.log('Redis API initialized.')

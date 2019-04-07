@@ -1,10 +1,12 @@
 const bluebird = require('bluebird')
 
 const getHandler = require('./get')
+const addHandler = require('./add')
 
 const cutOffDays = 3
 const millisecondsInDay = 1000 * 60 * 60 * 24
 
+// Add a snippet to the recently deleted list
 function addSnippet(client, id) {
 	let promise
 
@@ -18,8 +20,11 @@ function addSnippet(client, id) {
 	return promise
 }
 
-function getAll(client) {
+// Get all the snippets in the recently deleted list
+function getAll(client, data) {
 	let promise
+
+	// Data will contain RPP and page # one day
 
 	// Clean the set
 	promise = cleanSet(client)
@@ -44,7 +49,31 @@ function getAll(client) {
 	return promise
 }
 
-/* Utility below this line */
+// Restore a snippet from the recently deleted list
+function restoreSnippet(client, id) {
+	let promise
+
+	// Clean the set
+	promise = cleanSet(client)
+		// Remove from set
+		.then(result => {
+			return client.zremAsync('~~recently-deleted', id)
+		})
+
+		// Do an indexAndScore to make it searchable
+		.then(result => {
+			return addHandler.indexAndScore(client, id)
+		})
+
+	return promise
+}
+
+// Permanently delete a snippet
+function deleteSnippet(client, id) {
+	// stuff
+}
+
+/* Utility functions below this line */
 
 function cleanSet(client) {
 	// Remove any expired deletions from the sorted set
@@ -70,7 +99,10 @@ function expireCutOff(stamp) {
 	return stamp - cutOffDays * millisecondsInDay
 }
 
+/* Export */
+
 module.exports = {
 	add: addSnippet,
-	getAll: getAll
+	getAll: getAll,
+	restore: restoreSnippet
 }
