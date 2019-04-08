@@ -24,7 +24,19 @@ function snippetRestore(event, id) {
 	})
 }
 
+function snippetDelete(event, id) {
+	console.log('delete:permanent: ' + id)
+
+	// Permanently delete the snippet
+	api.deleteRecentlyDeleted(id).then(result => {
+		event.sender.send('delete:permanent-result', {
+			status: 'success'
+		})
+	})
+}
+
 module.exports = {
 	get: snippetsGet,
-	restore: snippetRestore
+	restore: snippetRestore,
+	delete: snippetDelete
 }

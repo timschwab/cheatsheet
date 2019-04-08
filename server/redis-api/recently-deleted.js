@@ -2,6 +2,7 @@ const bluebird = require('bluebird')
 
 const getHandler = require('./get')
 const addHandler = require('./add')
+const deleteHandler = require('./delete')
 
 const cutOffDays = 3
 const millisecondsInDay = 1000 * 60 * 60 * 24
@@ -57,7 +58,7 @@ function restoreSnippet(client, id) {
 	promise = cleanSet(client)
 		// Remove from set
 		.then(result => {
-			return client.zremAsync('~~recently-deleted', id)
+			return removeFromRecentlyDeleted(client, id)
 		})
 
 		// Do an indexAndScore to make it searchable
@@ -70,20 +71,45 @@ function restoreSnippet(client, id) {
 
 // Permanently delete a snippet
 function deleteSnippet(client, id) {
-	// stuff
-}
-
-/* Utility functions below this line */
-
-function cleanSet(client) {
-	// Remove any expired deletions from the sorted set
 	let promise
 
+	// Clean the set
+	promise = cleanSet(client)
+		// Remove from the set of recently deleted
+		.then(result => {
+			return removeFromRecentlyDeleted(client, id)
+		})
+
+		// Delete snippet data
+		.then(result => {
+			return deleteHandler.simpleDelete(client, id)
+		})
+
+	return promise
+}
+console.log(getHandler.get)
+/***** Utility functions below this line *****/
+
+// Remove any expired deletions from the sorted set
+function cleanSet(client) {
+	let promise
+
+	// Note that this leaves the underlying Redis string that holds the snippet data
 	promise = client.zremrangebyscoreAsync(
 		'~~recently-deleted',
 		'-inf',
 		expireCutOff()
 	)
+
+	return promise
+}
+
+// Note - this does not clean the set, because it is a helper function
+function removeFromRecentlyDeleted(client, id) {
+	let promise
+
+	// Clean the set
+	promise = client.zremAsync('~~recently-deleted', id)
 
 	return promise
 }
@@ -99,10 +125,11 @@ function expireCutOff(stamp) {
 	return stamp - cutOffDays * millisecondsInDay
 }
 
-/* Export */
+/***** Export *****/
 
 module.exports = {
 	add: addSnippet,
 	getAll: getAll,
-	restore: restoreSnippet
+	restore: restoreSnippet,
+	delete: deleteSnippet
 }

@@ -1,3 +1,16 @@
+/*
+	Available functions:
+		init()
+		add(data)
+		search(query)
+		get(id)
+		edit(id, newData)
+		undoableDelete(id)
+		getRecentlyDeleted(data)
+		restoreRecentlyDeleted(id)
+		deleteRecentlyDeleted(id)
+*/
+
 const redis = require('redis')
 const bluebird = require('bluebird')
 bluebird.promisifyAll(redis)
@@ -48,6 +61,10 @@ function init() {
 
 	api.restoreRecentlyDeleted = id => {
 		return recentlyDeletedHandler.restore(client, id)
+	}
+
+	api.deleteRecentlyDeleted = id => {
+		return recentlyDeletedHandler.delete(client, id)
 	}
 
 	console.log('Redis API initialized.')
