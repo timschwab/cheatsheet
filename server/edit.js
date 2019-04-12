@@ -1,4 +1,4 @@
-const api = require('./redis-api/api')
+const api = require('./redis-api')
 
 function get(event, id) {
 	console.log('edit:get: ' + id)

@@ -1,4 +1,4 @@
-const api = require('./redis-api/api')
+const api = require('./redis-api')
 
 // Add to redis and send back success message to client
 function snippetAdd(event, data) {

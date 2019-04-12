@@ -69,6 +69,4 @@ function searchSnippet(client, query) {
 	return promise
 }
 
-module.exports = {
-	search: searchSnippet
-}
+module.exports.search = searchSnippet

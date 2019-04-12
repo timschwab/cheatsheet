@@ -1,4 +1,4 @@
-const api = require('./redis-api/api')
+const api = require('./redis-api')
 
 // Receive query, process it, and send back the results
 function snippetSearch(event, query) {

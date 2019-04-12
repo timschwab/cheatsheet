@@ -1,4 +1,4 @@
-const api = require('./redis-api/api')
+const api = require('./redis-api')
 
 // Get the snippet then send it to the client
 function snippetGet(event, id) {

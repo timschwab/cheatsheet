@@ -67,8 +67,6 @@ function tokenizeString(str) {
 	return tokens
 }
 
-module.exports = {
-	tokenizeID: tokenizeID,
-	tokenizeData: tokenizeData,
-	tokenizeString: tokenizeString
-}
+module.exports.tokenizeID = tokenizeID
+module.exports.tokenizeData = tokenizeData
+module.exports.tokenizeString = tokenizeString

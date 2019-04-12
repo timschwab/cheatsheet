@@ -38,6 +38,4 @@ function scoreToken(client, token) {
 	)
 }
 
-module.exports = {
-	score: score
-}
+module.exports.score = score

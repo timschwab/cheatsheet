@@ -22,6 +22,4 @@ function editSnippet(client, id, newData) {
 	return promise
 }
 
-module.exports = {
-	edit: editSnippet
-}
+module.exports.edit = editSnippet

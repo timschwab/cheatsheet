@@ -48,7 +48,5 @@ function unindex(client, id, tokens) {
 	return promise
 }
 
-module.exports = {
-	index: index,
-	unindex: unindex
-}
+module.exports.index = index
+module.exports.unindex = unindex

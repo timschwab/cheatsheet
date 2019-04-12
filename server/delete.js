@@ -1,4 +1,4 @@
-const api = require('./redis-api/api')
+const api = require('./redis-api')
 
 function snippetUndoableDelete(event, id) {
 	console.log('undoable delete: ' + id)

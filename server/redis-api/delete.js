@@ -36,7 +36,6 @@ function unindexAndScore(client, id) {
 
 function undoableDelete(client, id) {
 	let promise
-	let tokens
 
 	// Remove from search results
 	promise = unindexAndScore(client, id)
@@ -61,9 +60,7 @@ function fullDelete(client, id) {
 	return promise
 }
 
-module.exports = {
-	simpleDelete: simpleDelete,
-	unindexAndScore: unindexAndScore,
-	undoableDelete: undoableDelete,
-	fullDelete: fullDelete
-}
+module.exports.simpleDelete = simpleDelete
+module.exports.unindexAndScore = unindexAndScore
+module.exports.undoableDelete = undoableDelete
+module.exports.fullDelete = fullDelete

@@ -87,7 +87,7 @@ function deleteSnippet(client, id) {
 
 	return promise
 }
-console.log(getHandler.get)
+
 /***** Utility functions below this line *****/
 
 // Remove any expired deletions from the sorted set
@@ -127,9 +127,7 @@ function expireCutOff(stamp) {
 
 /***** Export *****/
 
-module.exports = {
-	add: addSnippet,
-	getAll: getAll,
-	restore: restoreSnippet,
-	delete: deleteSnippet
-}
+module.exports.add = addSnippet
+module.exports.getAll = getAll
+module.exports.restore = restoreSnippet
+module.exports.delete = deleteSnippet

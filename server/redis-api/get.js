@@ -18,6 +18,4 @@ function getSnippet(client, id) {
 	return promise
 }
 
-module.exports = {
-	get: getSnippet
-}
+module.exports.get = getSnippet

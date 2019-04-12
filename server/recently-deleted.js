@@ -1,4 +1,4 @@
-const api = require('./redis-api/api')
+const api = require('./redis-api')
 
 const cutOffDays = 3
 const millisecondsInDay = 1000 * 60 * 60 * 24

@@ -28,46 +28,45 @@ const deleteHandler = require('./delete')
 const recentlyDeletedHandler = require('./recently-deleted')
 
 let client
-let api = {init: init}
 
 function init() {
 	// Get the redis client
 	client = redis.createClient()
 
 	// Set up the API
-	api.add = data => {
+	module.exports.add = data => {
 		return addHandler.fullAdd(client, data)
 	}
 
-	api.search = query => {
+	module.exports.search = query => {
 		return searchHandler.search(client, query)
 	}
 
-	api.get = id => {
+	module.exports.get = id => {
 		return getHandler.get(client, id)
 	}
 
-	api.edit = (id, newData) => {
+	module.exports.edit = (id, newData) => {
 		return editHandler.edit(client, id, newData)
 	}
 
-	api.undoableDelete = id => {
+	module.exports.undoableDelete = id => {
 		return deleteHandler.undoableDelete(client, id)
 	}
 
-	api.getRecentlyDeleted = data => {
+	module.exports.getRecentlyDeleted = data => {
 		return recentlyDeletedHandler.getAll(client, data)
 	}
 
-	api.restoreRecentlyDeleted = id => {
+	module.exports.restoreRecentlyDeleted = id => {
 		return recentlyDeletedHandler.restore(client, id)
 	}
 
-	api.deleteRecentlyDeleted = id => {
+	module.exports.deleteRecentlyDeleted = id => {
 		return recentlyDeletedHandler.delete(client, id)
 	}
 
 	console.log('Redis API initialized.')
 }
 
-module.exports = api
+module.exports.init = init

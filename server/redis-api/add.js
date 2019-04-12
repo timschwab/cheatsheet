@@ -1,4 +1,3 @@
-const getHandler = require('./get')
 const tokenizeHandler = require('./tokenize')
 const indexHandler = require('./index')
 const scoreHandler = require('./score')
@@ -39,7 +38,6 @@ function indexAndScore(client, id) {
 // Get next ID -> simple add -> tokenize and score
 function fullAdd(client, data) {
 	let promise
-	let tokens
 	let id
 
 	// Get next ID
@@ -61,8 +59,6 @@ function fullAdd(client, data) {
 	return promise
 }
 
-module.exports = {
-	simpleAdd: simpleAdd,
-	indexAndScore: indexAndScore,
-	fullAdd: fullAdd
-}
+module.exports.simpleAdd = simpleAdd
+module.exports.indexAndScore = indexAndScore
+module.exports.fullAdd = fullAdd
