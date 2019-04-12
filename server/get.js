@@ -1,19 +1,15 @@
-function snippetGet(event, client, id) {
+const api = require('./redis-api')
+
+// Get the snippet then send it to the client
+function snippetGet(event, id) {
 	console.log('get: ' + id)
 
-	redisGet(client, id).then(snippetText => {
-		let snippet = JSON.parse(snippetText)
+	// Get the snippet
+	api.get(id).then(snippet => {
 		event.sender.send('get-result', snippet)
 	})
 }
 
-function redisGet(client, id) {
-	let promise = client.getAsync(id)
-
-	return promise
-}
-
 module.exports = {
-	get: snippetGet,
-	redisGet: redisGet
+	get: snippetGet
 }

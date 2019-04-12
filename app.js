@@ -1,20 +1,17 @@
 // Library includes
 const {app, BrowserWindow, Menu} = require('electron')
-const redis = require('redis')
-const bluebird = require('bluebird')
-bluebird.promisifyAll(redis)
 
-// Electron infrastructure
+// Custom infrastructure
 const menu = require('./server/menu')
 const routes = require('./server/routes')
+const api = require('./server/redis-api/api')
 
-// Connect to redis and set up the main window
 function main() {
-	// Connect to redis
-	let client = redis.createClient()
+	// Set up redis API
+	api.init()
 
 	// Set up routes
-	routes.init(client)
+	routes.init()
 
 	// Create main window
 	let win = new BrowserWindow({width: 800, height: 600})

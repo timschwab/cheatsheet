@@ -5,12 +5,12 @@ const getHandler = require('./get')
 const addHandler = require('./add')
 const editHandler = require('./edit')
 const deleteHandler = require('./delete')
-const recentDeleteHandler = require('./recently-deleted')
+const recentlyDeletedHandler = require('./recently-deleted')
 
-let client
-
-function init(redisClient) {
-	client = redisClient
+function init() {
+	ipcMain.on('add', (event, data) => {
+		timeLog(event, data, addHandler.add)
+	})
 
 	ipcMain.on('search', (event, query) => {
 		timeLog(event, query, searchHandler.search)
@@ -18,10 +18,6 @@ function init(redisClient) {
 
 	ipcMain.on('get', (event, id) => {
 		timeLog(event, id, getHandler.get)
-	})
-
-	ipcMain.on('add', (event, data) => {
-		timeLog(event, data, addHandler.add)
 	})
 
 	ipcMain.on('edit:get', (event, data) => {
@@ -36,16 +32,16 @@ function init(redisClient) {
 		timeLog(event, id, deleteHandler.delete)
 	})
 
-	ipcMain.on('delete:permanent', (event, id) => {
-		timeLog(event, id, deleteHandler.permanentDelete)
-	})
-
 	ipcMain.on('get:deleted', (event, data) => {
-		timeLog(event, data, recentDeleteHandler.get)
+		timeLog(event, data, recentlyDeletedHandler.get)
 	})
 
 	ipcMain.on('restore', (event, id) => {
-		timeLog(event, id, recentDeleteHandler.restore)
+		timeLog(event, id, recentlyDeletedHandler.restore)
+	})
+
+	ipcMain.on('delete:permanent', (event, id) => {
+		timeLog(event, id, recentlyDeletedHandler.delete)
 	})
 
 	console.log('Routes initialized.\n')
@@ -55,10 +51,12 @@ function init(redisClient) {
 function timeLog(event, requestData, fn) {
 	console.time('time')
 
-	fn(event, client, requestData)
+	fn(event, requestData)
 
 	console.timeEnd('time')
 	console.log()
 }
 
-module.exports = {init: init}
+module.exports = {
+	init: init
+}
