@@ -54,4 +54,12 @@ ipcRenderer.on('get:deleted-result', (event, snippets) => {
 	vm.snippets = snippets
 })
 
+// If the list has changed, then reload it.
+let events = ['restore', 'delete:permanent']
+events.forEach(event => {
+	ipcRenderer.on(event + '-result', () => {
+		ipcRenderer.send('get:deleted', {})
+	})
+})
+
 module.exports = {}
