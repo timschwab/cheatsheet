@@ -57,13 +57,12 @@ ipcRenderer.on('search-result', (event, results) => {
 	}
 })
 
-// If a snippet is deleted, make sure it is removed from the search results
-ipcRenderer.on('delete-result', (event, result) => {
-	if (result.status == 'success') {
-		vm.results = vm.results.filter(snippet => {
-			return snippet.key != result.id
-		})
-	}
+// If the search results might have been changed, then reload them.
+let events = ['add', 'edit:change', 'delete', 'restore']
+events.forEach(event => {
+	ipcRenderer.on(event + '-result', () => {
+		ipcRenderer.send('search', vm.query)
+	})
 })
 
 module.exports = {}
