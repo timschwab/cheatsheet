@@ -31,7 +31,7 @@ Vue.component('deleted-page', {
 					<snippet-preview
 						:snippet="snippet"
 						:deleted=true
-						:key="snippet.key"
+						:key="snippet.id"
 						v-on:view="$emit('page', 'view-deleted:' + $event)"
 						v-on:restore="restoreSnippet"
 						v-on:delete="deleteSnippet"

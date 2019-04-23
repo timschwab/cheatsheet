@@ -9,11 +9,11 @@ Vue.component('edit-page', {
 	created: function() {
 		vm = this
 	},
-	props: ['snippetKey'],
+	props: ['snippetID'],
 	watch: {
-		snippetKey: function(key) {
-			if (key) {
-				ipcRenderer.send('edit:get', key)
+		snippetID: function(id) {
+			if (id) {
+				ipcRenderer.send('edit:get', id)
 			}
 		}
 	},
@@ -32,10 +32,10 @@ Vue.component('edit-page', {
 	`,
 	methods: {
 		back: function(event) {
-			this.$emit('page', 'view:' + vm.snippetKey)
+			this.$emit('page', 'view:' + vm.snippetID)
 		},
 		submit: function(data) {
-			data.key = this.snippetKey
+			data.id = this.snippetID
 			ipcRenderer.send('edit:change', data)
 		}
 	}
@@ -50,7 +50,7 @@ ipcRenderer.on('edit:get-result', (event, snippet) => {
 ipcRenderer.on('edit:change-result', (event, result) => {
 	if (result.status == 'success') {
 		vm.$emit('message', 'Successfully edited')
-		vm.$emit('page', 'view:' + vm.snippetKey)
+		vm.$emit('page', 'view:' + vm.snippetID)
 	} else {
 		console.log(result)
 		vm.$emit('message', 'Could not edit snippet')

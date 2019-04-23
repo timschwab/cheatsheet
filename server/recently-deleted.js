@@ -1,8 +1,5 @@
 const api = require('./redis-api')
 
-const cutOffDays = 3
-const millisecondsInDay = 1000 * 60 * 60 * 24
-
 function snippetsGet(event, data) {
 	console.log('get:deleted:')
 	console.log(data)

@@ -36,21 +36,21 @@ document.addEventListener('DOMContentLoaded', () => {
 			showDeletedViewPage: function() {
 				return this.page.slice(0, 13) == 'view-deleted:'
 			},
-			viewingKey: function() {
+			viewingID: function() {
 				if (this.showViewPage) {
 					return this.page.slice(5)
 				} else {
 					return null
 				}
 			},
-			editingKey: function() {
+			editingID: function() {
 				if (this.showEditPage) {
 					return this.page.slice(5)
 				} else {
 					return null
 				}
 			},
-			deletedKey: function() {
+			deletedID: function() {
 				if (this.showDeletedViewPage) {
 					return this.page.slice(13)
 				} else {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						v-on:page="page = $event"
 						v-on:message="message = $event"
 
-						:snippetKey="viewingKey"
+						:snippetID="viewingID"
 					></view-page>
 
 					<add-page
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						v-on:page="page = $event"
 						v-on:message="message = $event"
 
-						:snippetKey="editingKey"
+						:snippetID="editingID"
 					></edit-page>
 
 					<deleted-page
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						v-on:page="page = $event"
 						v-on:message="message = $event"
 
-						:snippetKey="deletedKey"
+						:snippetID="deletedID"
 						:deleted=true
 					></view-page>
 				</div>

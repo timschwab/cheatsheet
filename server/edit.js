@@ -13,7 +13,7 @@ function change(event, data) {
 	console.log(data)
 
 	// Delete snippet
-	api.edit(data.key, data).then(result => {
+	api.edit(data.id, data).then(result => {
 		event.sender.send('edit:change-result', {
 			status: 'success'
 		})

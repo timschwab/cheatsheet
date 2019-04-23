@@ -34,12 +34,12 @@ function searchSnippet(client, query) {
 		})
 
 		.then(results => {
-			// Separate out keys and scores
+			// Separate out IDs and scores
 			snippets = results.reduce((soFar, nextValue, index) => {
 				if (index % 2) {
 					soFar[soFar.length - 1].score = nextValue
 				} else {
-					soFar.push({key: nextValue})
+					soFar.push({id: nextValue})
 				}
 
 				return soFar
@@ -47,7 +47,7 @@ function searchSnippet(client, query) {
 
 			// Get all the snippets
 			let getPromises = snippets.map(snippet => {
-				return getHandler.get(client, snippet.key)
+				return getHandler.get(client, snippet.id)
 			})
 
 			return bluebird.all(getPromises)

@@ -1,4 +1,4 @@
-const {Menu, ipcMain} = require('electron')
+const {Menu} = require('electron')
 
 const menu = Menu.buildFromTemplate([
 	{

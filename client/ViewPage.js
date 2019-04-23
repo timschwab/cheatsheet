@@ -20,7 +20,7 @@ Vue.component('view-page', {
 			}
 		})
 	},
-	props: ['snippetKey', 'deleted'],
+	props: ['snippetID', 'deleted'],
 	data: function() {
 		return {
 			snippet: {
@@ -36,9 +36,9 @@ Vue.component('view-page', {
 		}
 	},
 	watch: {
-		snippetKey: function(key) {
-			if (key) {
-				ipcRenderer.send('get', key)
+		snippetID: function(id) {
+			if (id) {
+				ipcRenderer.send('get', id)
 			}
 		}
 	},
@@ -75,18 +75,18 @@ Vue.component('view-page', {
 	`,
 	methods: {
 		deleteSnippet: function() {
-			if (this.snippetKey) {
-				ipcRenderer.send('delete', this.snippetKey)
+			if (this.snippetID) {
+				ipcRenderer.send('delete', this.snippetID)
 			}
 		},
 		editSnippet: function() {
-			this.$emit('page', 'edit:' + this.snippetKey)
+			this.$emit('page', 'edit:' + this.snippetID)
 		},
 		deletePermanent: function() {
-			ipcRenderer.send('delete:permanent', this.snippetKey)
+			ipcRenderer.send('delete:permanent', this.snippetID)
 		},
 		restoreSnippet: function() {
-			ipcRenderer.send('restore', this.snippetKey)
+			ipcRenderer.send('restore', this.snippetID)
 		}
 	}
 })
