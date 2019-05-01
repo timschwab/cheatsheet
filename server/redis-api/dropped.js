@@ -2,26 +2,26 @@ const bluebird = require('bluebird')
 
 const getHandler = require('./get')
 const addHandler = require('./add')
-const deleteHandler = require('./delete')
+const dropHandler = require('./drop')
 
 const cutOffDays = 3
 const millisecondsInDay = 1000 * 60 * 60 * 24
 
-// Add a snippet to the recently deleted list
+// Add a snippet to the dropped list
 function addSnippet(client, id) {
 	let promise
 
 	// Clean the set
 	promise = cleanSet(client)
-		// Add the new deleted
+		// Add the new dropped
 		.then(result => {
-			return client.zadd('~~recently-deleted', timeStamp(), id)
+			return client.zadd('~~dropped', timeStamp(), id)
 		})
 
 	return promise
 }
 
-// Get all the snippets in the recently deleted list
+// Get all the snippets in the dropped list
 function getAll(client, data) {
 	let promise
 
@@ -31,11 +31,7 @@ function getAll(client, data) {
 	promise = cleanSet(client)
 		// Get the list of IDs
 		.then(result => {
-			return client.zrevrangebyscoreAsync(
-				'~~recently-deleted',
-				'+inf',
-				expireCutOff()
-			)
+			return client.zrevrangebyscoreAsync('~~dropped', '+inf', expireCutOff())
 		})
 
 		// Get the corresponding snippets
@@ -50,7 +46,7 @@ function getAll(client, data) {
 	return promise
 }
 
-// Restore a snippet from the recently deleted list
+// Restore a snippet from the dropped list
 function restoreSnippet(client, id) {
 	let promise
 
@@ -58,7 +54,7 @@ function restoreSnippet(client, id) {
 	promise = cleanSet(client)
 		// Remove from set
 		.then(result => {
-			return removeFromRecentlyDeleted(client, id)
+			return removeFromDropped(client, id)
 		})
 
 		// Do an indexAndScore to make it searchable
@@ -69,20 +65,20 @@ function restoreSnippet(client, id) {
 	return promise
 }
 
-// Permanently delete a snippet
-function deleteSnippet(client, id) {
+// Destroy a snippet
+function destroySnippet(client, id) {
 	let promise
 
 	// Clean the set
 	promise = cleanSet(client)
-		// Remove from the set of recently deleted
+		// Remove from the set of dropped
 		.then(result => {
-			return removeFromRecentlyDeleted(client, id)
+			return removeFromDropped(client, id)
 		})
 
 		// Delete snippet data
 		.then(result => {
-			return deleteHandler.simpleDelete(client, id)
+			return dropHandler.simpleDelete(client, id)
 		})
 
 	return promise
@@ -95,21 +91,17 @@ function cleanSet(client) {
 	let promise
 
 	// Note that this leaves the underlying Redis string that holds the snippet data
-	promise = client.zremrangebyscoreAsync(
-		'~~recently-deleted',
-		'-inf',
-		expireCutOff()
-	)
+	promise = client.zremrangebyscoreAsync('~~dropped', '-inf', expireCutOff())
 
 	return promise
 }
 
 // Note - this does not clean the set, because it is a helper function
-function removeFromRecentlyDeleted(client, id) {
+function removeFromDropped(client, id) {
 	let promise
 
-	// Clean the set
-	promise = client.zremAsync('~~recently-deleted', id)
+	// Remove member from set
+	promise = client.zremAsync('~~dropped', id)
 
 	return promise
 }
@@ -130,4 +122,4 @@ function expireCutOff(stamp) {
 module.exports.add = addSnippet
 module.exports.getAll = getAll
 module.exports.restore = restoreSnippet
-module.exports.delete = deleteSnippet
+module.exports.destroy = destroySnippet
