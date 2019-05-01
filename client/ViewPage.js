@@ -9,18 +9,18 @@ Vue.component('view-page', {
 			this.snippet = snippet
 		})
 
-		// Server deleted a snippet
-		ipcRenderer.on('delete-result', (event, result) => {
+		// Server dropped a snippet
+		ipcRenderer.on('drop-result', (event, result) => {
 			if (result.status == 'success') {
-				this.$emit('message', 'Snippet deleted')
+				this.$emit('message', 'Snippet dropped')
 				this.$emit('page', 'search')
 			} else {
-				this.$emit('message', 'Snippet could not be deleted')
+				this.$emit('message', 'Snippet could not be dropped')
 				console.log(result)
 			}
 		})
 	},
-	props: ['snippetID', 'deleted'],
+	props: ['snippetID', 'dropped'],
 	data: function() {
 		return {
 			snippet: {
@@ -60,13 +60,13 @@ Vue.component('view-page', {
 					</ul>
 				</div>
 				<div class="card-footer">
-					<div v-if="deleted">
-						<button class="btn btn-danger float-right mx-1" v-on:click="deletePermanent"><i class="fa fa-trash"></i> Delete Permanently</button>
+					<div v-if="dropped">
+						<button class="btn btn-danger float-right mx-1" v-on:click="destroySnippet"><i class="fa fa-trash"></i> Destroy</button>
 						<button class="btn btn-primary float-right mx-1" v-on:click="restoreSnippet"><i class="fa fa-undo"></i> Restore</button>
 					</div>
 
 					<div v-else>
-						<button class="btn btn-danger float-right mx-1" v-on:click="deleteSnippet"><i class="fa fa-trash"></i> Delete</button>
+						<button class="btn btn-danger float-right mx-1" v-on:click="dropSnippet"><i class="fa fa-trash"></i> Drop</button>
 						<button class="btn btn-secondary float-right mx-1" v-on:click="editSnippet"><i class="fa fa-edit"></i> Edit</button>
 					</div>
 				</div>
@@ -74,16 +74,16 @@ Vue.component('view-page', {
 		</div>
 	`,
 	methods: {
-		deleteSnippet: function() {
+		dropSnippet: function() {
 			if (this.snippetID) {
-				ipcRenderer.send('delete', this.snippetID)
+				ipcRenderer.send('drop', this.snippetID)
 			}
 		},
 		editSnippet: function() {
 			this.$emit('page', 'edit:' + this.snippetID)
 		},
-		deletePermanent: function() {
-			ipcRenderer.send('delete:permanent', this.snippetID)
+		destroySnippet: function() {
+			ipcRenderer.send('destroy', this.snippetID)
 		},
 		restoreSnippet: function() {
 			ipcRenderer.send('restore', this.snippetID)

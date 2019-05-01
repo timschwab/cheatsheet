@@ -3,7 +3,7 @@ const Vue = require('vue/dist/vue.js')
 
 let vm
 
-Vue.component('deleted-page', {
+Vue.component('dropped-page', {
 	created: function() {
 		vm = this
 	},
@@ -16,13 +16,13 @@ Vue.component('deleted-page', {
 	watch: {
 		visible: function() {
 			if (this.visible) {
-				ipcRenderer.send('get:deleted', {})
+				ipcRenderer.send('get:dropped', {})
 			}
 		}
 	},
 	template: `
-		<div id="deleted-page">
-			<div id="deleted-links">
+		<div id="dropped-page">
+			<div id="dropped-links">
 				<p><a href="#" v-on:click="$emit('page', 'search')">Back to search results</a></p>
 			</div>
 
@@ -30,11 +30,11 @@ Vue.component('deleted-page', {
 				<p>
 					<snippet-preview
 						:snippet="snippet"
-						:deleted=true
+						:dropped=true
 						:key="snippet.id"
-						v-on:view="$emit('page', 'view-deleted:' + $event)"
+						v-on:view="$emit('page', 'view-dropped:' + $event)"
 						v-on:restore="restoreSnippet"
-						v-on:delete="deleteSnippet"
+						v-on:destroy="dropSnippet"
 					></snippet-preview>
 				</p>
 			</div>
@@ -44,21 +44,21 @@ Vue.component('deleted-page', {
 		restoreSnippet: function(id) {
 			ipcRenderer.send('restore', id)
 		},
-		deleteSnippet: function(id) {
-			ipcRenderer.send('delete:permanent', id)
+		destroySnippet: function(id) {
+			ipcRenderer.send('destroy', id)
 		}
 	}
 })
 
-ipcRenderer.on('get:deleted-result', (event, snippets) => {
+ipcRenderer.on('get:dropped-result', (event, snippets) => {
 	vm.snippets = snippets
 })
 
 // If the list has changed, then reload it.
-let events = ['restore', 'delete:permanent']
+let events = ['restore', 'destroy']
 events.forEach(event => {
 	ipcRenderer.on(event + '-result', () => {
-		ipcRenderer.send('get:deleted', {})
+		ipcRenderer.send('get:dropped', {})
 	})
 })
 
