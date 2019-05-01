@@ -4,8 +4,8 @@ const searchHandler = require('./search')
 const getHandler = require('./get')
 const addHandler = require('./add')
 const editHandler = require('./edit')
-const deleteHandler = require('./delete')
-const recentlyDeletedHandler = require('./recently-deleted')
+const dropHandler = require('./drop')
+const droppedHandler = require('./dropped')
 
 function init() {
 	ipcMain.on('add', (event, data) => {
@@ -28,20 +28,20 @@ function init() {
 		timeLog(event, data, editHandler.change)
 	})
 
-	ipcMain.on('delete', (event, id) => {
-		timeLog(event, id, deleteHandler.delete)
+	ipcMain.on('drop', (event, id) => {
+		timeLog(event, id, dropHandler.drop)
 	})
 
-	ipcMain.on('get:deleted', (event, data) => {
-		timeLog(event, data, recentlyDeletedHandler.get)
+	ipcMain.on('get:dropped', (event, data) => {
+		timeLog(event, data, droppedHandler.get)
 	})
 
 	ipcMain.on('restore', (event, id) => {
-		timeLog(event, id, recentlyDeletedHandler.restore)
+		timeLog(event, id, droppedHandler.restore)
 	})
 
-	ipcMain.on('delete:permanent', (event, id) => {
-		timeLog(event, id, recentlyDeletedHandler.delete)
+	ipcMain.on('destroy', (event, id) => {
+		timeLog(event, id, droppedHandler.destroy)
 	})
 
 	console.log('Routes initialized.\n')

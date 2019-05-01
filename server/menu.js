@@ -11,9 +11,9 @@ const menu = Menu.buildFromTemplate([
 				label: 'Remove sheet'
 			},
 			{
-				label: 'Recently deleted snippets',
+				label: 'Dropped snippets',
 				click(item, window) {
-					window.webContents.send('menu:deleted')
+					window.webContents.send('menu:dropped')
 				}
 			}
 		]

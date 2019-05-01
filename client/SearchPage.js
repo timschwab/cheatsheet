@@ -58,7 +58,7 @@ ipcRenderer.on('search-result', (event, results) => {
 })
 
 // If the search results might have been changed, then reload them.
-let events = ['add', 'edit:change', 'delete', 'restore']
+let events = ['add', 'edit:change', 'drop', 'restore']
 events.forEach(event => {
 	ipcRenderer.on(event + '-result', () => {
 		ipcRenderer.send('search', vm.query)

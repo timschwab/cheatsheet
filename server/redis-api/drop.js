@@ -1,7 +1,7 @@
 const tokenizeHandler = require('./tokenize')
 const indexHandler = require('./index')
 const scoreHandler = require('./score')
-const recentlyDeletedHandler = require('./recently-deleted')
+const droppedHandler = require('./dropped')
 
 function simpleDelete(client, id) {
 	let promise
@@ -34,14 +34,14 @@ function unindexAndScore(client, id) {
 	return promise
 }
 
-function undoableDelete(client, id) {
+function drop(client, id) {
 	let promise
 
 	// Remove from search results
 	promise = unindexAndScore(client, id)
-		// Add to the recently deleted
+		// Add to the dropped
 		.then(results => {
-			return recentlyDeletedHandler.add(client, id)
+			return droppedHandler.add(client, id)
 		})
 
 	return promise
@@ -62,5 +62,5 @@ function fullDelete(client, id) {
 
 module.exports.simpleDelete = simpleDelete
 module.exports.unindexAndScore = unindexAndScore
-module.exports.undoableDelete = undoableDelete
+module.exports.drop = drop
 module.exports.fullDelete = fullDelete

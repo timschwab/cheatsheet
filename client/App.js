@@ -6,7 +6,7 @@ const searchPage = require('./SearchPage')
 const viewPage = require('./ViewPage')
 const addPage = require('./AddPage')
 const editPage = require('./EditPage')
-const deletedPage = require('./DeletedPage')
+const droppedPage = require('./DroppedPage')
 
 let vm
 
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			showEditPage: function() {
 				return this.page.slice(0, 5) == 'edit:'
 			},
-			showDeletedPage: function() {
-				return this.page == 'deleted'
+			showDroppedPage: function() {
+				return this.page == 'dropped'
 			},
-			showDeletedViewPage: function() {
-				return this.page.slice(0, 13) == 'view-deleted:'
+			showDroppedViewPage: function() {
+				return this.page.slice(0, 13) == 'view-dropped:'
 			},
 			viewingID: function() {
 				if (this.showViewPage) {
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 					return null
 				}
 			},
-			deletedID: function() {
-				if (this.showDeletedViewPage) {
+			droppedID: function() {
+				if (this.showDroppedViewPage) {
 					return this.page.slice(13)
 				} else {
 					return null
@@ -95,21 +95,21 @@ document.addEventListener('DOMContentLoaded', () => {
 						:snippetID="editingID"
 					></edit-page>
 
-					<deleted-page
-						v-show="showDeletedPage"
+					<dropped-page
+						v-show="showDroppedPage"
 						v-on:page="page = $event"
 						v-on:message="message = $event"
 
-						:visible="showDeletedPage"
-					></deleted-page>
+						:visible="showDroppedPage"
+					></dropped-page>
 
 					<view-page
-						v-show="showDeletedViewPage"
+						v-show="showDroppedViewPage"
 						v-on:page="page = $event"
 						v-on:message="message = $event"
 
-						:snippetID="deletedID"
-						:deleted=true
+						:snippetID="droppedID"
+						:dropped=true
 					></view-page>
 				</div>
 			</div>
@@ -117,6 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 })
 
-ipcRenderer.on('menu:deleted', (event, results) => {
-	vm.page = 'deleted'
+ipcRenderer.on('menu:dropped', (event, results) => {
+	vm.page = 'dropped'
 })
