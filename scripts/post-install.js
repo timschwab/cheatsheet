@@ -15,10 +15,6 @@ switch (process.platform) {
 		// https://redis.io/topics/quickstart
 		// This is the way to install on Linux, apparently...
 
-		// Download tarball
-		// Extract source
-		// Make
-		// Run Redis
-		exec('sh scripts/install-redis-linux.bat')
+		exec('sh scripts/install-redis-linux.sh')
 		break
 }
