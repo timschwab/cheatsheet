@@ -12,12 +12,13 @@ switch (process.platform) {
 		)
 		break
 	case 'linux':
-		// This is the way to install on Linux, apparently... https://redis.io/topics/quickstart
+		// https://redis.io/topics/quickstart
+		// This is the way to install on Linux, apparently...
 
 		// Download tarball
 		// Extract source
 		// Make
 		// Run Redis
-		console.log('Automated install of Redis currently not implemented on Linux')
+		exec('sh scripts/install-redis-linux.bat')
 		break
 }
