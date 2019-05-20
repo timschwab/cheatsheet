@@ -1,6 +1,8 @@
 # custom
 
 scripts/redis-installed
+scripts/redis-stable.tar.gz
+scripts/redis-stable/*
 
 
 
