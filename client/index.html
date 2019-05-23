@@ -28,6 +28,15 @@
 		<!-- Custom files -->
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script src="App.js"></script>
+
+		<!-- Open all links in the default browser -->
+		<script>
+			let shell = require('electron').shell
+			$(document).on('click', 'a[href^="http"]', function(event) {
+				event.preventDefault()
+				shell.openExternal(this.href)
+			})
+		</script>
 	</head>
 
 	<body>
