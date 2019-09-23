@@ -1,5 +1,3 @@
-const bluebird = require('bluebird')
-
 // Takes an object with these params:
 //   problemTokens
 //   solutionTokens
@@ -15,7 +13,7 @@ function index(client, id, tokens) {
 		return client.saddAsync(keyword + '-keywords', id)
 	})
 
-	let promise = bluebird.all([
+	let promise = Promise.all([
 		problemPromises,
 		solutionPromises,
 		keywordPromises
@@ -39,7 +37,7 @@ function unindex(client, id, tokens) {
 		return client.sremAsync(keyword + '-keywords', id)
 	})
 
-	let promise = bluebird.all([
+	let promise = Promise.all([
 		problemPromises,
 		solutionPromises,
 		keywordPromises

@@ -1,5 +1,3 @@
-const bluebird = require('bluebird')
-
 const getHandler = require('./get')
 const addHandler = require('./add')
 const dropHandler = require('./drop')
@@ -40,7 +38,7 @@ function getAll(client, data) {
 				return getHandler.get(client, id)
 			})
 
-			return bluebird.all(getPromises)
+			return Promise.all(getPromises)
 		})
 
 	return promise

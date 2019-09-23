@@ -1,5 +1,3 @@
-const bluebird = require('bluebird')
-
 // Takes an object with these params:
 //   problemTokens
 //   solutionTokens
@@ -15,7 +13,7 @@ function score(client, tokens) {
 		return scoreToken(client, keyword)
 	})
 
-	let promise = bluebird.all([
+	let promise = Promise.all([
 		problemPromises,
 		solutionPromises,
 		keywordPromises

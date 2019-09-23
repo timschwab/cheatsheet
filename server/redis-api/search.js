@@ -1,5 +1,3 @@
-const bluebird = require('bluebird')
-
 const tokenizeHandler = require('./tokenize')
 const getHandler = require('./get')
 
@@ -50,7 +48,7 @@ function searchSnippet(client, query) {
 				return getHandler.get(client, snippet.id)
 			})
 
-			return bluebird.all(getPromises)
+			return Promise.all(getPromises)
 		})
 
 		// Parse and return
@@ -61,9 +59,7 @@ function searchSnippet(client, query) {
 			})
 
 			// Construct a promise that returns the parsed data
-			return new Promise((resolve, reject) => {
-				resolve(parsed)
-			})
+			return Promise.resolve(parsed)
 		})
 
 	return promise

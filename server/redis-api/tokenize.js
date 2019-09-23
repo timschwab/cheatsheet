@@ -31,12 +31,10 @@ function tokenizeData(data) {
 	// In the future: store tokenization history. Will need to have the `client`.
 
 	// Construct a promise that provides the tokenized data
-	promise = new Promise((resolve, reject) => {
-		resolve({
-			problemTokens: problemTokens,
-			solutionTokens: solutionTokens,
-			keywords: keywords
-		})
+	promise = Promise.resolve({
+		problemTokens: problemTokens,
+		solutionTokens: solutionTokens,
+		keywords: keywords
 	})
 
 	return promise
