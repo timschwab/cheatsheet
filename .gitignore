@@ -1,9 +1,10 @@
-# custom
+# Custom
 
 scripts/redis-installed
 scripts/redis-stable.tar.gz
 scripts/redis-stable/*
 
+*.DS_Store
 
 
 # Logs
