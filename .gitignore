@@ -4,6 +4,8 @@ scripts/redis-installed
 scripts/redis-stable.tar.gz
 scripts/redis-stable/*
 
+src/client/dist/*
+
 *.DS_Store
 
 
