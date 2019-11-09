@@ -1,11 +1,12 @@
 {
 	"name": "cheatsheet",
-	"version": "1.2.1",
+	"version": "1.3.0",
 	"description": "A knowledge base for short snippets",
-	"main": "app.js",
+	"main": "src/main.js",
 	"scripts": {
-		"start": "electron .",
-		"postinstall": "node ./scripts/post-install.js"
+		"postinstall": "node ./scripts/post-install.js",
+		"build": "webpack",
+		"start": "electron ."
 	},
 	"repository": {
 		"type": "git",
@@ -20,20 +21,26 @@
 		"url": "https://github.com/timschwab/cheatsheet/issues"
 	},
 	"homepage": "https://github.com/timschwab/cheatsheet#readme",
-	"devDependencies": {
-		"electron": "^2.0.8",
-		"husky": "^1.3.1",
-		"lint-staged": "^8.1.3",
-		"prettier": "^1.16.4"
-	},
 	"dependencies": {
-		"bluebird": "^3.5.3",
+		"bluebird": "^3.7.1",
 		"bootstrap": "^4.3.1",
-		"jquery": "^3.4.0",
+		"jquery": "^3.4.1",
 		"marked": "^0.7.0",
-		"popper.js": "^1.15.0",
+		"popper.js": "^1.16.0",
 		"redis": "^2.8.0",
-		"vue": "^2.5.20"
+		"vue": "^2.6.10"
+	},
+	"devDependencies": {
+		"css-loader": "^3.2.0",
+		"electron": "^2.0.18",
+		"husky": "^1.3.1",
+		"lint-staged": "^8.2.1",
+		"prettier": "^1.19.1",
+		"vue-loader": "^15.7.2",
+		"vue-style-loader": "^4.1.2",
+		"vue-template-compiler": "^2.6.10",
+		"webpack": "^4.41.2",
+		"webpack-cli": "^3.3.10"
 	},
 	"husky": {
 		"hooks": {
@@ -41,7 +48,7 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,json,css,html}": [
+		"*.{js, json, css, html, vue}": [
 			"prettier --write",
 			"git add"
 		]

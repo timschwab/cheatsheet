@@ -22,5 +22,6 @@ Check out the [wiki](https://github.com/timschwab/cheatsheet/wiki) for more deta
 git clone git@github.com:timschwab/cheatsheet.git
 cd cheatsheet
 npm install
+npm run build
 npm start
 ```
