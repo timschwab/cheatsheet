@@ -1,59 +1,66 @@
 <template>
 	<div class="m-3">
-		<message-display
+		<MessageDisplay
 			:message="message"
-		></message-display>
+		></MessageDisplay>
 
 		<hr />
 
 		<div id="content">
-			<search-page
+			<SearchPage
 				v-show="showSearchPage"
 				v-on:page="page = $event"
 				v-on:message="message = $event"
-			></search-page>
+			></SearchPage>
 
-			<view-page
+			<ViewPage
 				v-show="showViewPage"
 				v-on:page="page = $event"
 				v-on:message="message = $event"
 				:snippetID="viewingID"
-			></view-page>
+			></ViewPage>
 
-			<add-page
+			<AddPage
 				v-show="showAddPage"
 				v-on:page="page = $event"
 				v-on:message="message = $event"
-			></add-page>
+			></AddPage>
 
-			<edit-page
+			<EditPage
 				v-show="showEditPage"
 				v-on:page="page = $event"
 				v-on:message="message = $event"
 				:snippetID="editingID"
-			></edit-page>
+			></EditPage>
 
-			<dropped-page
+			<DroppedPage
 				v-show="showDroppedPage"
 				v-on:page="page = $event"
 				v-on:message="message = $event"
 				:visible="showDroppedPage"
-			></dropped-page>
+			></DroppedPage>
 
-			<view-page
+			<ViewPage
 				v-show="showDroppedViewPage"
 				v-on:page="page = $event"
 				v-on:message="message = $event"
 
 				:snippetID="droppedID"
 				:dropped=true
-			></view-page>
+			></ViewPage>
 		</div>
 	</div>
 </template>
 
 <script>
 	const {ipcRenderer} = require('electron')
+	const MessageDisplay = require('./MessageDisplay')
+	const SearchPage = require('./SearchPage')
+	const ViewPage = require('./ViewPage')
+	const AddPage = require('./AddPage')
+	const EditPage = require('./EditPage')
+	const DroppedPage = require('./DroppedPage')
+	const ViewPage = require('./ViewPage')
 
 	let vm
 

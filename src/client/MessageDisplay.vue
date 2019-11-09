@@ -1,12 +1,11 @@
-const Vue = require('vue/dist/vue.js')
+<template>
+	<div id="message-box">
+		<span>{{ message }}</span>
+	</div>
+</template>
 
-Vue.component('message-display', {
-	props: ['message'],
-	template: `
-		<div id="message-box">
-			<span>{{ message }}</span>
-		</div>
-	`
-})
-
-module.exports = {}
+<script>
+	module.exports = {
+		props: ['message']
+	}
+</script>
