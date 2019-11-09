@@ -14,7 +14,7 @@
 
 <script>
 	const {ipcRenderer} = require('electron')
-	const AddForm = require('./AddForm')
+	const AddForm = require('./AddForm.vue')
 
 	let vm
 
@@ -29,7 +29,7 @@
 		}
 	})
 
-	export.modules = {
+	module.export = {
 		created: function() {
 			vm = this
 		},
@@ -38,5 +38,5 @@
 				ipcRenderer.send('add', data)
 			}
 		}
-	})
+	}
 </script>

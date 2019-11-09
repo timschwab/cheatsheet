@@ -54,13 +54,12 @@
 
 <script>
 	const {ipcRenderer} = require('electron')
-	const MessageDisplay = require('./MessageDisplay')
-	const SearchPage = require('./SearchPage')
-	const ViewPage = require('./ViewPage')
-	const AddPage = require('./AddPage')
-	const EditPage = require('./EditPage')
-	const DroppedPage = require('./DroppedPage')
-	const ViewPage = require('./ViewPage')
+	const MessageDisplay = require('./MessageDisplay.vue')
+	const SearchPage = require('./SearchPage.vue')
+	const ViewPage = require('./ViewPage.vue')
+	const AddPage = require('./AddPage.vue')
+	const EditPage = require('./EditPage.vue')
+	const DroppedPage = require('./DroppedPage.vue')
 
 	let vm
 

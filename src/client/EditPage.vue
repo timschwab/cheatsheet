@@ -14,7 +14,7 @@
 
 <script>
 	const {ipcRenderer} = require('electron')
-	const AddForm = require('./AddForm')
+	const AddForm = require('./AddForm.vue')
 
 	let vm
 

@@ -21,7 +21,7 @@
 
 <script>
 	const {ipcRenderer} = require('electron')
-	const SnippetPreview = require('./SnippetPreview')
+	const SnippetPreview = require('./SnippetPreview.vue')
 
 	let vm
 
