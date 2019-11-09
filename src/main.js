@@ -16,7 +16,7 @@ function main() {
 	// Create main window
 	let win = new BrowserWindow({width: 800, height: 600})
 	Menu.setApplicationMenu(menu)
-	win.loadFile('client/index.html')
+	win.loadFile('src/client/index.html')
 }
 
 // Start app

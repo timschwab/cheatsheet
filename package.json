@@ -2,7 +2,7 @@
 	"name": "cheatsheet",
 	"version": "1.2.1",
 	"description": "A knowledge base for short snippets",
-	"main": "app.js",
+	"main": "src/main.js",
 	"scripts": {
 		"postinstall": "node ./scripts/post-install.js",
 		"build": "webpack",
@@ -48,7 +48,7 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,json,css,html}": [
+		"*.{js, json, css, html, vue}": [
 			"prettier --write",
 			"git add"
 		]
