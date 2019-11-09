@@ -21,7 +21,7 @@
 
 <script>
 	const {ipcRenderer} = require('electron')
-	const SnippetPreview = require('./SnippetPreview.vue')
+	const SnippetPreview = require('./SnippetPreview.vue').default
 
 	let vm
 
@@ -61,6 +61,9 @@
 			destroySnippet: function(id) {
 				ipcRenderer.send('destroy', id)
 			}
+		},
+		components: {
+			SnippetPreview
 		}
 	}
 

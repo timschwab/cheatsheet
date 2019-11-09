@@ -14,7 +14,7 @@
 
 <script>
 	const {ipcRenderer} = require('electron')
-	const AddForm = require('./AddForm.vue')
+	const AddForm = require('./AddForm.vue').default
 
 	let vm
 
@@ -54,6 +54,9 @@
 				data.id = this.snippetID
 				ipcRenderer.send('edit:change', data)
 			}
+		},
+		components: {
+			AddForm
 		}
 	}
 </script>

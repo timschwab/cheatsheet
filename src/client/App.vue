@@ -54,12 +54,12 @@
 
 <script>
 	const {ipcRenderer} = require('electron')
-	const MessageDisplay = require('./MessageDisplay.vue')
-	const SearchPage = require('./SearchPage.vue')
-	const ViewPage = require('./ViewPage.vue')
-	const AddPage = require('./AddPage.vue')
-	const EditPage = require('./EditPage.vue')
-	const DroppedPage = require('./DroppedPage.vue')
+	const MessageDisplay = require('./MessageDisplay.vue').default
+	const SearchPage = require('./SearchPage.vue').default
+	const ViewPage = require('./ViewPage.vue').default
+	const AddPage = require('./AddPage.vue').default
+	const EditPage = require('./EditPage.vue').default
+	const DroppedPage = require('./DroppedPage.vue').default
 
 	let vm
 
@@ -117,6 +117,14 @@
 					return null
 				}
 			}
+		},
+		components: {
+			MessageDisplay,
+			SearchPage,
+			ViewPage,
+			AddPage,
+			EditPage,
+			DroppedPage
 		}
 	}
 </script>
