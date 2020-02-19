@@ -8,7 +8,7 @@ As the tagline says, this tool is a knowledge base for short snippets. In the da
 
 The answers to these questions come from three sources: the Internet, the subject matter expert, or a half-hour of digging. Using Stack Overflow can slow up your process and you sometimes have to filter through several questions before finding what you need. Plus, it will never have proprietary information. Asking the subject matter expert interrupts his workflow, and one day, he may leave the company, taking his knowledge with him. And I don't think any of us likes digging through the labyrinth to find information that should've been available in seconds.
 
-So, most of us developments have a document. A document named "notes.txt" or "stuff to remember.txt" or something like that. It is just a list of all the small snippets of information we need throughout our day. The problem, though, is that these documents are not searchable, and they are not shared among developers.
+So, most of us developers have a document. A document named "notes.txt" or "stuff to remember.txt" or something like that. It is just a list of all the small snippets of information we need throughout our day. The problem, though, is that these documents are not searchable, and they are not shared among developers.
 
 Hence, CheatSheet. It is a central source of truth for tiny, minuscule pieces of information. When we already have a framework of knowledge but just can't remember something, we need one place we can search. The search needs to understand what you want, and it needs to be fast. This is what CheatSheet delivers.
 
