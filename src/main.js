@@ -14,7 +14,13 @@ function main() {
 	routes.init()
 
 	// Create main window
-	let win = new BrowserWindow({width: 800, height: 600})
+	let win = new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			nodeIntegration: true
+		}
+	})
 	Menu.setApplicationMenu(menu)
 	win.loadFile('src/client/index.html')
 }
