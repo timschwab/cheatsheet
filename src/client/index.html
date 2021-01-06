@@ -2,7 +2,10 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'self' https://maxcdn.bootstrapcdn.com https://use.fontawesome.com; font-src https://use.fontawesome.com;">
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'self' https://maxcdn.bootstrapcdn.com https://use.fontawesome.com; font-src https://use.fontawesome.com;"
+		/>
 		<title>CheatSheet</title>
 
 		<!-- Bootstrap CSS -->
@@ -21,9 +24,9 @@
 
 		<script>
 			// Load JS libraries
-			window.$ = window.jQuery = require('jquery')
-			require('popper.js')
-			require('bootstrap')
+			window.$ = window.jQuery = require('jquery');
+			require('popper.js');
+			require('bootstrap');
 		</script>
 
 		<!-- Custom files -->
@@ -32,11 +35,11 @@
 
 		<!-- Open all links in the default browser -->
 		<script>
-			let shell = require('electron').shell
+			let shell = require('electron').shell;
 			$(document).on('click', 'a[href^="http"]', function(event) {
-				event.preventDefault()
-				shell.openExternal(this.href)
-			})
+				event.preventDefault();
+				shell.openExternal(this.href);
+			});
 		</script>
 	</head>
 

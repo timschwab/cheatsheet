@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	module.exports = {
-		props: ['message']
-	}
+module.exports = {
+	props: ['message']
+};
 </script>

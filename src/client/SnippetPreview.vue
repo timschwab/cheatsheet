@@ -2,7 +2,9 @@
 	<div class="snippet-preview">
 		<hr />
 		<p>
-			<a href="#" v-on:click="$emit('view', snippet.id)">{{ snippet.problem }}</a>
+			<a href="#" v-on:click="$emit('view', snippet.id)">{{
+				snippet.problem
+			}}</a>
 
 			<span v-if="dropped">
 				-
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-	module.exports = {
-		props: ['snippet', 'dropped']
-	}
+module.exports = {
+	props: ['snippet', 'dropped']
+};
 </script>
