@@ -1,9 +1,9 @@
-const dropHandler = require('./drop')
-const addHandler = require('./add')
+const dropHandler = require('./drop');
+const addHandler = require('./add');
 
 // Replace the snippet at `id` with the snippet contained in `newData`
 function editSnippet(client, id, newData) {
-	let promise
+	let promise;
 
 	// Unindex the old version
 	promise = dropHandler
@@ -11,15 +11,15 @@ function editSnippet(client, id, newData) {
 
 		// Add the new data
 		.then(result => {
-			return addHandler.simpleAdd(client, id, newData)
+			return addHandler.simpleAdd(client, id, newData);
 		})
 
 		// Make the new data searchable
 		.then(result => {
-			return addHandler.indexAndScore(client, id)
-		})
+			return addHandler.indexAndScore(client, id);
+		});
 
-	return promise
+	return promise;
 }
 
-module.exports.edit = editSnippet
+module.exports.edit = editSnippet;

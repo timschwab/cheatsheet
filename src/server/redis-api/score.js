@@ -4,22 +4,22 @@
 //   keywords
 function score(client, tokens) {
 	let problemPromises = tokens.problemTokens.map(token => {
-		return scoreToken(client, token)
-	})
+		return scoreToken(client, token);
+	});
 	let solutionPromises = tokens.solutionTokens.map(token => {
-		return scoreToken(client, token)
-	})
+		return scoreToken(client, token);
+	});
 	let keywordPromises = tokens.keywords.map(keyword => {
-		return scoreToken(client, keyword)
-	})
+		return scoreToken(client, keyword);
+	});
 
 	let promise = Promise.all([
 		problemPromises,
 		solutionPromises,
 		keywordPromises
-	])
+	]);
 
-	return promise
+	return promise;
 }
 
 function scoreToken(client, token) {
@@ -33,7 +33,7 @@ function scoreToken(client, token) {
 		'10',
 		'3',
 		'1'
-	)
+	);
 }
 
-module.exports.score = score
+module.exports.score = score;

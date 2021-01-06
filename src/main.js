@@ -1,17 +1,17 @@
 // Library includes
-const {app, BrowserWindow, Menu} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron');
 
 // Custom infrastructure
-const menu = require('./server/menu')
-const routes = require('./server/routes')
-const api = require('./server/redis-api/api')
+const menu = require('./server/menu');
+const routes = require('./server/routes');
+const api = require('./server/redis-api/api');
 
 function main() {
 	// Set up redis API
-	api.init()
+	api.init();
 
 	// Set up routes
-	routes.init()
+	routes.init();
 
 	// Create main window
 	let win = new BrowserWindow({
@@ -20,10 +20,10 @@ function main() {
 		webPreferences: {
 			nodeIntegration: true
 		}
-	})
-	Menu.setApplicationMenu(menu)
-	win.loadFile('src/client/index.html')
+	});
+	Menu.setApplicationMenu(menu);
+	win.loadFile('src/client/index.html');
 }
 
 // Start app
-app.on('ready', main)
+app.on('ready', main);

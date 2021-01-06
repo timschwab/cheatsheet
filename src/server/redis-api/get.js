@@ -1,5 +1,5 @@
 function getSnippet(client, id) {
-	let promise
+	let promise;
 
 	// Query redis for the text
 	promise = client
@@ -7,13 +7,13 @@ function getSnippet(client, id) {
 
 		// Convert to object
 		.then(text => {
-			let obj = JSON.parse(text)
-			obj.id = id
+			let obj = JSON.parse(text);
+			obj.id = id;
 
-			return Promise.resolve(obj)
-		})
+			return Promise.resolve(obj);
+		});
 
-	return promise
+	return promise;
 }
 
-module.exports.get = getSnippet
+module.exports.get = getSnippet;

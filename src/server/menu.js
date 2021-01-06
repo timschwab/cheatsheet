@@ -1,4 +1,4 @@
-const {Menu} = require('electron')
+const {Menu} = require('electron');
 
 const menu = Menu.buildFromTemplate([
 	{
@@ -13,7 +13,7 @@ const menu = Menu.buildFromTemplate([
 			{
 				label: 'Dropped snippets',
 				click(item, window) {
-					window.webContents.send('menu:dropped')
+					window.webContents.send('menu:dropped');
 				}
 			}
 		]
@@ -31,6 +31,6 @@ const menu = Menu.buildFromTemplate([
 			}
 		]
 	}
-])
+]);
 
-module.exports = menu
+module.exports = menu;
